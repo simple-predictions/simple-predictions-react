@@ -5,19 +5,13 @@ import GamesTable from './games.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
-  state = {games: []}
+  state = {games: []
+  }
   componentDidMount() {
     this.apiCall()
     setInterval(() => {
       this.apiCall()
-    }, 1000*20)
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(prevState.games) == JSON.stringify(this.state.games) || !prevState.game) {
-      //alert('NOT CHANGED')
-    } else {
-      alert('Predictions are in or a goal has been scored - please refresh your page for the latest!')
-    }
+    }, 1000*10)
   }
   render() {
     return(

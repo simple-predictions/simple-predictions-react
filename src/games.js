@@ -2,7 +2,32 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import './games.css'
 
-const GamesTable = ({ games }) => {
+class GamesTable extends React.Component{
+    componentDidUpdate(prevProps, prevState) {
+        if (JSON.stringify(prevProps.games) === JSON.stringify(this.props.games) || !prevProps.games) {
+          //alert('NOT CHANGED')
+        } else {
+          var old_games = prevProps.games
+          var new_games = this.props.games
+          console.log(old_games)
+          console.log(new_games)
+          // Loop through new games
+          new_games.map((new_game) => {
+              old_games.map((old_game) => {
+                  if (new_game.id === old_game.id) {
+                      // Same game found
+                      if (new_game.live_home_score !== old_game.live_home_score || new_game.live_away_score !== old_game.live_away_score) {
+                          // Score has changed
+                          alert(`A goal has been scored in ${new_game.home_team} vs ${new_game.away_team}`)
+                      }
+                  }
+                  return old_game;
+              })
+              return new_game;
+          })
+        }
+    }
+    render(){
     return(
         <Table striped bordered hover>
             <thead className='table-header'>
@@ -22,7 +47,7 @@ const GamesTable = ({ games }) => {
                 </tr>
             </thead>
             <tbody>
-                {games.map((game) => (
+                {this.props.games.map((game) => (
                     <tr key={game.id}>
                         <td>{game.home_team}</td>
                         <td>{game.away_team}</td>
@@ -38,6 +63,7 @@ const GamesTable = ({ games }) => {
             </tbody>
         </Table>
     )
+    }
 }
 
 export default GamesTable;
