@@ -1,2 +1,5 @@
+[defaults]
+org = sol-abrahams
+project = simple-predictions-frontend
 [auth]
 token=a072e2ed9f64440e87c442c8ff6ce4faf84f9a344f374456a7492ca82059d627

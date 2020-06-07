@@ -5,7 +5,8 @@ import GamesTable from './games.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
-  state = {games: []
+  constructor(props) {
+    this.state = {games: []}
   }
   componentDidMount() {
     this.apiCall()
