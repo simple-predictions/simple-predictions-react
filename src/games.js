@@ -9,8 +9,6 @@ class GamesTable extends React.Component{
         } else {
           var old_games = prevProps.games
           var new_games = this.props.games
-          console.log(old_games)
-          console.log(new_games)
           // Loop through new games
           new_games.map((new_game) => {
               old_games.map((old_game) => {
