@@ -27,7 +27,7 @@ class Game extends React.Component{
     render() {
         return(
             <div>
-                <h2>{this.state.game.home_team}</h2>
+                <h2>{this.state.game.home_team} vs {this.state.game.away_team}</h2>
             </div>
         )
     }
