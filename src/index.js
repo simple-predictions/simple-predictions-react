@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/browser';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const environment = process.env.ENV || 'development';
+const environment = process.env.NODE_ENV || 'development';
 
 Sentry.init({dsn: "https://0c405d571e4a4582b1cc30e23089964f@o342120.ingest.sentry.io/5267310", environment: environment})
 
