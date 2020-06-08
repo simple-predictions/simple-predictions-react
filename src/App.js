@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import MainView from './mainView.js';
 import Game from './game.js';
+import * as Sentry from '@sentry/browser';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends React.Component {
     this.state = {games: [], minileague: [], combinedPoints: []}
   }
   componentDidMount() {
+    Sentry.captureException('test error');
     this.apiCall()
     this.miniLeagueApiCall()
     setInterval(() => {
