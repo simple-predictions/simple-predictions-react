@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import Header from './Header.js';
-import GamesTable from './games.js';
-import MiniLeagueTable from './minileague.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Tabs, Tab} from 'react-bootstrap';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import MainView from './mainView.js';
+import Game from './game.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -32,14 +32,12 @@ class App extends React.Component {
     return(
       <div>
         <Header />
-        <Tabs>
-          <Tab eventKey='fixtures' title='Fixtures'>
-            <GamesTable games={this.state.games} />
-          </Tab>
-          <Tab eventKey='minileague' title='Table'>
-            <MiniLeagueTable minileague={this.state.combinedPoints} />
-          </Tab>
-        </Tabs>
+        <Router>
+          <Switch>
+            <Route path={`/game/:gameId`} render={(routeProps) => <Game routeProps={routeProps} games={this.state.games} />}></Route>
+            <Route exact path='/'><MainView games={this.state.games} combinedPoints={this.state.combinedPoints} selectedGame={this.state.selectedGame} /></Route>
+          </Switch>
+        </Router>
       </div>
     )
   }
@@ -86,10 +84,8 @@ class App extends React.Component {
       var player_points = this.calculateWeekPoints(name, username);
       player['points'] += player_points
       player['pointsChange'] = player_points
-      console.log(player)
       return points[name]
     })
-    console.log(points)
     points.sort((a,b) => (a.points < b.points) ? 1 : -1)
     this.setState({combinedPoints:points})
     return points;
