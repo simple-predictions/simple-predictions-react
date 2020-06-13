@@ -13,7 +13,6 @@ class App extends React.Component {
     this.state = {games: [], minileague: [], combinedPoints: []}
   }
   componentDidMount() {
-    Sentry.captureException('test error');
     this.apiCall()
     this.miniLeagueApiCall()
     setInterval(() => {
