@@ -11,3 +11,8 @@
     margin-right:auto;
     margin-left:10px;
 }
+
+#header-row {
+    margin-right: 0;
+    margin-left: 0;
+}

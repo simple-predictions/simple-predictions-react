@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import MainView from './mainView.js';
 import Game from './game.js';
+// eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
 
 class App extends React.Component {
