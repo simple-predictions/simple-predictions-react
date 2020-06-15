@@ -2,7 +2,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/football',
+    'football',
     createProxyMiddleware({
       target: 'https://footballapi.pulselive.com',
       changeOrigin: true,
@@ -12,7 +12,7 @@ module.exports = function(app) {
     })
   );
   app.use(
-    '/game/football',
+    'game/football',
     createProxyMiddleware({
       target: 'https://footballapi.pulselive.com',
       pathRewrite: {
