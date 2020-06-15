@@ -81,7 +81,7 @@ class Game extends React.Component{
             var game_id = ids[0]
             var home_id = ids[1]
             var away_id = ids[2]
-            var url = '/football/stats/match/'+game_id
+            var url = 'https://simple-predictions-api.herokuapp.com/premierleague/football/stats/match/'+game_id
             fetch(url).then(response => { return response.json()}).then(data => {
                 var stats = {
                     possession: {},
@@ -164,7 +164,7 @@ class Game extends React.Component{
         }
         this.updateStats(ids);
         var game_id = ids[0]
-        var url = '/football/fixtures/'+game_id+'/textstream/EN?pageSize=100&sort=desc'
+        var url = 'https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures/'+game_id+'/textstream/EN?pageSize=100&sort=desc'
         fetch(url).then(response => {return response.json()}).then(data => {
             var commentary = data['events']['content'];
             this.setState({
@@ -174,7 +174,7 @@ class Game extends React.Component{
     }
 
     getIDs(home_team_name, away_team_name) {
-        return new Promise((resolve,reject) => {fetch("/football/fixtures?comps=1&compSeasons=274&teams=1,2,127,131,43,4,6,7,26,10,11,12,23,14,18,20,21,33,25,38&page=0&pageSize=40&sort=desc&statuses=C&altIds=true").then(response => {return response.json()}).then(data => {
+        return new Promise((resolve,reject) => {fetch("https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures?comps=1&compSeasons=274&teams=1,2,127,131,43,4,6,7,26,10,11,12,23,14,18,20,21,33,25,38&page=0&pageSize=40&sort=desc&statuses=C&altIds=true").then(response => {return response.json()}).then(data => {
             var games_arr = data['content']
             for (var i = 0;i < games_arr.length; i++) {
                 var game = games_arr[i]
