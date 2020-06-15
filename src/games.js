@@ -30,13 +30,13 @@ class GamesTable extends React.Component{
     return(
         <Table striped bordered hover>
             <thead className='table-header'>
-                <tr>
+                <tr key='upper-header'>
                     <th rowSpan='2' colSpan='1'>Home Team</th>
                     <th rowSpan='2' colSpan='1'>Away Team</th>
                     <th colSpan='6'>Predictions</th>
                     <th rowSpan='2' colSpan='1'>Live Score</th>
                 </tr>
-                <tr>
+                <tr key='lower-header'>
                     <th colSpan='1'>Sol</th>
                     <th colSpan='1'>Phillip</th>
                     <th colSpan='1'>Lila</th>
@@ -47,7 +47,7 @@ class GamesTable extends React.Component{
             </thead>
             <tbody>
                 {this.props.games.map((game) => (
-                    <GameRow showAllColumns={true}game={game} />
+                    <GameRow key={game.id} showAllColumns={true}game={game} />
                 ))}
             </tbody>
         </Table>
