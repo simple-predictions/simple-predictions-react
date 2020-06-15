@@ -248,7 +248,7 @@ class Game extends React.Component{
         }
         return(
             <div>
-                <h2 style={{textAlign: 'center'}}>{this.state.game.home_team} {this.state.game.live_home_score} vs {this.state.game.live_away_score} {this.state.game.away_team} {this.state.gameMin}</h2>
+                {this.state.game.home_team && <h2 style={{textAlign: 'center'}}><img src={require(`./badges/${this.state.game.home_team}.png`)} height={'80'} alt='team badge'/> {this.state.game.home_team} {this.state.game.live_home_score} vs {this.state.game.live_away_score} {this.state.game.away_team} <img src={require(`./badges/${this.state.game.away_team}.png`)} height={'80'} alt='team badge'/> {this.state.gameMin}</h2> }
                 <Container>
                     <Row style={{marginBottom: 20}}>
                         <Col sm={6}>

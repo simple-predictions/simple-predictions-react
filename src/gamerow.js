@@ -6,9 +6,9 @@ class GameRow extends React.Component {
         return(
             <tr key={this.props.game.id}>
                 {this.props.showAllColumns && 
-                <td>{this.props.game.home_team}</td>}
+                <td><img src={require(`./badges/${this.props.game.home_team}.png`)} height={'30'} alt='team badge'/> {this.props.game.home_team}</td>}
                 {this.props.showAllColumns && 
-                <td>{this.props.game.away_team}</td>}
+                <td><img src={require(`./badges/${this.props.game.away_team}.png`)} height={'30'} alt='team badge'/> {this.props.game.away_team}</td>}
                 <td className={`${this.props.game.sol_banker ? 'yellow-text' : null} ${this.props.game.sol_insurance ? 'green-text' : null} ${this.props.game.sol_points>15 ? 'table-success' : null} ${this.props.game.sol_points<0 ? 'table-danger' : null}`}>{this.props.game.sol_home_prediction}-{this.props.game.sol_away_prediction}<strong style={{float: 'right'}}>{this.props.game.sol_points}</strong></td>
                 <td className={`${this.props.game.phil_banker ? 'yellow-text' : null} ${this.props.game.phil_insurance ? 'green-text' : null} ${this.props.game.phil_points>15 ? 'table-success' : null} ${this.props.game.phil_points<0 ? 'table-danger' : null}`}>{this.props.game.phil_home_prediction}-{this.props.game.phil_away_prediction}<strong style={{float: 'right'}}>{this.props.game.phil_points}</strong></td>
                 <td className={`${this.props.game.lila_banker ? 'yellow-text' : null} ${this.props.game.lila_insurance ? 'green-text' : null} ${this.props.game.lila_points>15 ? 'table-success' : null} ${this.props.game.lila_points<0 ? 'table-danger' : null}`}>{this.props.game.lila_home_prediction}-{this.props.game.lila_away_prediction}<strong style={{float: 'right'}}>{this.props.game.lila_points}</strong></td>
