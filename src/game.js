@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Container, Row, Col, Table } from 'react-bootstrap';
-import ReactHtmlParser from 'react-html-parser';
 import GameRow from './gamerow.js';
 import LiveStats from './livestats.js';
 
@@ -40,6 +39,9 @@ class Game extends React.Component{
         if (this.state.id !== prevState.id || this.props.games !== prevProps.games) {
             this.findGame()
         }
+        if (this.state.game !== prevState.game) {
+            this.updateCommentary()
+        }
     }
 
     updateMinute() {
@@ -74,13 +76,17 @@ class Game extends React.Component{
         }
     }
 
-    updateStats(game_id) {
+    updateStats(ids) {
         return new Promise((resolve, reject) => {
-            var url = 'https://secure.espn.com/core/football/matchstats?gameId='+game_id+'&xhr=1&render=true&device=desktop&country=gb&lang=en&region=us&site=espn&edition-host=espn.com&site-type=full'
+            var game_id = ids[0]
+            var home_id = ids[1]
+            var away_id = ids[2]
+            var url = '/football/stats/match/'+game_id
             fetch(url).then(response => { return response.json()}).then(data => {
                 var stats = {
                     possession: {},
-                    shots: {},
+                    ontargetshots: {},
+                    allshots: {},
                     fouls: {},
                     yellow: {},
                     red: {},
@@ -88,66 +94,22 @@ class Game extends React.Component{
                     corner: {},
                     save: {}
                 }
-                var html = data['content']['html']
-                // Possession
-                var possStartIndex = html.lastIndexOf('<div class="stat-graph compareLineGraph twoTeam"')
-                var possEndIndex = html.indexOf('</div>', possStartIndex)
-                var possString = html.substring(possStartIndex, possEndIndex) + '</div>'
-                var firstPossIndex = possString.indexOf('%')
-                var firstPoss = possString.substring(firstPossIndex-2, firstPossIndex);
-                var lastPossIndex = possString.lastIndexOf('%')
-                var lastPoss = possString.substring(lastPossIndex-2, lastPossIndex)
-                stats['possession']['home'] = firstPoss;
-                stats['possession']['away'] = lastPoss;
-                // Shots
-                var shotsStartIndex = html.lastIndexOf('<div class="shots">')
-                var shotsEndIndex = html.indexOf('class="shots-on-goal" data-home-away="away"', shotsStartIndex)
-                var shotsString = html.substring(shotsStartIndex, shotsEndIndex)
-                var allShots = shotsString.match(/Summary">(.*?)\)/g)
-                var homeShots = allShots[0].substring(9)
-                var awayShots = allShots[1].substring(9)
-                stats['shots']['home'] = homeShots
-                stats['shots']['away'] = awayShots
-                // General stats
-                var allStatsStartIndex = html.lastIndexOf('<div class="stat-list">')
-                var allStatsEndIndex = html.indexOf('</div>', allStatsStartIndex)
-                var allStatsString = html.substring(allStatsStartIndex, allStatsEndIndex)
-                // Fouls
-                var allFouls = allStatsString.match(/foulsCommitted">(.*?)</g)
-                var homeFouls = allFouls[0].substring(16, allFouls[0].length-1)
-                var awayFouls = allFouls[1].substring(16, allFouls[1].length-1)
-                stats['fouls']['home'] = homeFouls
-                stats['fouls']['away'] = awayFouls
-                // Yellow cards
-                var allYellow = allStatsString.match(/yellowCards">(.*?)</g)
-                var homeYellow = allYellow[0].substring(13, allYellow[0].length-1)
-                var awayYellow = allYellow[1].substring(13, allYellow[1].length-1)
-                stats['yellow']['home'] = homeYellow
-                stats['yellow']['away'] = awayYellow
-                // Red cards
-                var allRed = allStatsString.match(/redCards">(.*?)</g)
-                var homeRed = allRed[0].substring(10, allRed[0].length-1)
-                var awayRed = allRed[1].substring(10, allRed[1].length-1)
-                stats['red']['home'] = homeRed
-                stats['red']['away'] = awayRed
-                // Offsides
-                var allOffside = allStatsString.match(/offsides">(.*?)</g)
-                var homeOffside = allOffside[0].substring(10, allOffside[0].length-1)
-                var awayOffside = allOffside[1].substring(10, allOffside[1].length-1)
-                stats['offside']['home'] = homeOffside
-                stats['offside']['away'] = awayOffside
-                // Corners
-                var allCorner = allStatsString.match(/wonCorners">(.*?)</g)
-                var homeCorner = allCorner[0].substring(12, allCorner[0].length-1)
-                var awayCorner = allCorner[1].substring(12, allCorner[1].length-1)
-                stats['corner']['home'] = homeCorner
-                stats['corner']['away'] = awayCorner
-                // Saves
-                var allSave = allStatsString.match(/saves">(.*?)</g)
-                var homeSave = allSave[0].substring(7, allSave[0].length-1)
-                var awaySave = allSave[1].substring(7, allSave[1].length-1)
-                stats['save']['home'] = homeSave
-                stats['save']['away'] = awaySave
+                var homeData = data['data'][home_id]['M']
+                var awayData = data['data'][away_id]['M']
+                for (var i = 0; i < homeData.length; i++) {
+                    var currentData = homeData[i]
+                    var arr = this.checkAttribute(currentData)
+                    if (arr) {
+                        stats[arr[0]]['home'] = arr[1]
+                    }
+                }
+                for (i = 0; i < awayData.length; i++) {
+                    currentData = awayData[i]
+                    arr = this.checkAttribute(currentData)
+                    if (arr) {
+                        stats[arr[0]]['away'] = arr[1]
+                    }
+                }
                 this.setState({
                     liveStats: stats
                 })
@@ -156,56 +118,79 @@ class Game extends React.Component{
         })
     }
 
+    checkAttribute(row) {
+        var attribute = row['name']
+        if (attribute === 'possession_percentage') {
+            // Possession
+            return ['possession',row['value']]
+        }
+        if (attribute === 'total_scoring_att') {
+            // Total shots
+            return ['allshots',row['value']]
+        }
+        if (attribute === 'ontarget_scoring_att') {
+            // On target shots
+            return ['ontargetshots',row['value']]
+        }
+        if (attribute === 'fk_foul_lost') {
+            // Fouls conceded
+            return ['fouls',row['value']]
+        }
+        if (attribute === 'total_yel_card') {
+            // Yellow cards
+            return ['yellow',row['value']]
+        }
+        if (attribute === 'total_offside') {
+            // Offsides
+            return ['offside',row['value']]
+        }
+        if (attribute === 'lost_corners') {
+            // Lost corners
+            return ['corner',row['value']]
+        }
+        if (attribute === 'saves') {
+            // Saves
+            return ['save',row['value']]
+        }
+        return
+    }
+
     async updateCommentary() {
         var home_team_name = this.state.game.home_team;
         var away_team_name = this.state.game.away_team;
-        var game_id = await this.getGameId(home_team_name, away_team_name);
-        this.updateStats(game_id);
-        var url = 'https://secure.espn.com/core/football/commentary?gameId='+game_id+'&xhr=1&render=true&device=desktop&country=gb&lang=en&region=gb&site=espn&edition-host=espn.co.uk&site-type=full'
+        var ids = await this.getIDs(home_team_name, away_team_name);
+        if (!ids) {
+            return
+        }
+        this.updateStats(ids);
+        var game_id = ids[0]
+        var url = '/football/fixtures/'+game_id+'/textstream/EN?pageSize=100&sort=desc'
         fetch(url).then(response => {return response.json()}).then(data => {
-            var html = data['content']['html'];
-            var startIndex = html.lastIndexOf('<div id="match-commentary-1-tab-1')
-            var endIndex = html.indexOf('</div>', startIndex)
-            var mySubString = html.substring(startIndex, endIndex) + '</div>'
-            mySubString = mySubString.replace('<h1>Match Commentary</h1>','')
+            var commentary = data['events']['content'];
             this.setState({
-                liveCommentary: mySubString
+                liveCommentary: commentary
             })
         })
     }
 
-    getTeamId(name) {
-        return new Promise((resolve, reject) => {
-            fetch('https://site.web.api.espn.com/apis/site/v2/sports/soccer/ENG.1/teams?region=gb&lang=en&contentorigin=espn&limit=400').then(response => {return response.json()}).then(data => {
-            var teams_arr = data['sports'][0]['leagues'][0]['teams'];
-                for (var i = 0;i < teams_arr.length;i++) {
-                    var team = teams_arr[i]['team'];
-                    var long_name = team['name'];
-                    var short_name = team['shortDisplayName'];
-                    if (short_name === name || long_name === name) {
-                        var id = team['id']
-                        resolve(id)
-                    }
-                }
-            })
-        })
-    }
-
-    getGameId(home_team_id, away_team_id) {
-        var url = 'https://secure.espn.com/core/football/scoreboard/_/league/eng.1?xhr=1&render=true&device=desktop&country=gb&lang=en&region=gb&site=espn&edition-host=espn.co.uk&site-type=full'
-        return new Promise((resolve,reject) => {fetch(url).then(response => {return response.json()}).then(data => {
-            var games_arr = data['content']['sbData']['events']
+    getIDs(home_team_name, away_team_name) {
+        return new Promise((resolve,reject) => {fetch("/football/fixtures?comps=1&compSeasons=274&teams=1,2,127,131,43,4,6,7,26,10,11,12,23,14,18,20,21,33,25,38&page=0&pageSize=40&sort=desc&statuses=C&altIds=true").then(response => {return response.json()}).then(data => {
+            var games_arr = data['content']
             for (var i = 0;i < games_arr.length; i++) {
                 var game = games_arr[i]
-                var teams = game['competitions'][0]['competitors'];
-                var current_home_team_id = teams[0]['id'];
-                var current_away_team_id = teams[1]['id'];
-                if (current_home_team_id === home_team_id && current_away_team_id === away_team_id) {
+                var teams = game['teams'];
+                var current_home_team_shortName = teams[0]['team']['shortName'];
+                var current_home_team_name = teams[0]['team']['name']
+                var current_away_team_shortName = teams[1]['team']['shortName']
+                var current_away_team_name = teams[1]['team']['name']
+                if ((current_home_team_name === home_team_name || current_home_team_shortName === home_team_name) && (current_away_team_name === away_team_name || current_away_team_shortName === away_team_name)) {
                     var game_id = game['id'];
-                    resolve(game_id);
+                    var home_team_id = game['teams'][0]['team']['id'];
+                    var away_team_id = game['teams'][1]['team']['id'];
+                    resolve([game_id, home_team_id, away_team_id]);
                 }
             }
-            resolve('123456')
+            resolve()
         })
         })
     }
@@ -218,7 +203,9 @@ class Game extends React.Component{
                                     <Card>
                                         <Card.Header>Live Commentary</Card.Header>
                                         <Card.Body style={{height: '50vh', overflow: 'auto'}}>
-                                            {ReactHtmlParser(this.state.liveCommentary)}
+                                            {this.state.liveCommentary.map((event) => (
+                                                <div><p><strong>{event.time.label}</strong> {event.text}</p></div>
+                                            ))}
                                         </Card.Body>
                                     </Card>
                                 </Col>

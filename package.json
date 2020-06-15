@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^7.2.1",
     "babel-loader": "^8.1.0",
     "bootstrap": "^4.5.0",
+    "http-proxy-middleware": "^1.0.4",
+    "morgan": "^1.10.0",
     "nan": "^2.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
