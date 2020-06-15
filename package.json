@@ -47,6 +47,5 @@
   },
   "devDependencies": {
     "@sentry/webpack-plugin": "^1.11.1"
-  },
-  "homepage": "."
+  }
 }
