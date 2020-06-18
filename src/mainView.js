@@ -9,7 +9,7 @@ class MainView extends React.Component {
             <div>
             <Tabs>
               <Tab eventKey='fixtures' title='Fixtures'>
-                <GamesTable games={this.props.games} selectedGame={this.props.selectedGame} />
+                <GamesTable games={this.props.games} selectedGame={this.props.selectedGame} playerPoints={this.props.combinedPoints} />
               </Tab>
               <Tab eventKey='minileague' title='Table'>
                 <MiniLeagueTable minileague={this.props.combinedPoints} />
