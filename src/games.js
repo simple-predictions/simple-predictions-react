@@ -53,7 +53,7 @@ class GamesTable extends React.Component{
                 if (playerName === 'churchstreetsuperhoops') {playerName = 'Phillip'};
                 totalPoints[playerName] = this.props.playerPoints[i].pointsChange
             }
-            if (this.state.totalPoints !== totalPoints){
+            if (JSON.stringify(this.state.totalPoints) !== JSON.stringify(totalPoints)){
                 this.setState({
                     totalPoints: totalPoints
                 })
