@@ -43,7 +43,6 @@ class GamesTable extends React.Component{
         // Set state total scores by player
         if (this.props.playerPoints !== prevProps.playerPoints) {
             if (this.props.playerPoints.length > 0) {
-                console.log(this.props.playerPoints)
                 var totalPoints = {};
                 for (var i=0; i < this.props.playerPoints.length; i++) {
                     var playerName = this.props.playerPoints[i].name
@@ -55,11 +54,9 @@ class GamesTable extends React.Component{
                     if (playerName === 'churchstreetsuperhoops') {playerName = 'Phillip'};
                     totalPoints[playerName] = this.props.playerPoints[i].pointsChange
                 }
-                console.log(totalPoints)
                 this.setState({
                     totalPoints: totalPoints
                 })
-                console.log(this.state.totalPoints)
             }
         }
     }

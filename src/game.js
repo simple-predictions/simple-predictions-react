@@ -203,7 +203,6 @@ class Game extends React.Component{
                                     <Card>
                                         <Card.Header>Live Commentary</Card.Header>
                                         <Card.Body style={{height: '50vh', overflow: 'auto'}}>
-                                        { console.log(this.state.liveCommentary) }
                                             {this.state.liveCommentary.map((event) => (
                                                 <div><p><strong>{event.time ? event.time.label : null}</strong> {event.text}</p></div>
                                             ))}

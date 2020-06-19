@@ -5,6 +5,7 @@ class GameRow extends React.Component {
     render() {
         return(
             <tr key={this.props.game.id}>
+                {console.log(this.props.game.live_home_score)}
                 {this.props.showAllColumns && 
                 <td><img src={require(`./badges/${this.props.game.home_team}.png`)} height={'30'} alt='team badge'/> {this.props.game.home_team}</td>}
                 {this.props.showAllColumns && 
@@ -16,7 +17,7 @@ class GameRow extends React.Component {
                 <td className={`${this.props.game.sam_banker ? 'yellow-text' : null} ${this.props.game.sam_insurance ? 'green-text' : null} ${this.props.game.sam_points>15 ? 'table-success' : null} ${this.props.game.sam_points<0 ? 'table-danger' : null}`}>{this.props.game.sam_home_prediction}-{this.props.game.sam_away_prediction}<strong style={{float: 'right'}}>{this.props.game.sam_points}</strong></td>
                 <td className={`${this.props.game.jacob_banker ? 'yellow-text' : null} ${this.props.game.jacob_insurance ? 'green-text' : null} ${this.props.game.jacob_points>15 ? 'table-success' : null} ${this.props.game.jacob_points<0 ? 'table-danger' : null}`}>{this.props.game.jacob_home_prediction}-{this.props.game.jacob_away_prediction}<strong style={{float: 'right'}}>{this.props.game.jacob_points}</strong></td>
                 {this.props.showAllColumns && 
-                <td className={`${this.props.game.status === 'FINISHED' ? 'table-warning' : null} ${this.props.game.status === 'INPLAY' ? 'table-primary' : null}`}><Link to={`/game/${this.props.game.id}`}>{this.props.game.live_home_score ? `${this.props.game.live_home_score}-${this.props.game.live_away_score}` : (new Date(this.props.game.kick_off_time) > Date.now ? '0-0' : 'Not kicked off') }</Link></td>}
+                <td className={`${this.props.game.status === 'FINISHED' ? 'table-warning' : null} ${this.props.game.status === 'IN_PLAY' ? 'table-primary' : null}`}><Link to={`/game/${this.props.game.id}`}>{typeof this.props.game.live_home_score != 'undefined' ? `${this.props.game.live_home_score}-${this.props.game.live_away_score}` : (new Date(this.props.game.kick_off_time) > Date.now ? '0-0' : 'Not kicked off') }</Link></td>}
             </tr>
         )
     }
