@@ -5,7 +5,6 @@ class GameRow extends React.Component {
     render() {
         return(
             <tr key={this.props.game.id}>
-                {console.log(this.props.game.live_home_score)}
                 {this.props.showAllColumns && 
                 <td><img src={require(`./badges/${this.props.game.home_team}.png`)} height={'30'} alt='team badge'/> {this.props.game.home_team}</td>}
                 {this.props.showAllColumns && 

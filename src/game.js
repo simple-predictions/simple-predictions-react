@@ -159,6 +159,7 @@ class Game extends React.Component{
         var home_team_name = this.state.game.home_team;
         var away_team_name = this.state.game.away_team;
         var ids = await this.getIDs(home_team_name, away_team_name);
+        console.log(ids)
         if (!ids) {
             return
         }
@@ -174,7 +175,7 @@ class Game extends React.Component{
     }
 
     getIDs(home_team_name, away_team_name) {
-        return new Promise((resolve,reject) => {fetch("https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures?comps=1&compSeasons=274&teams=1,2,127,131,43,4,6,7,26,10,11,12,23,14,18,20,21,33,25,38&page=0&pageSize=40&sort=desc&statuses=C&altIds=true").then(response => {return response.json()}).then(data => {
+        return new Promise((resolve,reject) => {fetch("https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures?comps=1&compSeasons=274&teams=1,2,127,131,43,4,6,7,26,10,11,12,23,14,18,20,21,33,25,38&page=0&pageSize=40&sort=desc&statuses=L,C&altIds=true").then(response => {return response.json()}).then(data => {
             var games_arr = data['content']
             for (var i = 0;i < games_arr.length; i++) {
                 var game = games_arr[i]
@@ -183,6 +184,7 @@ class Game extends React.Component{
                 var current_home_team_name = teams[0]['team']['name']
                 var current_away_team_shortName = teams[1]['team']['shortName']
                 var current_away_team_name = teams[1]['team']['name']
+                console.log([current_home_team_name, current_away_team_name])
                 if ((current_home_team_name === home_team_name || current_home_team_shortName === home_team_name) && (current_away_team_name === away_team_name || current_away_team_shortName === away_team_name)) {
                     var game_id = game['id'];
                     var home_team_id = game['teams'][0]['team']['id'];
@@ -204,7 +206,7 @@ class Game extends React.Component{
                                         <Card.Header>Live Commentary</Card.Header>
                                         <Card.Body style={{height: '50vh', overflow: 'auto'}}>
                                             {this.state.liveCommentary.map((event) => (
-                                                <div><p><strong>{event.time ? event.time.label : null}</strong> {event.text}</p></div>
+                                                <div key={event.id}><p><strong>{event.time ? event.time.label : null}</strong> {event.text}</p></div>
                                             ))}
                                         </Card.Body>
                                     </Card>
@@ -242,7 +244,8 @@ class Game extends React.Component{
                             <Card border='primary'>
                                 <Card.Header className='border-primary'>Live Stats</Card.Header>
                                 <Card.Body>
-                                    {this.state.liveStats.possession.home ? <LiveStats liveStats={this.state.liveStats} /> : "This game doesn't kick off until "+ (formatted_kick_off_time || 'later')}
+                                    {console.log(this.state.liveStats)}
+                                    {typeof this.state.liveStats.possession.home != 'undefined' ? <LiveStats liveStats={this.state.liveStats} /> : "This game doesn't kick off until "+ (formatted_kick_off_time || 'later')}
                                 </Card.Body>
                             </Card>
                         </Col>
