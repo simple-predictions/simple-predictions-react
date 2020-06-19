@@ -183,6 +183,9 @@ class Game extends React.Component{
                 var current_home_team_name = teams[0]['team']['name']
                 var current_away_team_shortName = teams[1]['team']['shortName']
                 var current_away_team_name = teams[1]['team']['name']
+                home_team_name = this.fixTeamNamePrem(home_team_name)
+                away_team_name = this.fixTeamNamePrem(away_team_name)
+                console.log(current_home_team_name+' '+current_home_team_shortName)
                 if ((current_home_team_name === home_team_name || current_home_team_shortName === home_team_name) && (current_away_team_name === away_team_name || current_away_team_shortName === away_team_name)) {
                     var game_id = game['id'];
                     var home_team_id = game['teams'][0]['team']['id'];
@@ -193,6 +196,11 @@ class Game extends React.Component{
             resolve()
         })
         })
+    }
+
+    fixTeamNamePrem(name) {
+        if (name==='Tottenham') {name='Spurs'}
+        return name
     }
 
     render() {
