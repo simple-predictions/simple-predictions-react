@@ -41,17 +41,28 @@ class Game extends React.Component{
         }
         if (this.state.game !== prevState.game) {
             this.updateCommentary()
+            this.updateMinute()
         }
     }
 
     updateMinute() {
-        if (this.state.game.status === "INPLAY") {
+        if (this.state.game.status === "IN_PLAY") {
             var kick_off_time = new Date(this.state.game.kick_off_time)
             var now = Date.now()
             if (kick_off_time < now) {
                 // Game in play
                 var diff = now - kick_off_time
-                var diffMins = Math.round(((diff % 86400000) % 3600000) / 60000) + '\''
+                var diffMins = Math.round(((diff % 86400000) % 3600000) / 60000)
+                // Allow for 1 hour time diff
+                diffMins = diffMins + 60
+                // Check if past half time
+                if (diffMins>45 && diffMins<60) {
+                    diffMins='Half Time'
+                } else if (diffMins>=60) {
+                    diffMins -= 15
+                }
+                // Add ' to indicate seconds to user
+                diffMins = diffMins + '\''
                 this.setState({
                     gameMin: diffMins
                 })
@@ -185,7 +196,6 @@ class Game extends React.Component{
                 var current_away_team_name = teams[1]['team']['name']
                 home_team_name = this.fixTeamNamePrem(home_team_name)
                 away_team_name = this.fixTeamNamePrem(away_team_name)
-                console.log(current_home_team_name+' '+current_home_team_shortName)
                 if ((current_home_team_name === home_team_name || current_home_team_shortName === home_team_name) && (current_away_team_name === away_team_name || current_away_team_shortName === away_team_name)) {
                     var game_id = game['id'];
                     var home_team_id = game['teams'][0]['team']['id'];
