@@ -159,7 +159,6 @@ class Game extends React.Component{
         var home_team_name = this.state.game.home_team;
         var away_team_name = this.state.game.away_team;
         var ids = await this.getIDs(home_team_name, away_team_name);
-        console.log(ids)
         if (!ids) {
             return
         }
@@ -184,7 +183,6 @@ class Game extends React.Component{
                 var current_home_team_name = teams[0]['team']['name']
                 var current_away_team_shortName = teams[1]['team']['shortName']
                 var current_away_team_name = teams[1]['team']['name']
-                console.log([current_home_team_name, current_away_team_name])
                 if ((current_home_team_name === home_team_name || current_home_team_shortName === home_team_name) && (current_away_team_name === away_team_name || current_away_team_shortName === away_team_name)) {
                     var game_id = game['id'];
                     var home_team_id = game['teams'][0]['team']['id'];
@@ -244,7 +242,6 @@ class Game extends React.Component{
                             <Card border='primary'>
                                 <Card.Header className='border-primary'>Live Stats</Card.Header>
                                 <Card.Body>
-                                    {console.log(this.state.liveStats)}
                                     {typeof this.state.liveStats.possession.home != 'undefined' ? <LiveStats liveStats={this.state.liveStats} /> : "This game doesn't kick off until "+ (formatted_kick_off_time || 'later')}
                                 </Card.Body>
                             </Card>
