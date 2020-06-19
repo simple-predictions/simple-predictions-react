@@ -41,19 +41,19 @@ class GamesTable extends React.Component{
         }
 
         // Set state total scores by player
-        if (this.props.playerPoints !== prevProps.playerPoints) {
-            if (this.props.playerPoints.length > 0) {
-                var totalPoints = {};
-                for (var i=0; i < this.props.playerPoints.length; i++) {
-                    var playerName = this.props.playerPoints[i].name
-                    if (playerName === 'JadTheGooner82') {playerName = 'Jacob'};
-                    if (playerName === 'Gunnersof82') {playerName = 'Jonny'};
-                    if (playerName === 'RedArmy82') {playerName = 'Sam'};
-                    if (playerName === 'churchstreetgunners') {playerName = 'Sol'};
-                    if (playerName === 'finchleygunners') {playerName = 'Lila'};
-                    if (playerName === 'churchstreetsuperhoops') {playerName = 'Phillip'};
-                    totalPoints[playerName] = this.props.playerPoints[i].pointsChange
-                }
+        if (this.props.playerPoints.length > 0) {
+            var totalPoints = {};
+            for (var i=0; i < this.props.playerPoints.length; i++) {
+                var playerName = this.props.playerPoints[i].name
+                if (playerName === 'JadTheGooner82') {playerName = 'Jacob'};
+                if (playerName === 'Gunnersof82') {playerName = 'Jonny'};
+                if (playerName === 'RedArmy82') {playerName = 'Sam'};
+                if (playerName === 'churchstreetgunners') {playerName = 'Sol'};
+                if (playerName === 'finchleygunners') {playerName = 'Lila'};
+                if (playerName === 'churchstreetsuperhoops') {playerName = 'Phillip'};
+                totalPoints[playerName] = this.props.playerPoints[i].pointsChange
+            }
+            if (this.state.totalPoints !== totalPoints){
                 this.setState({
                     totalPoints: totalPoints
                 })
