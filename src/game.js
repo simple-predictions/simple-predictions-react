@@ -47,7 +47,7 @@ class Game extends React.Component{
 
     updateMinute() {
         if (this.state.game.status === "PAUSED") {
-            diffMins = 'Half Time'
+            var diffMins = 'Half Time'
             this.setState({
                 gameMin: diffMins
             })
@@ -67,7 +67,7 @@ class Game extends React.Component{
                     console.log(diffMins)
                     diffMins -= 15
                 }*/
-                diffMins = 'Live'
+                var diffMins = 'Live'
                 // Add ' to indicate seconds to user
                 diffMins = diffMins + '\''
                 this.setState({
