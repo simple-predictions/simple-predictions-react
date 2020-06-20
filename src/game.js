@@ -67,9 +67,8 @@ class Game extends React.Component{
                     console.log(diffMins)
                     diffMins -= 15
                 }*/
-                var diffMins = 'Live'
+                diffMins = 'Live'
                 // Add ' to indicate seconds to user
-                diffMins = diffMins + '\''
                 this.setState({
                     gameMin: diffMins
                 })
