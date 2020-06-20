@@ -46,19 +46,28 @@ class Game extends React.Component{
     }
 
     updateMinute() {
+        if (this.state.game.status === "PAUSED") {
+            diffMins = 'Half Time'
+            this.setState({
+                gameMin: diffMins
+            })
+        }
         if (this.state.game.status === "IN_PLAY") {
             var kick_off_time = new Date(this.state.game.kick_off_time)
             var now = Date.now()
             if (kick_off_time < now) {
                 // Game in play
-                var diff = now - kick_off_time
+                // Old unused code
+                /*var diff = now - kick_off_time
                 var diffMins = Math.round(((diff % 86400000) % 3600000) / 60000)
                 // Check if past half time
                 if (diffMins>45 && diffMins<60) {
                     diffMins='Half Time'
                 } else if (diffMins>=60) {
+                    console.log(diffMins)
                     diffMins -= 15
-                }
+                }*/
+                diffMins = 'Live'
                 // Add ' to indicate seconds to user
                 diffMins = diffMins + '\''
                 this.setState({
