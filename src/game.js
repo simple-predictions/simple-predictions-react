@@ -12,7 +12,8 @@ class Game extends React.Component{
             liveCommentary: '<div></div>',
             liveStats: {
                 possession: {},
-                shots: {},
+                allshots: {},
+                ontargetshots: {},
                 fouls: {},
                 yellow: {},
                 red: {},

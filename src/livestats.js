@@ -12,6 +12,11 @@ class LiveStats extends React.Component {
                         <td>Possession</td>
                         <td>{this.props.liveStats.possession.away}%</td>
                     </tr>
+                    <tr key='shots'>
+                        <td>{this.props.liveStats.allshots.home ? this.props.liveStats.allshots.home : 0} ({this.props.liveStats.ontargetshots.home ? this.props.liveStats.ontargetshots.home : 0})</td>
+                        <td>Shots (on target)</td>
+                        <td>{this.props.liveStats.allshots.away ? this.props.liveStats.allshots.away : 0} ({this.props.liveStats.ontargetshots.away ? this.props.liveStats.ontargetshots.away : 0})</td>
+                    </tr>
                     <tr key='fouls'>
                         <td>{this.props.liveStats.fouls.home ? this.props.liveStats.fouls.home : 0}</td>
                         <td>Fouls</td>
