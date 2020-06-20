@@ -8,9 +8,9 @@ class LiveStats extends React.Component {
             <Table borderless>
                 <tbody className={'liveStatsTable'}>
                     <tr key='possession'>
-                        <td>{this.props.liveStats.possession.home}</td>
+                        <td>{this.props.liveStats.possession.home}%</td>
                         <td>Possession</td>
-                        <td>{this.props.liveStats.possession.away}</td>
+                        <td>{this.props.liveStats.possession.away}%</td>
                     </tr>
                     <tr key='fouls'>
                         <td>{this.props.liveStats.fouls.home ? this.props.liveStats.fouls.home : 0}</td>
