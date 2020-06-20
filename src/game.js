@@ -219,6 +219,8 @@ class Game extends React.Component{
     }
 
     fixTeamNamePrem(name) {
+        if (name==='Bournemouth') {name='AFC Bournemouth'}
+        if (name==='Crystal Pal') {name='Crystal Palace'}
         if (name==='Tottenham') {name='Spurs'}
         return name
     }
