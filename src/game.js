@@ -177,6 +177,7 @@ class Game extends React.Component{
         var url = 'https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures/'+game_id+'/textstream/EN?pageSize=100&sort=desc'
         fetch(url).then(response => {return response.json()}).then(data => {
             var commentary = data['events']['content'];
+            console.log(data)
             console.log('commentary actually updated')
             this.setState({
                 liveCommentary: commentary
