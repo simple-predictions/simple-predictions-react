@@ -53,8 +53,6 @@ class Game extends React.Component{
                 // Game in play
                 var diff = now - kick_off_time
                 var diffMins = Math.round(((diff % 86400000) % 3600000) / 60000)
-                // Allow for 1 hour time diff
-                diffMins = diffMins + 60
                 // Check if past half time
                 if (diffMins>45 && diffMins<60) {
                     diffMins='Half Time'
