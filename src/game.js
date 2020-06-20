@@ -165,6 +165,7 @@ class Game extends React.Component{
     }
 
     async updateCommentary() {
+        console.log('commentary update run')
         var home_team_name = this.state.game.home_team;
         var away_team_name = this.state.game.away_team;
         var ids = await this.getIDs(home_team_name, away_team_name);
@@ -176,6 +177,7 @@ class Game extends React.Component{
         var url = 'https://simple-predictions-api.herokuapp.com/premierleague/football/fixtures/'+game_id+'/textstream/EN?pageSize=100&sort=desc'
         fetch(url).then(response => {return response.json()}).then(data => {
             var commentary = data['events']['content'];
+            console.log('commentary actually updated')
             this.setState({
                 liveCommentary: commentary
             })
