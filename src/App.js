@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import MainView from './mainView.js';
 import Game from './game.js';
+import Dashboard from './dashboard.js'
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
 
@@ -37,6 +38,7 @@ class App extends React.Component {
         <Router>
           <Switch>
             <Route path={`/game/:gameId`} render={(routeProps) => <Game routeProps={routeProps} games={this.state.games} />}></Route>
+            <Route path={`/dashboard`}><Dashboard combinedPoints={this.state.combinedPoints} games={this.state.games}/></Route>
             <Route exact path='/'><MainView games={this.state.games} combinedPoints={this.state.combinedPoints} selectedGame={this.state.selectedGame} /></Route>
           </Switch>
         </Router>

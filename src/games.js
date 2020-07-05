@@ -81,7 +81,7 @@ class GamesTable extends React.Component{
             </thead>
             <tbody>
                 {this.props.games.map((game) => (
-                    <GameRow key={game.id} showAllColumns={true}game={game} />
+                    <GameRow key={game.id} showAllColumns={true} game={game} />
                 ))}
             </tbody>
         </Table>
