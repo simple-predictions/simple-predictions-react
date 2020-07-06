@@ -110,8 +110,8 @@ class Dashboard extends React.Component {
                     <div className='col-md-8'>
                         <Card>
                         <Card.Header>{this.state.gamesInPlay != null ? (this.state.gamesInPlay === true ? `Live game - kicked off at ${new Date(this.state.liveGames[0].kick_off_time).getHours()}:${("0"+new Date(this.state.liveGames[0].kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.liveGames[0].kick_off_time).getDate()} ${monthNames[new Date(this.state.liveGames[0].kick_off_time).getMonth()]}` : 
-                        (this.state.showGame === 'prev' ? `Last game - kicked off at  - kicked off at ${new Date(this.state.lastGame.kick_off_time).getHours()}:${("0"+new Date(this.state.lastGame.kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.lastGame.kick_off_time).getDate()} ${monthNames[new Date(this.state.lastGame.kick_off_time).getMonth()]}` : 
-                        `Next game - kicks off at  - kicked off at ${new Date(this.state.nextGame.kick_off_time).getHours()}:${("0"+new Date(this.state.nextGame.kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.nextGame.kick_off_time).getDate()} ${monthNames[new Date(this.state.nextGame.kick_off_time).getMonth()]}`)) : null}</Card.Header>
+                        (this.state.showGame === 'prev' ? `Last game - kicked off at ${new Date(this.state.lastGame.kick_off_time).getHours()}:${("0"+new Date(this.state.lastGame.kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.lastGame.kick_off_time).getDate()} ${monthNames[new Date(this.state.lastGame.kick_off_time).getMonth()]}` : 
+                        `Next game - kicks off at ${new Date(this.state.nextGame.kick_off_time).getHours()}:${("0"+new Date(this.state.nextGame.kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.nextGame.kick_off_time).getDate()} ${monthNames[new Date(this.state.nextGame.kick_off_time).getMonth()]}`)) : null}</Card.Header>
                         <Card.Body>
                         <Table bordered style={{marginBottom: 0}}>
                         <thead className='table-header'>
