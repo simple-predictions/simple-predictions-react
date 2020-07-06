@@ -1,7 +1,7 @@
 import React from 'react';
 import MiniLeagueTable from './minileague';
 import GameRow from './gamerow';
-import { Table, Card } from 'react-bootstrap';
+import { Table, Card, Button } from 'react-bootstrap';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -101,13 +101,13 @@ class Dashboard extends React.Component {
                 {this.state.overallChamp != null ?
                 <div className='row'>
                     <div className='col-md-4' style={{margin:'auto', textAlign: 'center'}}><h4>The current Abrahams{this.state.overallChamp === 'abrahams' ? ' and overall' : null} champion is:</h4><h1>{this.state.abrahamsChamp.name}{this.state.overallChamp === 'abrahams' ? '!' : null}</h1></div>
-                    <div className='col-md-4' style={{margin:'auto', textAlign: 'center'}}><h2>&#11013; {Math.abs(this.state.freedlandChamp.points - this.state.abrahamsChamp.points)} point gap &#10145;</h2></div>
+                    <div className='col-md-4' style={{margin:'auto', textAlign: 'center'}}><h2>&#11013; {Math.abs(this.state.freedlandChamp.points - this.state.abrahamsChamp.points)} point gap &#10145;</h2><a href='/'><Button variant='info'>Show all games</Button></a></div>
                     <div className='col-md-4' style={{margin:'auto', textAlign: 'center'}}><h4>The current Freedland{this.state.overallChamp === 'freedland' ? ' and overall' : null} champion is:</h4><h1>{this.state.freedlandChamp.name}{this.state.overallChamp === 'freedland' ? '!' : null}</h1></div>
                 </div>
                 : null }
                 <div className='row'>
-                    <div className='col-md-2'></div>
-                    <div className='col-md-8'>
+                    <div className='col-md-1'></div>
+                    <div className='col-md-10'>
                         <Card>
                         <Card.Header>{this.state.gamesInPlay != null ? (this.state.gamesInPlay === true ? `Live game - kicked off at ${new Date(this.state.liveGames[0].kick_off_time).getHours()}:${("0"+new Date(this.state.liveGames[0].kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.liveGames[0].kick_off_time).getDate()} ${monthNames[new Date(this.state.liveGames[0].kick_off_time).getMonth()]}` : 
                         (this.state.showGame === 'prev' ? `Last game - kicked off at ${new Date(this.state.lastGame.kick_off_time).getHours()}:${("0"+new Date(this.state.lastGame.kick_off_time).getMinutes()).slice(-2)} on ${new Date(this.state.lastGame.kick_off_time).getDate()} ${monthNames[new Date(this.state.lastGame.kick_off_time).getMonth()]}` : 
@@ -142,8 +142,10 @@ class Dashboard extends React.Component {
                         </tbody></Table></Card.Body></Card>
                     </div>
                 </div>
-                <div className='row'>
-                    <div className='col-md-6'><MiniLeagueTable minileague={this.props.combinedPoints} /></div>
+                <div className='row' style={{marginTop: 15}}>
+                    <div className='col-md-1'></div>
+                    <div className='col-md-10'><MiniLeagueTable minileague={this.props.combinedPoints} /></div>
+                    <div className='col-md-1'></div>
                 </div>
             </div>
         )
