@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Container, Row, Col, Table } from 'react-bootstrap';
+import { Button, Card, Container, Row, Col, Table } from 'react-bootstrap';
 import GameRow from './gamerow.js';
 import LiveStats from './livestats.js';
 
@@ -274,7 +274,15 @@ class Game extends React.Component{
 
         return(
             <div>
-                {this.state.game.home_team && <h2 style={{textAlign: 'center'}}><img src={require(`./badges/${this.state.game.home_team}.png`)} height={'80'} alt='team badge'/> {this.state.game.home_team} {this.state.game.live_home_score} vs {this.state.game.live_away_score} {this.state.game.away_team} <img src={require(`./badges/${this.state.game.away_team}.png`)} height={'80'} alt='team badge'/> {live_min}</h2> }
+                {this.state.game.home_team && 
+                <div>
+                    <div style={{position: 'absolute'}}>
+                        <a href='/' style={{marginLeft:10}}><Button variant='info'>Show homepage</Button></a>
+                        <a href='/dashboard' style={{marginLeft:10}}><Button variant='info'>Show dashboard</Button></a>
+                    </div>
+                    <h2 style={{textAlign: 'center'}}><img src={require(`./badges/${this.state.game.home_team}.png`)} height={'80'} alt='team badge'/> {this.state.game.home_team} {this.state.game.live_home_score} vs {this.state.game.live_away_score} {this.state.game.away_team} <img src={require(`./badges/${this.state.game.away_team}.png`)} height={'80'} alt='team badge'/> {live_min}</h2> 
+                </div>
+                }
                 <Container>
                     <Row style={{marginBottom: 20}}>
                         <Col sm={6}>
