@@ -8,6 +8,10 @@ class Dashboard extends React.Component {
         super(props)
         this.state = {}
     }
+    componentDidMount() {
+        this.checkIfLiveGame()
+        this.findChampion()
+    }
     componentDidUpdate(prevProps, prevState) {
         if (JSON.stringify(prevProps.games) !== JSON.stringify(this.props.games)){
             this.checkIfLiveGame()
@@ -18,7 +22,7 @@ class Dashboard extends React.Component {
     }
     checkIfLiveGame() {
         var allGames = this.props.games;
-        if (allGames === null) {
+        if (allGames.length === 0) {
             return;
         }
         var previousGames = []
@@ -70,6 +74,9 @@ class Dashboard extends React.Component {
         const abrahamsNames = ['churchstreetgunners','churchstreetsuperhoops','finchleygunners']
         const freedlandNames = ['JadTheGooner82','GunnersOf82','RedArmy82']
         var dict = this.props.combinedPoints
+        if (dict.length === 0) {
+            return;
+        }
         var abrahamsChamp = this.findFirstInArr(abrahamsNames, dict)
         var freedlandChamp = this.findFirstInArr(freedlandNames, dict)
         if (abrahamsChamp.points > freedlandChamp.points) {

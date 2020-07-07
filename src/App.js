@@ -28,6 +28,7 @@ class App extends React.Component {
     if (JSON.stringify(prevState.games) === JSON.stringify(this.state.games) || !prevState.games) {
       //alert('NOT CHANGED')
     } else {
+      this.miniLeagueApiCall()
       // Games have updated
       // This will mostly be handled in the GamesTable component in games.js but refreshing minileague scores will be handled here
     }

@@ -25,6 +25,7 @@ class Team extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (JSON.stringify(prevProps.games) !== JSON.stringify(this.props.games)) {
             this.findTeamGames()
+            this.getPrevResults()
         }
         if (prevProps.routeProps.match.params.teamName !== this.props.routeProps.match.params.teamName) {
             this.findTeamGames()
