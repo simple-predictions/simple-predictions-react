@@ -147,7 +147,7 @@ class Team extends React.Component {
         var home_id = this.getPremID(game['home_team'])
         var away_id = this.getPremID(game['away_team'])
         var newState = {}
-        var base_url = 'http://simple-predictions-api.herokuapp.com/premierleague/football/compseasons/274/standings/team/'
+        var base_url = 'https://simple-predictions-api.herokuapp.com/premierleague/football/compseasons/274/standings/team/'
         fetch(base_url+home_id+'?altIds=true').then(response => response.json()).then(data => {
             var home_pos = data['entries'][data['entries'].length-1]['position'];
             newState['homePosition'] = home_pos
