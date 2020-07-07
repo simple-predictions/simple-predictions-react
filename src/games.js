@@ -17,6 +17,9 @@ class GamesTable extends React.Component{
             }
         }
     }
+    componentDidMount(prevProps, prevState) {
+        this.updateTotalPoints()
+    }
 
     componentDidUpdate(prevProps, prevState) {
         if (JSON.stringify(prevProps.games) === JSON.stringify(this.props.games) || !prevProps.games) {
@@ -39,8 +42,11 @@ class GamesTable extends React.Component{
               return new_game;
           })
         }
-
         // Set state total scores by player
+        this.updateTotalPoints()
+    }
+
+    updateTotalPoints() {
         if (this.props.playerPoints.length > 0) {
             var totalPoints = {};
             for (var i=0; i < this.props.playerPoints.length; i++) {
