@@ -1,0 +1,13 @@
+.pred-container {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  background-color: green;
+  margin-bottom: 50px;
+}
+
+.pred-container > div {
+  display: inline;
+  min-width: 33.333%;
+  text-align: center;
+}
