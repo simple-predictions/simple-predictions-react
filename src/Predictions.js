@@ -14,7 +14,7 @@ class Predictions extends React.Component {
       for (var i = 0; i < data.length; i++) {
         var game = data[i]
         if (game['user_predictions'].length === 0) {
-          game['user_predictions'].push({test_attribute: 'test'})
+          game['user_predictions'].push({home_pred: '-', away_pred: '-'})
         }
         final_games_arr.push(game)
       }  
@@ -24,23 +24,61 @@ class Predictions extends React.Component {
       })
     })
   }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const data = new FormData(event.target);
+
+    var predsData = []
+    for (var [key, value] of data.entries()) {
+      var pred_type = key.split('[')[1].split(']')[0]
+      var pred_num = value
+      const game_id = key.split('[')[0]
+      
+      const exists = predsData.some(pred => pred.game_id === game_id)
+      if (!exists) {
+        predsData.push({game_id: game_id})
+      }
+
+      const predIndex = predsData.findIndex(pred => pred.game_id === game_id)
+      if (pred_type === 'home-pred') {
+        predsData[predIndex]['home_pred'] = pred_num
+      }
+      if (pred_type === 'away-pred') {
+        predsData[predIndex]['away_pred'] = pred_num
+      }
+    }
+    
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({predictions: predsData}),
+      credentials: 'include'
+    }
+
+    fetch('http://127.0.0.1:5000/updatemanypredictions', requestOptions)
+  }
   render() {
     return (
       <div>
-        {this.state.user_predictions.map((match) => (
-          <div class='pred-container'>
-            <div class='home-team-container'>
-              {match.home_team}
+        <form onSubmit={this.handleSubmit}>
+          {this.state.user_predictions.map((match) => (
+            <div className='pred-container' key={match._id}>
+              <div className='home-team-container'>
+                {match.home_team}
+              </div>
+              <div className='score-container'>
+                <input name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['home_pred']} />
+                -
+                <input name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['away_pred']} />
+              </div>
+              <div className='away-team-container'>
+                {match.away_team}
+              </div>
             </div>
-            <div class='score-container'>
-              1
-            </div>
-            <div class='away-team-container'>
-              {match.away_team}
-            </div>
-            {console.log(match)}
-          </div>
-        ))}
+          ))}
+          <input type='submit' value='Submit' />
+        </form>
       </div>
     )
   }
