@@ -1,15 +1,30 @@
 import React from 'react'
 import './Predictions.css'
+import GameweekSelector from './GameweekSelector'
 
 class Predictions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user_predictions: []
+      user_predictions: [],
+      gameweek: 1
     }
+
+    this.handleGameweekChange = this.handleGameweekChange.bind(this)
   }
-  componentDidMount() {
-    fetch('http://127.0.0.1:5000/getuserpredictions', {credentials: "include"}).then(response => response.json()).then(data => {
+  handleGameweekChange(event) {
+    this.setState({gameweek: event.target.value})
+    this.getUserPredictions(event.target.value)
+  }
+
+  getUserPredictions(gameweek) {
+    if (gameweek) {
+      var url = 'http://127.0.0.1:5000/getuserpredictions?gameweek='+gameweek
+    } else {
+      url = 'http://127.0.0.1:5000/getuserpredictions'
+    }
+
+    fetch(url, {credentials: "include"}).then(response => response.json()).then(data => {
       var final_games_arr = []
       for (var i = 0; i < data.length; i++) {
         var game = data[i]
@@ -23,6 +38,10 @@ class Predictions extends React.Component {
         user_predictions: final_games_arr
       })
     })
+  }
+
+  componentDidMount() {
+    this.getUserPredictions()
   }
 
   handleSubmit(event) {
@@ -61,6 +80,7 @@ class Predictions extends React.Component {
   render() {
     return (
       <div>
+        <GameweekSelector onGameweekUpdate={this.handleGameweekChange} gameweek={this.state.gameweek} />
         <form onSubmit={this.handleSubmit}>
           {this.state.user_predictions.map((match) => (
             <div className='pred-container' key={match._id}>
