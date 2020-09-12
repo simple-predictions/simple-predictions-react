@@ -1,6 +1,7 @@
 import React from 'react'
 import './Predictions.css'
 import GameweekSelector from './GameweekSelector'
+import Cookies from 'js-cookie'
 
 class Predictions extends React.Component {
   constructor(props) {
@@ -24,13 +25,26 @@ class Predictions extends React.Component {
       url = 'http://127.0.0.1:5000/getuserpredictions'
     }
 
-    fetch(url, {credentials: "include"}).then(response => response.json()).then(data => {
+    fetch(url, {credentials: "include"}).then(response => {
+      if (response.status === 401) {
+        Cookies.remove('connect.sid')
+        this.props.clearApiCookie()
+        return []
+      }
+      return response.json()
+    }).then((data) => {
       var final_games_arr = []
       for (var i = 0; i < data.length; i++) {
         var game = data[i]
         if (game['user_predictions'].length === 0) {
           game['user_predictions'].push({home_pred: '-', away_pred: '-'})
         }
+        if (new Date(game['kick_off_time']).getTime() < Date.now()) {
+          game['locked'] = true
+        } else {
+          game['locked'] = false
+        }
+        game['kick_off_time'] = new Date(game['kick_off_time'])
         final_games_arr.push(game)
       }  
 
@@ -78,22 +92,44 @@ class Predictions extends React.Component {
     fetch('http://127.0.0.1:5000/updatemanypredictions', requestOptions)
   }
   render() {
+    var month = []
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
     return (
       <div>
         <GameweekSelector onGameweekUpdate={this.handleGameweekChange} gameweek={this.state.gameweek} />
         <form onSubmit={this.handleSubmit}>
           {this.state.user_predictions.map((match) => (
-            <div className='pred-container' key={match._id}>
-              <div className='home-team-container'>
-                {match.home_team}
+            <div className='outer-container' key={match._id}>
+              <div className='kick-off-time-container'>
+                {match.kick_off_time.getDate()} 
+                {month[match.kick_off_time.getMonth()]} 
+                {match.kick_off_time.getHours()}:
+                {match.kick_off_time.getMinutes()}
               </div>
-              <div className='score-container'>
-                <input name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['home_pred']} />
-                -
-                <input name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['away_pred']} />
-              </div>
-              <div className='away-team-container'>
-                {match.away_team}
+              <div className='pred-container'>
+                <div className='home-team-container'>
+                  {match.home_team}
+                </div>
+                <div className='score-container'>
+                  <input disabled={match.locked ? true : false} name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['home_pred']} />
+                  -
+                  <input disabled={match.locked ? true : false} name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['away_pred']} />
+                </div>
+                <div className='away-team-container'>
+                  {match.away_team}
+                </div>
               </div>
             </div>
           ))}

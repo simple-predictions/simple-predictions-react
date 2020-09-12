@@ -10,6 +10,9 @@ class Homepage extends React.Component {
           <div className='col-md-4'>
             <Link to='/predictions'><button>Make Predictions</button></Link>
           </div>
+          <div className='col-md-4'>
+            <Link to='/minileagues'><button>View Minileagues</button></Link>
+          </div>
         </div>
       </div>
     )
