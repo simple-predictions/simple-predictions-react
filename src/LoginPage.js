@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
     }
 
     fetch('http://127.0.0.1:5000/login', requestOptions).then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         window.location.reload(false)
       } else {
         this.setState({

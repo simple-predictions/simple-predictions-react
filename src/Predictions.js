@@ -8,7 +8,7 @@ class Predictions extends React.Component {
     super(props)
     this.state = {
       user_predictions: [],
-      gameweek: 15
+      gameweek: 0
     }
 
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
@@ -28,11 +28,14 @@ class Predictions extends React.Component {
     fetch(url, {credentials: "include"}).then(response => {
       if (response.status === 401) {
         Cookies.remove('connect.sid')
+        console.log("COOKIE REMOVED")
         this.props.clearApiCookie()
-        return []
+        return {data: []}
       }
       return response.json()
     }).then((data) => {
+      var gameweek_num = data.gameweek
+      data = data.data
       var final_games_arr = []
       for (var i = 0; i < data.length; i++) {
         var game = data[i]
@@ -49,13 +52,14 @@ class Predictions extends React.Component {
       }  
 
       this.setState({
+        gameweek: gameweek_num,
         user_predictions: final_games_arr
       })
     })
   }
 
   componentDidMount() {
-    this.getUserPredictions(15)
+    this.getUserPredictions(this.state.gameweek)
   }
 
   handleSubmit(event) {
