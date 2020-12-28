@@ -8,7 +8,7 @@ class Predictions extends React.Component {
     super(props)
     this.state = {
       user_predictions: [],
-      gameweek: 1
+      gameweek: 15
     }
 
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
@@ -55,7 +55,7 @@ class Predictions extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserPredictions()
+    this.getUserPredictions(15)
   }
 
   handleSubmit(event) {
@@ -112,23 +112,37 @@ class Predictions extends React.Component {
         <form onSubmit={this.handleSubmit}>
           {this.state.user_predictions.map((match) => (
             <div className='outer-container' key={match._id}>
-              <div className='kick-off-time-container'>
-                {match.kick_off_time.getDate()} 
-                {month[match.kick_off_time.getMonth()]} 
-                {match.kick_off_time.getHours()}:
-                {match.kick_off_time.getMinutes()}
-              </div>
-              <div className='pred-container'>
-                <div className='home-team-container'>
-                  {match.home_team}
+              <div className='outer-pred-container'>
+                <div className='kick-off-time-container'>
+                  {match.kick_off_time.getDate()}{' '}
+                  {month[match.kick_off_time.getMonth()]}{' '}
+                  {match.kick_off_time.getHours()}:
+                  {("0" + match.kick_off_time.getMinutes()).slice(-2)}
+                  <div className='points-container'>
+                    Points: {match.user_predictions[0]['points']}
+                  </div>
+                  <div style={{background: match.status === 'IN_PLAY' ? '#ff2121' : '#ffd230'}} className='live-score'>
+                    <div style={{display: match.status === 'IN_PLAY' ? 'inline-block' : 'none'}} className='pulsing-circle'></div>
+                    {match.live_home_score}
+                    -
+                    {match.live_away_score}
+                  </div>
+                  <div className='status'>
+                    Status: {match.status}
+                  </div>
                 </div>
-                <div className='score-container'>
-                  <input disabled={match.locked ? true : false} name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['home_pred']} />
-                  -
-                  <input disabled={match.locked ? true : false} name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center'}} defaultValue={match.user_predictions[0]['away_pred']} />
-                </div>
-                <div className='away-team-container'>
-                  {match.away_team}
+                <div className='pred-container'>
+                  <div className='home-team-container'>
+                    {match.home_team}
+                  </div>
+                  <div className='score-container'>
+                    <input disabled={match.locked ? true : false} name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['home_pred']} />
+                    -
+                    <input disabled={match.locked ? true : false} name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['away_pred']} />
+                  </div>
+                  <div className='away-team-container'>
+                    {match.away_team}
+                  </div>
                 </div>
               </div>
             </div>

@@ -2,18 +2,52 @@
   text-align: center
 }
 
-.pred-container {
-  max-width: 400px;
+.outer-pred-container {
+  max-width: 800px;
   margin: auto;
-  display: flex;
-  background-color: green;
+  background-color: #37B1C8;
   margin-bottom: 50px;
+  border-radius: 25px;
+}
+
+.pred-container {
+  display: flex;
+  padding: 20px;
 }
 
 .pred-container > div {
   display: inline;
   min-width: 33.333%;
   text-align: center;
+}
+
+.live-score {
+  margin: auto;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+@keyframes pulse-dot {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.pulsing-circle {
+  margin-right: 5px;
+  font-size: 18px;
+  width: 10px;
+  height: 10px;
+  border-radius: 45px;
+  background-color: white;
+  animation: pulse-dot 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
 }
 
 /* Chrome, Safari, Edge, Opera */

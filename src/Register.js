@@ -1,8 +1,7 @@
 import React from 'react'
-import { Button, FormGroup, FormControl, FormLabel, Alert } from "react-bootstrap"
-import { Link } from 'react-router-dom';
+import {Button, FormLabel, FormControl, FormGroup, Alert} from 'react-bootstrap'
 
-class LoginPage extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,6 +14,7 @@ class LoginPage extends React.Component {
     this.updatePassword = this.updatePassword.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   validateForm() {
     return this.state.username.length > 0 && this.state.password.length > 0;
   }
@@ -31,15 +31,17 @@ class LoginPage extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://127.0.0.1:5000/login', requestOptions).then((res) => {
-      if (res.status == 200) {
-        window.location.reload(false)
+    fetch('http://127.0.0.1:5000/register', requestOptions).then((res) => {
+      if (res.status === 200) {
+        window.location.href = '/'
       } else {
-        this.setState({
-          errorCount: this.state.errorCount + 1,
-          errorMessage: 'Your username or password is incorrect. Please try again'
-        })
+        return res
       }
+    }).then((res) => res.json()).then((data) => {
+      this.setState({
+        errorCount: this.state.errorCount + 1,
+        errorMessage: data.message
+      })
     })
   }
 
@@ -49,9 +51,11 @@ class LoginPage extends React.Component {
   updatePassword(event) {
     this.setState({password: event.target.value});
   }
+
   render() {
-    return (
-      <div className="login-form">
+    return(
+      <div className='register-form'>
+        <h3 style={{textAlign: 'center'}}>Sign up</h3>
         {this.state.errorMessage && <Alert variant="danger">{this.state.errorMessage} - <strong>{this.state.errorCount} attempt(s)</strong></Alert>}
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="username" bssize="large">
@@ -72,13 +76,12 @@ class LoginPage extends React.Component {
             />
           </FormGroup>
           <Button block bssize="large" disabled={!this.validateForm()} type="submit">
-            Login
+            Register
           </Button>
         </form>
-        <Link to='/register'><Button block style={{marginTop: 10}}>Sign up</Button></Link>
       </div>
     )
   }
 }
 
-export default LoginPage
+export default Register

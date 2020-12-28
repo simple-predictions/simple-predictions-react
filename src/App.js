@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 import Predictions from './Predictions'
 import MiniLeagues from './MiniLeagues'
 import MiniLeagueTable from './MiniLeagueTable'
+import Register from './Register'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -43,6 +44,7 @@ class App extends React.Component {
             <Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />
             <Route path='/minileagues'><MiniLeagues clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/predictions'><Predictions clearApiCookie={this.clearApiCookie} /></Route>
+            <Route path='/register'><Register /></Route>
             <Route exact path='/'>{this.state.apiCookie ? <Homepage /> : <LoginPage />}</Route>
           </Switch>
         </Router>
