@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button, FormLabel, FormControl, FormGroup, Alert} from 'react-bootstrap'
+import {Button, FormControl, FormGroup, Alert, Container} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 class Register extends React.Component {
   constructor(props) {
@@ -55,30 +56,36 @@ class Register extends React.Component {
   render() {
     return(
       <div className='register-form'>
-        <h3 style={{textAlign: 'center'}}>Sign up</h3>
-        {this.state.errorMessage && <Alert variant="danger">{this.state.errorMessage} - <strong>{this.state.errorCount} attempt(s)</strong></Alert>}
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="username" bssize="large">
-            <FormLabel>Username</FormLabel>
-            <FormControl
-              autoFocus
-              type="username"
-              value={this.state.username}
-              onChange={this.updateUsername}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bssize="large">
-            <FormLabel>Password</FormLabel>
-            <FormControl
-              value={this.state.password}
-              type="password"
-              onChange={this.updatePassword}
-            />
-          </FormGroup>
-          <Button block bssize="large" disabled={!this.validateForm()} type="submit">
-            Register
-          </Button>
-        </form>
+        <Container style={{maxWidth: 400}}>
+          {this.state.errorMessage && <Alert variant="danger">{this.state.errorMessage} - <strong>{this.state.errorCount} attempt(s)</strong></Alert>}
+          <form onSubmit={this.handleSubmit}>
+            <FormGroup controlId="username" bssize="large">
+              <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
+              <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign up to view, make and share predictions with live results and scoring.</p>
+              <FormControl
+                className='form-field'
+                placeholder="Username"
+                autoFocus
+                type="username"
+                value={this.state.username}
+                onChange={this.updateUsername}
+              />
+            </FormGroup>
+            <FormGroup controlId="password" bssize="large">
+              <FormControl
+                className='form-field'
+                placeholder="Password"
+                value={this.state.password}
+                type="password"
+                onChange={this.updatePassword}
+              />
+            </FormGroup>
+            <Link className='form-buttons secondary-form-button' to='/'>Login</Link>
+            <Button className='form-buttons main-form-button' size='lg' disabled={!this.validateForm()} type="submit">
+              Sign up
+            </Button>
+          </form>
+        </Container>
       </div>
     )
   }

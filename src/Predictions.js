@@ -1,7 +1,6 @@
 import React from 'react'
 import './Predictions.css'
-import GameweekSelector from './GameweekSelector'
-import Cookies from 'js-cookie'
+import DropdownSelector from './DropdownSelector'
 
 class Predictions extends React.Component {
   constructor(props) {
@@ -13,53 +12,14 @@ class Predictions extends React.Component {
 
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
   }
-  handleGameweekChange(event) {
-    this.setState({gameweek: event.target.value})
-    this.getUserPredictions(event.target.value)
+  async handleGameweekChange(event) {
+    var newState = await this.props.getUserPredictions(event.target.value)
+    this.setState(newState)
   }
 
-  getUserPredictions(gameweek) {
-    if (gameweek) {
-      var url = 'http://127.0.0.1:5000/getuserpredictions?gameweek='+gameweek
-    } else {
-      url = 'http://127.0.0.1:5000/getuserpredictions'
-    }
-
-    fetch(url, {credentials: "include"}).then(response => {
-      if (response.status === 401) {
-        Cookies.remove('connect.sid')
-        console.log("COOKIE REMOVED")
-        this.props.clearApiCookie()
-        return {data: []}
-      }
-      return response.json()
-    }).then((data) => {
-      var gameweek_num = data.gameweek
-      data = data.data
-      var final_games_arr = []
-      for (var i = 0; i < data.length; i++) {
-        var game = data[i]
-        if (game['user_predictions'].length === 0) {
-          game['user_predictions'].push({home_pred: '-', away_pred: '-'})
-        }
-        if (new Date(game['kick_off_time']).getTime() < Date.now()) {
-          game['locked'] = true
-        } else {
-          game['locked'] = false
-        }
-        game['kick_off_time'] = new Date(game['kick_off_time'])
-        final_games_arr.push(game)
-      }  
-
-      this.setState({
-        gameweek: gameweek_num,
-        user_predictions: final_games_arr
-      })
-    })
-  }
-
-  componentDidMount() {
-    this.getUserPredictions(this.state.gameweek)
+  async componentDidMount() {
+    var newState = await this.props.getUserPredictions(this.state.gameweek)
+    this.setState(newState)
   }
 
   handleSubmit(event) {
@@ -112,7 +72,7 @@ class Predictions extends React.Component {
 
     return (
       <div>
-        <GameweekSelector onGameweekUpdate={this.handleGameweekChange} gameweek={this.state.gameweek} />
+        <DropdownSelector length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
         <form onSubmit={this.handleSubmit}>
           {this.state.user_predictions.map((match) => (
             <div className='outer-container' key={match._id}>

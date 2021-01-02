@@ -22,6 +22,8 @@ class App extends React.Component {
     }
 
     this.clearApiCookie = this.clearApiCookie.bind(this)
+    this.getUserPredictions = this.getUserPredictions.bind(this)
+    this.getMiniLeagues = this.getMiniLeagues.bind(this)
   }
   componentDidMount() {
     var apiCookie = Cookies.get('connect.sid')
@@ -34,6 +36,78 @@ class App extends React.Component {
     this.setState({apiCookie: ''})
   }
 
+  getMiniLeagues() {
+    var url = 'http://127.0.0.1:5000/minileagues'
+
+    return fetch(url, {credentials: "include"}).then(response => {
+      if (response.status === 401) {
+        Cookies.remove('connect.sid')
+        this.clearApiCookie()
+        return []
+      }
+      return response.json()
+    }).then((data) => {
+      var final_leagues_arr = []
+      for (var i = 0; i < data.length; i++) {
+        var league = data[i]
+        var members = league['members']
+        var usernames = []
+        for (var x = 0; x < members.length; x++) {
+          var member = members[x]
+          var username = member['username']
+          usernames.push(username)
+        }
+        var members_str = usernames.join(', ')
+        league['members_str'] = members_str
+        final_leagues_arr.push(league)
+      }
+
+      return {
+        minileagues: final_leagues_arr
+      }
+    })
+  }
+
+  getUserPredictions(gameweek) {
+    if (gameweek) {
+      var url = 'http://127.0.0.1:5000/getuserpredictions?gameweek='+gameweek
+    } else {
+      url = 'http://127.0.0.1:5000/getuserpredictions'
+    }
+
+    return fetch(url, {credentials: "include"}).then(response => {
+      if (response.status === 401) {
+        Cookies.remove('connect.sid')
+        console.log("COOKIE REMOVED")
+        this.clearApiCookie()
+        return {data: []}
+      }
+      return response.json()
+    }).then((data) => {
+      var gameweek_num = data.gameweek
+      data = data.data
+      var final_games_arr = []
+      for (var i = 0; i < data.length; i++) {
+        var game = data[i]
+        if (game['user_predictions'].length === 0) {
+          game['user_predictions'].push({home_pred: '-', away_pred: '-'})
+        }
+        if (new Date(game['kick_off_time']).getTime() < Date.now()) {
+          game['locked'] = true
+        } else {
+          game['locked'] = false
+        }
+        game['kick_off_time'] = new Date(game['kick_off_time'])
+        final_games_arr.push(game)
+      }  
+
+      return {
+        gameweek: gameweek_num,
+        user_predictions: final_games_arr
+      }
+    })
+  }
+
   render() {
     return(
       <div>
@@ -42,10 +116,10 @@ class App extends React.Component {
           <Switch>
             {this.state.apiCookie==='' ? <Route path='/'><LoginPage /></Route> : null }
             <Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />
-            <Route path='/minileagues'><MiniLeagues clearApiCookie={this.clearApiCookie} /></Route>
-            <Route path='/predictions'><Predictions clearApiCookie={this.clearApiCookie} /></Route>
+            <Route path='/minileagues'><MiniLeagues getMiniLeagues={this.getMiniLeagues} clearApiCookie={this.clearApiCookie} /></Route>
+            <Route path='/predictions'><Predictions getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/register'><Register /></Route>
-            <Route exact path='/'>{this.state.apiCookie ? <Homepage /> : <LoginPage />}</Route>
+            <Route exact path='/'>{this.state.apiCookie ? <Homepage getMiniLeagues={this.getMiniLeagues} getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /> : <LoginPage />}</Route>
           </Switch>
         </Router>
       </div>

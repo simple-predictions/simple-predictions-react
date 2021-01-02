@@ -1,0 +1,55 @@
+input.form-field {
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    border-radius: 0;
+    font-size: 14px;
+    height: 40px;
+}
+
+input.form-field:hover, input.form-field:focus {
+    border-color: #ccc;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-buttons {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+}
+
+button.main-form-button.form-buttons {
+    height: 40px;
+    background-color: #F6F6F6;
+    color: #888888;
+    border: 0;
+    border-radius: 0;
+    font-size: 14px;
+}
+
+button.main-form-button.form-buttons:enabled {
+    background-color: #6C7868 !important;
+    color: white !important;
+}
+
+button.main-form-button.form-buttons:enabled:hover {
+    color: rgb(202, 202, 202) !important;
+}
+
+a.secondary-form-button.form-buttons {
+    color: #888;
+}
+
+a.secondary-form-button.form-buttons:hover {
+    text-decoration: none;
+    color: black;
+}
+
+div.login-form > div, div.register-form > div {
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 20px 30px;
+}
