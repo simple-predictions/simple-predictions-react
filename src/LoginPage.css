@@ -58,7 +58,7 @@ div.login-form > div > div > div.widget-container , div.register-form > div > di
 
 div.login-form > div.front-page-scrollover {
     background-color: #defc5f;
-    position: sticky;
+    position: relative;
     height: 100vh;
 }
 div.login-form > div.front-page-scrollover > div {
@@ -66,15 +66,17 @@ div.login-form > div.front-page-scrollover > div {
 }
 div.login-form > div.front-page-scrollover > div > div.widget-container {
     display: flex;
+    height: 324px;
 }
 
 .front-page-top {
     height: 100vh;
     background-image: url('icons/saltbeef.png');
     background-size: cover;
-    position: fixed;
+    position: relative;
     width: 100%;
     display: flex;
+    background-attachment: fixed;
 }
 
 .front-page-top > .text-container {

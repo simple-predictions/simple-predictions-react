@@ -1,5 +1,7 @@
 import React from 'react'
 import './LoginPage.css'
+import LoginPage from './LoginPage'
+import Register from './Register'
 
 class FrontPage extends React.Component {
   constructor(props) {
@@ -13,6 +15,9 @@ class FrontPage extends React.Component {
     this.updateUsername = this.updateUsername.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount() {
+    window.scrollTo(0, 0)
   }
   validateForm() {
     return this.state.username.length > 0 && this.state.password.length > 0;
@@ -57,13 +62,10 @@ class FrontPage extends React.Component {
             <h4 className='site-tagline'>Predictions. Results. Live Scores.</h4>
           </div>
         </div>
-        <div className='front-page-placeholder'>
-
-        </div>
         <div className='front-page-scrollover'>
           <div className='row m-0'>
             <div className='col-md-7 widget-container'>
-              {this.props.widget}
+              {this.props.widget === 'Login' ? <LoginPage /> : <Register />}
             </div>
             <div className='col-md-5 saltbeef-background-col'>
             </div>

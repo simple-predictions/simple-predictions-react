@@ -113,12 +113,12 @@ class App extends React.Component {
       <div>
         <Router>
           <Switch>
-            {this.state.apiCookie==='' ? <Route path='/'><FrontPage widget={<LoginPage />} /></Route> : null }
+            {this.state.apiCookie==='' ? <Route path='/'><FrontPage widget={'Login'} /></Route> : null }
             <Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />
             <Route path='/minileagues'><MiniLeagues getUserPredictions={this.getUserPredictions} getMiniLeagues={this.getMiniLeagues} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/predictions'><Predictions getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /></Route>
-            <Route path='/register'><FrontPage widget={<Register />} /></Route>
-            <Route exact path='/'>{this.state.apiCookie ? <PageSelector clearApiCookie={this.clearApiCookie} /> : <FrontPage widget={<LoginPage />} />}</Route>
+            <Route path='/register'><FrontPage widget={'Register'} /></Route>
+            <Route exact path='/'>{this.state.apiCookie ? <PageSelector clearApiCookie={this.clearApiCookie} /> : <FrontPage widget={'Login'} />}</Route>
           </Switch>
         </Router>
       </div>
