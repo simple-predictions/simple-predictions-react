@@ -47,9 +47,59 @@ a.secondary-form-button.form-buttons:hover {
     color: black;
 }
 
-div.login-form > div, div.register-form > div {
+div.login-form > div > div > div.widget-container , div.register-form > div > div {
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
     border-radius: 4px;
     padding: 20px 30px;
+    margin: auto;
+    max-width: 400px;
+}
+
+div.login-form > div.front-page-scrollover {
+    background-color: #defc5f;
+    position: sticky;
+    height: 100vh;
+}
+div.login-form > div.front-page-scrollover > div {
+    height: 100vh;
+}
+div.login-form > div.front-page-scrollover > div > div.widget-container {
+    display: flex;
+}
+
+.front-page-top {
+    height: 100vh;
+    background-image: url('icons/saltbeef.png');
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+    display: flex;
+}
+
+.front-page-top > .text-container {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 100px;
+}
+
+.front-page-placeholder {
+    height: 100vh;
+}
+
+.site-header {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 5rem;
+}
+
+.site-tagline {
+    color: #defc5f;
+    font-weight: 400;
+}
+
+.saltbeef-background-col {
+    background-image: url('icons/square_saltbeef.jpg');
+    background-size: cover;
 }

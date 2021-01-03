@@ -32,7 +32,7 @@ class Register extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://127.0.0.1:5000/register', requestOptions).then((res) => {
+    fetch('http://192.168.0.16:5000/register', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.href = '/'
       } else {

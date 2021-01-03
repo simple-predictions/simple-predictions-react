@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav} from 'react-bootstrap'
 import './header.css'
 import Cookies from 'js-cookie'
 
@@ -11,7 +11,7 @@ class Header extends React.Component {
         <h1 style={{textAlign: "center"}}>The Salt Beef League</h1>
         <img alt='' id='beef' src="https://img.icons8.com/officel/80/000000/steak-medium.png"/>
       </div>*/
-      <Navbar bg="#d7fd35" expand="lg" style={{marginBottom: 10}}>
+      <Navbar bg="#defc5f" expand="lg" style={{marginBottom: 10}}>
         <Navbar.Brand href="#home">Salt Beef League</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

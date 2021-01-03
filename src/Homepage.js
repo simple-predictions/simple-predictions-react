@@ -21,7 +21,7 @@ class Homepage extends React.Component {
     this.props.getUserPredictions().then(res => {
       this.setState(res)
     })
-    fetch('http://127.0.0.1:5000/userinfo', {credentials: 'include'}).then(response => {
+    fetch('http://192.168.0.16:5000/userinfo', {credentials: 'include'}).then(response => {
       if (response.status === 401) {
         Cookies.remove('connect.sid')
         this.props.clearApiCookie()
@@ -43,7 +43,7 @@ class Homepage extends React.Component {
   updateSelectedMinileague(event) {
     var idx = event.target.value - 1
     var league_id = this.state.minileagues[idx]._id
-    fetch('http://127.0.0.1:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
+    fetch('http://192.168.0.16:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
       this.setState({
         selectedMinileague: data
       })

@@ -1,39 +1,92 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {Table} from 'react-bootstrap'
+import {Alert, Nav} from 'react-bootstrap'
+import MiniLeagueTable from './MiniLeagueTable'
+import DropdownSelector from './DropdownSelector'
+import MiniLeagueRankings from './MiniLeagueRankings'
+import './MiniLeagues.css'
 
 class MiniLeagues extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      minileagues: []
+      minileagues: [],
+      componentName: 'Predictions',
+      league_id: '',
+      selectedMiniLeague: {'members':[]},
+      selectedMiniLeagueTable: []
     }
+    this.handleSelect = this.handleSelect.bind(this)
+    this.handleDropdownSelect = this.handleDropdownSelect.bind(this)
   }
   async componentDidMount() {
     var newState = await this.props.getMiniLeagues()
+    var league_id = newState['minileagues'][0]._id
+    newState['league_id'] = league_id
+    newState['selectedMiniLeague'] = newState['minileagues'][0]
+    this.getMiniLeagueRankings(league_id)
     this.setState(newState)
   }
 
-  render () {
+  handleSelect(eventKey) {
+    this.setState({
+      componentName: eventKey
+    })
+  }
+
+  handleDropdownSelect(event) {
+    var idx = event.target.value - 1
+    var league_id = this.state.minileagues[idx]._id
+    this.setState({
+      league_id: league_id,
+      selectedMiniLeague: this.state.minileagues[idx],
+    })
+    this.getMiniLeagueRankings(league_id)
+  }
+
+  getMiniLeagueRankings(league_id) {
+    fetch('http://192.168.0.16:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
+      this.setState({
+        selectedMiniLeagueTable: data
+      })
+    })
+  }
+
+  updateSelectedMinileague(event) {
+    var idx = event.target.value - 1
+    var league_id = this.state.minileagues[idx]._id
+    fetch('http://192.168.0.16:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
+      this.setState({
+        selectedMinileague: data
+      })
+    })
+  }
+
+  render() {
     return (
-      <Table>
-        <thead>
-          <tr>
-            <th>League name</th>
-            <th>Members</th>
-            <th>Links</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.minileagues.map((league) => (
-            <tr key={league.name}>
-              <td>{league.name}</td>
-              <td>{league.members_str}</td>
-              <td><Link to={`/minileague/${league._id}`} ><button>View minileague</button></Link></td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <div className='m-0 row'>
+        <div className='col-md-4 left-col-prediction-outer-container'>
+          {this.state.successMessage && <Alert variant="success">{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
+          <div className='left-col-prediction-container'>
+            <h1 className='left-col-prediction-text'>Mini-leagues</h1>
+            <DropdownSelector onValueUpdate={this.handleDropdownSelect} length={this.state.minileagues.length} minileagueArr={this.state.minileagues} />
+          </div>
+        </div>
+        <div className='col-md-8 right-col'>
+          <Nav className='minileague-pills' fill activeKey={this.state.componentName} variant="pills" onSelect={this.handleSelect}>
+            <Nav.Item>
+              <Nav.Link eventKey='Predictions'>
+                Table
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey='MiniLeagueTable'>
+                Predictions
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          {this.state.componentName === 'MiniLeagueTable' ? <MiniLeagueTable league_id={this.state.league_id} getUserPredictions={this.props.getUserPredictions} getMiniLeagues={this.props.getMiniLeagues} /> : <MiniLeagueRankings selectedMiniLeague={this.state.selectedMiniLeagueTable} />}
+        </div>
+      </div>
     )
   }
 }

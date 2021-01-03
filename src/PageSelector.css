@@ -1,0 +1,56 @@
+.selector {
+    height: 100vh;
+}
+
+.left-col {
+    background-color: #323232;
+}
+
+.left-col-text {
+    color: #defc5f;
+    margin: auto;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: capitalize;
+    white-space: pre;
+}
+
+.left-col-container {
+    display:flex;
+    height: 100vh;
+}
+
+.selector-col > div {
+    height: 33.33vh;
+    font-family: 'Montserrat';
+}
+
+.selector-col > div > div {
+    display: flex;
+}
+
+.selector-col > div > div > div {
+    margin: auto;
+}
+
+.option-title {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.option-icon {
+    margin: auto;
+    filter: brightness(0) invert(1);
+}
+
+.option-circle {
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50px) translateX(-50px);
+    background-color: #323232;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+}
