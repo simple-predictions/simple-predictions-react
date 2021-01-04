@@ -1,0 +1,8 @@
+.homepage-button-container {
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.homepage-button-container > a {
+    display: inline-block;
+}

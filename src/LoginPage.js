@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, FormGroup, FormControl, Alert, Container } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import './LoginPage.css'
-import Cookie from 'js-cookie'
 
 class LoginPage extends React.Component {
   constructor(props) {

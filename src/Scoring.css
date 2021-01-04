@@ -1,0 +1,97 @@
+.left-col-scoring-text {
+    color: #323232;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: pre;
+}
+
+.left-col-scoring-container {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.left-col-scoring-outer-container {
+    display: flex;
+    justify-content: center;
+}
+
+.scored-match-inner-container {
+    display: flex;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+
+.scored-match-container > div > div {
+    text-align: center;
+}
+
+.scored-match-data-container {
+    display: flex;
+    justify-content: center;
+}
+
+.scored-match-data-container > div {
+    margin: auto 20px;
+}
+
+.live-score-container, .predicted-score-container {
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.prediction-circle.points-circle {
+    height: 50px;
+    width: 50px;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.scored-header-row {
+    margin-bottom: 20px;
+    color: white;
+    font-family: 'Montserrat';
+}
+
+.scored-header-row-inner-container {
+    display: flex;
+    padding: 20px;
+}
+
+.scored-header-row-inner-container > div {
+    display: flex;
+    justify-content: center;
+}
+
+.scored-header-row-inner-container > div > div{
+    margin: auto 20px;
+    text-align: center;
+
+}
+
+@keyframes pulse-dot {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+}
+
+.pulsing-circle {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 5px;
+    font-size: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 45px;
+    background-color: red;
+    animation: pulse-dot 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+}

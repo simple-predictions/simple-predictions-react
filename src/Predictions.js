@@ -2,6 +2,7 @@ import React from 'react'
 import './Predictions.css'
 import DropdownSelector from './DropdownSelector'
 import {Alert} from 'react-bootstrap'
+import HomepageButton from './HomepageButton'
 
 class Predictions extends React.Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class Predictions extends React.Component {
     return (
       <div className='m-0 row'>
         <div className='col-md-4 left-col-prediction-outer-container'>
+          <HomepageButton />
           {this.state.successMessage && <Alert variant="success">{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
           <div className='left-col-prediction-container'>
             <h1 className='left-col-prediction-text'>Predictions</h1>

@@ -1,9 +1,10 @@
 import React from 'react'
-import {Alert, Nav} from 'react-bootstrap'
+import {Alert, Nav, Form, InputGroup} from 'react-bootstrap'
 import MiniLeagueTable from './MiniLeagueTable'
 import DropdownSelector from './DropdownSelector'
 import MiniLeagueRankings from './MiniLeagueRankings'
 import './MiniLeagues.css'
+import HomepageButton from './HomepageButton'
 
 class MiniLeagues extends React.Component {
   constructor(props) {
@@ -17,6 +18,8 @@ class MiniLeagues extends React.Component {
     }
     this.handleSelect = this.handleSelect.bind(this)
     this.handleDropdownSelect = this.handleDropdownSelect.bind(this)
+    this.createMiniLeague = this.createMiniLeague.bind(this)
+    this.joinMiniLeague = this.joinMiniLeague.bind(this)
   }
   async componentDidMount() {
     var newState = await this.props.getMiniLeagues()
@@ -61,14 +64,77 @@ class MiniLeagues extends React.Component {
     })
   }
 
+  createMiniLeague(event) {
+    event.preventDefault()
+    const data = new FormData(event.target)
+    const minileague_name = data.get('minileague-name')
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({league_name: minileague_name}),
+      credentials: 'include'
+    }
+
+    fetch('http://192.168.0.16:5000/createminileague', requestOptions).then(res => {
+      this.setState({
+        responseStatus: res.status
+      })
+      return res.json()
+    }).then(data => {
+      this.setState({
+        responseMessage: data
+      })
+    })
+  }
+
+  joinMiniLeague(event) {
+    event.preventDefault()
+    const data = new FormData(event.target)
+    const minileague_name = data.get('minileague-name')
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({league_name: minileague_name}),
+      credentials: 'include'
+    }
+
+    fetch('http://192.168.0.16:5000/joinminileague', requestOptions).then(res => {
+      this.setState({
+        responseStatus: res.status
+      })
+      return res.json()
+    }).then(data => {
+      this.setState({
+        responseMessage: data
+      })
+    })
+  }
+
   render() {
     return (
       <div className='m-0 row'>
         <div className='col-md-4 left-col-prediction-outer-container'>
-          {this.state.successMessage && <Alert variant="success">{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
+          <HomepageButton />
+          {this.state.responseMessage && <Alert variant={this.state.responseStatus >= 400 ? 'danger' : 'success'}>{this.state.responseMessage}</Alert>}
           <div className='left-col-prediction-container'>
             <h1 className='left-col-prediction-text'>Mini-leagues</h1>
             <DropdownSelector onValueUpdate={this.handleDropdownSelect} length={this.state.minileagues.length} minileagueArr={this.state.minileagues} />
+            
+            <h4 className='left-col-minileague-text'>Create mini-league</h4>
+            <Form style={{marginBottom: 10}} onSubmit={this.createMiniLeague}>
+              <InputGroup>
+                <Form.Control placeholder='Mini-league name' type='text' name='minileague-name' />
+              </InputGroup>
+            </Form>
+
+            <h4 className='left-col-minileague-text'>Join mini-league</h4>
+            <Form style={{marginBottom: 10}} onSubmit={this.joinMiniLeague}>
+              <InputGroup>
+                <Form.Control placeholder='Mini-league name' type='text' name='minileague-name' />
+              </InputGroup>
+            </Form>
           </div>
         </div>
         <div className='col-md-8 right-col'>

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import FrontPage from './FrontPage'
-import LoginPage from './LoginPage'
 import PageSelector from './PageSelector'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -9,7 +8,7 @@ import Cookies from 'js-cookie'
 import Predictions from './Predictions'
 import MiniLeagues from './MiniLeagues'
 import MiniLeagueTable from './MiniLeagueTable'
-import Register from './Register'
+import Scoring from './Scoring'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -68,11 +67,17 @@ class App extends React.Component {
     })
   }
 
-  getUserPredictions(gameweek) {
-    if (gameweek) {
-      var url = 'http://192.168.0.16:5000/getuserpredictions?gameweek='+gameweek
+  getUserPredictions(gameweek, username) {
+    if (username) {
+      var url = 'http://192.168.0.16:5000/friendpredictions?username='+username
+      if (gameweek) {
+        url += '&gameweek='+gameweek
+      }
     } else {
       url = 'http://192.168.0.16:5000/getuserpredictions'
+      if (gameweek) {
+        url += '?gameweek='+gameweek
+      }
     }
 
     return fetch(url, {credentials: "include"}).then(response => {
@@ -118,6 +123,7 @@ class App extends React.Component {
             <Route path='/minileagues'><MiniLeagues getUserPredictions={this.getUserPredictions} getMiniLeagues={this.getMiniLeagues} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/predictions'><Predictions getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/register'><FrontPage widget={'Register'} /></Route>
+            <Route path='/scores'><Scoring getUserPredictions={this.getUserPredictions} /></Route>
             <Route exact path='/'>{this.state.apiCookie ? <PageSelector clearApiCookie={this.clearApiCookie} /> : <FrontPage widget={'Login'} />}</Route>
           </Switch>
         </Router>

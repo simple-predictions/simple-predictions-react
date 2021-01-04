@@ -24,3 +24,11 @@
 .mini-table {
     font-family: 'Montserrat';
 }
+
+h4.left-col-minileague-text {
+    margin-top: 10px;
+    text-align: center;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 10px;
+}

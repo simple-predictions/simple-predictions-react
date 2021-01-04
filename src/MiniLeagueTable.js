@@ -58,7 +58,7 @@ class MiniLeagueTable extends React.Component {
                   var pred = match.predictions.find(obj => obj.username === member.username)
                   if (pred) {if (pred.home_pred === null) {pred = null}}
                   return (
-                    pred ? <td key={member.username}>{pred.home_pred+'-'+pred.away_pred}</td> : <td key={member.username}>No prediction</td>
+                    pred ? <td key={member.username}>{pred.error_message ? pred.error_message : pred.home_pred+'-'+pred.away_pred }</td> : <td key={member.username}>No prediction</td>
                   )  
                 })}
               </tr>
