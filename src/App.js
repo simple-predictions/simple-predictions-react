@@ -9,6 +9,9 @@ import Predictions from './Predictions'
 import MiniLeagues from './MiniLeagues'
 import MiniLeagueTable from './MiniLeagueTable'
 import Scoring from './Scoring'
+import FeedbackToggle from './FeedbackToggle'
+import FeedbackPopup from './FeedbackPopup'
+import {Alert} from 'react-bootstrap'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -17,12 +20,17 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiCookie: ''
+      apiCookie: '',
+      displayFeedbackPopup: true,
+      feedbackMessage: '',
+      showFeedbackMessage: true
     }
 
     this.clearApiCookie = this.clearApiCookie.bind(this)
     this.getUserPredictions = this.getUserPredictions.bind(this)
     this.getMiniLeagues = this.getMiniLeagues.bind(this)
+    this.toggleFeedbackPopup = this.toggleFeedbackPopup.bind(this)
+    this.updateFeedbackMessage = this.updateFeedbackMessage.bind(this)
   }
   componentDidMount() {
     var apiCookie = Cookies.get('connect.sid')
@@ -113,9 +121,24 @@ class App extends React.Component {
     })
   }
 
+  toggleFeedbackPopup() {
+    this.setState({
+      displayFeedbackPopup: !this.state.displayFeedbackPopup
+    })
+  }
+
+  updateFeedbackMessage() {
+    this.setState({
+      feedbackMessage: 'Your feedback has been recorded. Thank you!'
+    })
+  }
+
   render() {
     return(
       <div>
+        {this.state.feedbackMessage && this.state.showFeedbackMessage && <div className='feedback-success-container'><Alert variant='success' className='feedback-success' onClose={() => this.setState({showFeedbackMessage: false})} dismissible>{this.state.feedbackMessage}</Alert></div>}
+        <FeedbackPopup updateFeedbackMessage={this.updateFeedbackMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
+        <FeedbackToggle onTogglePopup={this.toggleFeedbackPopup} />
         <Router>
           <Switch>
             {this.state.apiCookie==='' ? <Route path='/'><FrontPage widget={'Login'} /></Route> : null }

@@ -67,7 +67,7 @@ class FrontPage extends React.Component {
             <div className='col-md-7 widget-container'>
               {this.props.widget === 'Login' ? <LoginPage /> : <Register />}
             </div>
-            <div className='col-md-5 saltbeef-background-col'>
+            <div className='col-md-5 d-none d-lg-block d-xl-block saltbeef-background-col'>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-input.form-field {
+input.form-field, textarea.form-field {
     border: 0;
     border-bottom: 1px solid #ddd;
     box-sizing: border-box;
@@ -7,7 +7,7 @@ input.form-field {
     height: 40px;
 }
 
-input.form-field:hover, input.form-field:focus {
+input.form-field:hover, input.form-field:focus, textarea.form-field, textarea.form-field:focus {
     border-color: #ccc;
     outline: none;
     box-shadow: none;
@@ -104,4 +104,16 @@ div.login-form > div.front-page-scrollover > div > div.widget-container {
 .saltbeef-background-col {
     background-image: url('icons/square_saltbeef.jpg');
     background-size: cover;
+}
+
+@media (max-width: 700px) {
+    div.front-page-top > div.text-container {
+        margin: auto;
+    }
+}
+
+@media (max-width: 425px) {
+    div.login-form > div > div > div.widget-container , div.register-form > div > div {
+        max-width: 300px;
+    }
 }

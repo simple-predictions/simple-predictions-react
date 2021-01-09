@@ -16,4 +16,10 @@ html, body {
   background-color: #defc5f !important;
 }
 
+@media (max-width: 450px) {
+  html {
+    font-size: 10px;
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');

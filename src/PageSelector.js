@@ -81,8 +81,8 @@ class PageSelector extends React.Component {
               </div>
               <div className='col-md-6'>
                 <div className='selector-option-container'>
-                  <h4 className='option-title'>Predictions</h4>
-                  <h4 className='option-description'>Predict the results of the Premier League games</h4>
+                  <h4 className='option-title text-md-left text-center'>Predictions</h4>
+                  <h4 className='option-description text-md-left text-center'>Predict the results of the Premier League games</h4>
                 </div>
               </div>
             <div className='col-md-2 last-col'></div>
@@ -97,8 +97,8 @@ class PageSelector extends React.Component {
             </div>
             <div className='col-md-6'>
               <div className='selector-option-container'>
-                <h4 className='option-title'>Mini-leagues</h4>
-                <h4 className='option-description'>Compare your predictions against your competitors</h4>
+                <h4 className='option-title text-md-left text-center'>Mini-leagues</h4>
+                <h4 className='option-description text-md-left text-center'>Compare your predictions against your competitors</h4>
               </div>
             </div>
             <div className='col-md-2 last-col'></div>
@@ -113,8 +113,8 @@ class PageSelector extends React.Component {
             </div>
             <div className='col-md-6'>
               <div className='selector-option-container'>
-                <h4 className='option-title'>Scores</h4>
-                <h4 className='option-description'>Watch your scores as the goals come in</h4>
+                <h4 className='option-title text-md-left text-center'>Scores</h4>
+                <h4 className='option-description text-md-left text-center'>Watch your scores as the goals come in</h4>
               </div>
             </div>
             <div className='col-md-2 last-col'></div>

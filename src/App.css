@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+div.feedback-success-container {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+
+div.feedback-success {
+  margin: 20px 50px;
+}
