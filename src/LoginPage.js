@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
 
     fetch(base_url+'/login', requestOptions).then((res) => {
       if (res.status === 200) {
-        window.location.reload(false)
+        //window.location.reload(false)
       } else {
         this.setState({
           errorCount: this.state.errorCount + 1,

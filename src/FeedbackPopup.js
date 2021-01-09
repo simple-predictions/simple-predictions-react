@@ -39,6 +39,9 @@ class FeedbackPopup extends React.Component {
         'project': {
           'key': 'MAIN'
         },
+        'parent': {
+          'key': 'MAIN-2'
+        },
         'summary': summary,
         "description": {
           "type": "doc",
@@ -75,7 +78,7 @@ class FeedbackPopup extends React.Component {
       credentials: 'include'
     }
 
-    //fetch(base_url+'/create-jira-issue', requestOptions)
+    fetch(base_url+'/create-jira-issue', requestOptions)
     this.props.updateFeedbackMessage()
     this.props.onTogglePopup()
   }
