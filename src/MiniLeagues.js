@@ -5,6 +5,7 @@ import DropdownSelector from './DropdownSelector'
 import MiniLeagueRankings from './MiniLeagueRankings'
 import './MiniLeagues.css'
 import HomepageButton from './HomepageButton'
+import base_url from './globals'
 
 class MiniLeagues extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class MiniLeagues extends React.Component {
   }
 
   getMiniLeagueRankings(league_id) {
-    fetch('http://192.168.0.16:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
+    fetch(base_url+'/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
       this.setState({
         selectedMiniLeagueTable: data
       })
@@ -57,7 +58,7 @@ class MiniLeagues extends React.Component {
   updateSelectedMinileague(event) {
     var idx = event.target.value - 1
     var league_id = this.state.minileagues[idx]._id
-    fetch('http://192.168.0.16:5000/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
+    fetch(base_url+'/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
       this.setState({
         selectedMinileague: data
       })
@@ -76,7 +77,7 @@ class MiniLeagues extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/createminileague', requestOptions).then(res => {
+    fetch(base_url+'/createminileague', requestOptions).then(res => {
       this.setState({
         responseStatus: res.status
       })
@@ -100,7 +101,7 @@ class MiniLeagues extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/joinminileague', requestOptions).then(res => {
+    fetch(base_url+'/joinminileague', requestOptions).then(res => {
       this.setState({
         responseStatus: res.status
       })

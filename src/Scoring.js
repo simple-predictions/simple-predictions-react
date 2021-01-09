@@ -2,6 +2,7 @@ import React from 'react'
 import './Scoring.css'
 import HomepageButton from './HomepageButton'
 import DropdownSelector from './DropdownSelector'
+import base_url from './globals'
 
 class Scoring extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Scoring extends React.Component {
   }
 
   getFollowingList() {
-    fetch('http://192.168.0.16:5000/friends', {credentials: 'include'}).then(res => res.json()).then(data => {
+    fetch(base_url+'/friends', {credentials: 'include'}).then(res => res.json()).then(data => {
       this.setState({
         followingList: data
       })

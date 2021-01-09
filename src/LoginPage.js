@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, FormGroup, FormControl, Alert, Container } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import './LoginPage.css'
+import base_url from './globals'
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class LoginPage extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/login', requestOptions).then((res) => {
+    fetch(base_url+'/login', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.reload(false)
       } else {

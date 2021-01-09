@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import './PageSelector.css'
 import {Link} from 'react-router-dom'
 import {Form, InputGroup, Alert} from 'react-bootstrap'
+import base_url from './globals'
 
 class PageSelector extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class PageSelector extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    fetch('http://192.168.0.16:5000/userinfo', {credentials: 'include'}).then(response => {
+    fetch(base_url+'/userinfo', {credentials: 'include'}).then(response => {
       if (response.status === 401) {
         Cookies.remove('connect.sid')
         this.props.clearApiCookie()
@@ -40,7 +41,7 @@ class PageSelector extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/addfriend', requestOptions).then(res => {
+    fetch(base_url+'/addfriend', requestOptions).then(res => {
       this.setState({
         responseStatus: res.status
       })

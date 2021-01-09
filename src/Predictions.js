@@ -3,6 +3,7 @@ import './Predictions.css'
 import DropdownSelector from './DropdownSelector'
 import {Alert} from 'react-bootstrap'
 import HomepageButton from './HomepageButton'
+import base_url from './globals'
 
 class Predictions extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Predictions extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/updatemanypredictions', requestOptions).then(res => {
+    fetch(base_url+'/updatemanypredictions', requestOptions).then(res => {
       if (res.status === 200) {
         this.setState({
           successMessage: 'Your predictions have been updated',

@@ -2,6 +2,7 @@ import React from 'react'
 import Cookies from 'js-cookie'
 import {Table} from 'react-bootstrap'
 import './MiniLeagueTable.css'
+import base_url from './globals'
 
 class MiniLeagueTable extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class MiniLeagueTable extends React.Component {
   } 
 
   getMiniLeague() {
-    var url = 'http://192.168.0.16:5000/minileaguepredictions?league_id='+this.props.league_id
+    var url = base_url+'/minileaguepredictions?league_id='+this.props.league_id
 
     fetch(url, {credentials: "include"}).then(response => {
       if (response.status === 401) {

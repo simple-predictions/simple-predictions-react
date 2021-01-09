@@ -1,5 +1,6 @@
 import React from 'react'
 import {FormGroup, Button, FormControl, FormLabel} from 'react-bootstrap'
+import base_url from './globals'
 
 class FeedbackPopup extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class FeedbackPopup extends React.Component {
   }
   getUsername() {
     return new Promise(resolve => {
-      fetch('http://192.168.0.16:5000/userinfo', {credentials: 'include'}).then(res => {
+      fetch(base_url+'/userinfo', {credentials: 'include'}).then(res => {
         if (res.status === 200) {
           return res.json()
         } else {
@@ -74,7 +75,7 @@ class FeedbackPopup extends React.Component {
       credentials: 'include'
     }
 
-    //fetch('http://192.168.0.16:5000/create-jira-issue', requestOptions)
+    //fetch(base_url+'/create-jira-issue', requestOptions)
     this.props.updateFeedbackMessage()
     this.props.onTogglePopup()
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import './LoginPage.css'
 import LoginPage from './LoginPage'
 import Register from './Register'
+import base_url from './globals'
 
 class FrontPage extends React.Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class FrontPage extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://192.168.0.16:5000/login', requestOptions).then((res) => {
+    fetch(base_url+'/login', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.reload(false)
       } else {

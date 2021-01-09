@@ -12,6 +12,7 @@ import Scoring from './Scoring'
 import FeedbackToggle from './FeedbackToggle'
 import FeedbackPopup from './FeedbackPopup'
 import {Alert} from 'react-bootstrap'
+import base_url from './globals'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -44,7 +45,7 @@ class App extends React.Component {
   }
 
   getMiniLeagues() {
-    var url = 'http://192.168.0.16:5000/minileagues'
+    var url = base_url+'/minileagues'
 
     return fetch(url, {credentials: "include"}).then(response => {
       if (response.status === 401) {
@@ -77,12 +78,12 @@ class App extends React.Component {
 
   getUserPredictions(gameweek, username) {
     if (username) {
-      var url = 'http://192.168.0.16:5000/friendpredictions?username='+username
+      var url = base_url+'/friendpredictions?username='+username
       if (gameweek) {
         url += '&gameweek='+gameweek
       }
     } else {
-      url = 'http://192.168.0.16:5000/getuserpredictions'
+      url = base_url+'/getuserpredictions'
       if (gameweek) {
         url += '?gameweek='+gameweek
       }
