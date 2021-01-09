@@ -22,7 +22,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       apiCookie: '',
-      displayFeedbackPopup: true,
+      displayFeedbackPopup: false,
       feedbackMessage: '',
       showFeedbackMessage: true
     }
