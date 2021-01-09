@@ -1,0 +1,34 @@
+.minileague-pills {
+    margin: 20px;
+    margin-bottom: 0;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #defc5f;
+    color: black;
+}
+
+.nav-pills .nav-link {
+    font-family: 'Montserrat';
+    color: white;
+}
+
+.nav-pills .nav-link:not(.active):hover {
+    background-color: #526402;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.mini-table {
+    font-family: 'Montserrat';
+}
+
+h4.left-col-minileague-text {
+    margin-top: 20px;
+    text-align: center;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 10px;
+}

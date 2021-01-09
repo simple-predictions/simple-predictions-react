@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
-import Header from './Header.js';
-import LoginPage from './LoginPage'
-import Homepage from './Homepage'
+import FrontPage from './FrontPage'
+import PageSelector from './PageSelector'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Cookies from 'js-cookie'
 import Predictions from './Predictions'
 import MiniLeagues from './MiniLeagues'
 import MiniLeagueTable from './MiniLeagueTable'
-import Register from './Register'
+import Scoring from './Scoring'
+import FeedbackToggle from './FeedbackToggle'
+import FeedbackPopup from './FeedbackPopup'
+import {Alert} from 'react-bootstrap'
+import base_url from './globals'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -18,12 +21,17 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiCookie: ''
+      apiCookie: '',
+      displayFeedbackPopup: true,
+      feedbackMessage: '',
+      showFeedbackMessage: true
     }
 
     this.clearApiCookie = this.clearApiCookie.bind(this)
     this.getUserPredictions = this.getUserPredictions.bind(this)
     this.getMiniLeagues = this.getMiniLeagues.bind(this)
+    this.toggleFeedbackPopup = this.toggleFeedbackPopup.bind(this)
+    this.updateFeedbackMessage = this.updateFeedbackMessage.bind(this)
   }
   componentDidMount() {
     var apiCookie = Cookies.get('connect.sid')
@@ -37,7 +45,7 @@ class App extends React.Component {
   }
 
   getMiniLeagues() {
-    var url = 'http://127.0.0.1:5000/minileagues'
+    var url = base_url+'/minileagues'
 
     return fetch(url, {credentials: "include"}).then(response => {
       if (response.status === 401) {
@@ -68,11 +76,17 @@ class App extends React.Component {
     })
   }
 
-  getUserPredictions(gameweek) {
-    if (gameweek) {
-      var url = 'http://127.0.0.1:5000/getuserpredictions?gameweek='+gameweek
+  getUserPredictions(gameweek, username) {
+    if (username) {
+      var url = base_url+'/friendpredictions?username='+username
+      if (gameweek) {
+        url += '&gameweek='+gameweek
+      }
     } else {
-      url = 'http://127.0.0.1:5000/getuserpredictions'
+      url = base_url+'/getuserpredictions'
+      if (gameweek) {
+        url += '?gameweek='+gameweek
+      }
     }
 
     return fetch(url, {credentials: "include"}).then(response => {
@@ -108,18 +122,33 @@ class App extends React.Component {
     })
   }
 
+  toggleFeedbackPopup() {
+    this.setState({
+      displayFeedbackPopup: !this.state.displayFeedbackPopup
+    })
+  }
+
+  updateFeedbackMessage() {
+    this.setState({
+      feedbackMessage: 'Your feedback has been recorded. Thank you!'
+    })
+  }
+
   render() {
     return(
       <div>
-        <Header />
+        {this.state.feedbackMessage && this.state.showFeedbackMessage && <div className='feedback-success-container'><Alert variant='success' className='feedback-success' onClose={() => this.setState({showFeedbackMessage: false})} dismissible>{this.state.feedbackMessage}</Alert></div>}
+        <FeedbackPopup updateFeedbackMessage={this.updateFeedbackMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
+        <FeedbackToggle onTogglePopup={this.toggleFeedbackPopup} />
         <Router>
           <Switch>
-            {this.state.apiCookie==='' ? <Route path='/'><LoginPage /></Route> : null }
+            {this.state.apiCookie==='' ? <Route path='/'><FrontPage widget={'Login'} /></Route> : null }
             <Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />
-            <Route path='/minileagues'><MiniLeagues getMiniLeagues={this.getMiniLeagues} clearApiCookie={this.clearApiCookie} /></Route>
+            <Route path='/minileagues'><MiniLeagues getUserPredictions={this.getUserPredictions} getMiniLeagues={this.getMiniLeagues} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/predictions'><Predictions getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /></Route>
-            <Route path='/register'><Register /></Route>
-            <Route exact path='/'>{this.state.apiCookie ? <Homepage getMiniLeagues={this.getMiniLeagues} getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /> : <LoginPage />}</Route>
+            <Route path='/register'><FrontPage widget={'Register'} /></Route>
+            <Route path='/scores'><Scoring getUserPredictions={this.getUserPredictions} /></Route>
+            <Route exact path='/'>{this.state.apiCookie ? <PageSelector clearApiCookie={this.clearApiCookie} /> : <FrontPage widget={'Login'} />}</Route>
           </Switch>
         </Router>
       </div>

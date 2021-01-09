@@ -5,7 +5,7 @@
 .outer-pred-container {
   max-width: 800px;
   margin: auto;
-  background-color: #37B1C8;
+  /*background-color: #6B4BFB;*/
   margin-bottom: 50px;
   border-radius: 25px;
 }
@@ -60,4 +60,83 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.right-col {
+  background-color: #323232;
+  min-height: 100vh;
+}
+
+.left-col-prediction-text {
+  color: #323232;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: pre;
+}
+
+.left-col-prediction-container {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.left-col-prediction-outer-container {
+  display: flex;
+  justify-content: center;
+}
+
+.predictions-form {
+  margin-top: 50px;
+}
+
+.predictions-form-submit-button {
+  margin-top: 10px;
+  border: none;
+  background-color: #323232;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Montserrat';
+  padding: 5px 0;
+}
+
+.predictions-form-submit-button:active {
+  background-color: black;
+}
+
+.left-col-prediction-outer-container > div.alert {
+  position: fixed;
+  margin-top: 10px;
+}
+
+.score-container {
+  margin: auto;
+  background-color: #defc5f;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.prediction-circle {
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50px) translateX(-50px);
+  background-color: #defc5f;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+}
+
+.home-team-container, .away-team-container {
+  position: relative;
+}
+
+.club-badge {
+  position: relative;
+  z-index: 999;
+  top: 50%;
+  transform: translateY(-50%);
 }

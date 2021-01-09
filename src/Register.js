@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, FormControl, FormGroup, Alert, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import base_url from './globals'
 
 class Register extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Register extends React.Component {
       credentials: 'include'
     }
 
-    fetch('http://127.0.0.1:5000/register', requestOptions).then((res) => {
+    fetch(base_url+'/register', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.href = '/'
       } else {

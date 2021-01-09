@@ -1,0 +1,119 @@
+input.form-field, textarea.form-field {
+    border: 0;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    border-radius: 0;
+    font-size: 14px;
+    height: 40px;
+}
+
+input.form-field:hover, input.form-field:focus, textarea.form-field, textarea.form-field:focus {
+    border-color: #ccc;
+    outline: none;
+    box-shadow: none;
+}
+
+.form-buttons {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+}
+
+button.main-form-button.form-buttons {
+    height: 40px;
+    background-color: #F6F6F6;
+    color: #888888;
+    border: 0;
+    border-radius: 0;
+    font-size: 14px;
+}
+
+button.main-form-button.form-buttons:enabled {
+    background-color: #6C7868 !important;
+    color: white !important;
+}
+
+button.main-form-button.form-buttons:enabled:hover {
+    color: rgb(202, 202, 202) !important;
+}
+
+a.secondary-form-button.form-buttons {
+    color: #888;
+}
+
+a.secondary-form-button.form-buttons:hover {
+    text-decoration: none;
+    color: black;
+}
+
+div.login-form > div > div > div.widget-container , div.register-form > div > div {
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 20px 30px;
+    margin: auto;
+    max-width: 400px;
+}
+
+div.login-form > div.front-page-scrollover {
+    background-color: #defc5f;
+    position: relative;
+    height: 100vh;
+}
+div.login-form > div.front-page-scrollover > div {
+    height: 100vh;
+}
+div.login-form > div.front-page-scrollover > div > div.widget-container {
+    display: flex;
+    height: 324px;
+}
+
+.front-page-top {
+    height: 100vh;
+    background-image: url('icons/saltbeef.png');
+    background-size: cover;
+    position: relative;
+    width: 100%;
+    display: flex;
+    background-attachment: fixed;
+}
+
+.front-page-top > .text-container {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 100px;
+}
+
+.front-page-placeholder {
+    height: 100vh;
+}
+
+.site-header {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 5rem;
+}
+
+.site-tagline {
+    color: #defc5f;
+    font-weight: 400;
+}
+
+.saltbeef-background-col {
+    background-image: url('icons/square_saltbeef.jpg');
+    background-size: cover;
+}
+
+@media (max-width: 700px) {
+    div.front-page-top > div.text-container {
+        margin: auto;
+    }
+}
+
+@media (max-width: 425px) {
+    div.login-form > div > div > div.widget-container , div.register-form > div > div {
+        max-width: 300px;
+    }
+}

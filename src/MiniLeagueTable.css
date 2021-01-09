@@ -1,0 +1,28 @@
+.minileague-prediction-table {
+    color: black;
+    border-collapse: separate;
+    border-spacing: 0 30px;
+}
+
+.minileague-prediction-table > thead {
+    color: white;
+}
+
+.minileague-prediction-table-row > td {
+    padding: 20px;
+    background-color: #defc5f;
+}
+
+.minileague-prediction-table-row > td:first-child {
+    border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
+  }
+  
+.minileague-prediction-table-row > td:last-child {
+    border-radius: 0 10px 10px 0; 
+    -moz-border-radius: 0 10px 10px 0;
+}
+
+.minileague-prediction-container {
+    margin: 0 30px;
+}
