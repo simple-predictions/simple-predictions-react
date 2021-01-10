@@ -18,6 +18,7 @@ import CreateNewPassword from './CreateNewPassword'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
+import BetaStamp from './BetaStamp';
 
 class App extends React.Component {
   constructor(props) {
@@ -142,6 +143,7 @@ class App extends React.Component {
       <div>
         {this.state.alertMessage && <div className='feedback-success-container'><Alert variant={this.state.alertVariant} className='feedback-success' onClose={() => this.setState({alertMessage: ''})} dismissible>{this.state.alertMessage}</Alert></div>}
         <FeedbackPopup updateAlertMessage={this.updateAlertMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
+        <BetaStamp />
         <Router>
           <FeedbackToggle apiCookie={this.state.apiCookie} onTogglePopup={this.toggleFeedbackPopup} />
           <Switch>

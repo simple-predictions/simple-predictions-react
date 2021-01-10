@@ -46,3 +46,15 @@ div.feedback-success-container {
 div.feedback-success {
   margin: 20px 50px;
 }
+
+.beta-div-container {
+  position: fixed;
+  z-index: 999999;
+  font-size: 3rem;
+  font-family: 'Montserrat';
+  font-weight: 700;
+  color: black;
+  opacity: 0.4;
+  margin-left: 10px;
+  bottom: 0;
+}

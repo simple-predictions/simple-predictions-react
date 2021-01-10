@@ -15,6 +15,7 @@ class Predictions extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
+    this.closeAlert = this.closeAlert.bind(this)
   }
   async handleGameweekChange(event) {
     var newState = await this.props.getUserPredictions(event.target.value)
@@ -66,6 +67,13 @@ class Predictions extends React.Component {
       }
     })
   }
+
+  closeAlert() {
+    this.setState({
+      successMessage: ''
+    })
+  }
+
   render() {
     var month = []
     month[0] = "January";
@@ -85,7 +93,7 @@ class Predictions extends React.Component {
       <div className='m-0 row'>
         <div className='col-md-4 left-col-prediction-outer-container'>
           <HomepageButton />
-          {this.state.successMessage && <Alert variant="success">{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
+          {this.state.successMessage && <Alert variant="success" dismissible onClose={this.closeAlert}>{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
           <div className='left-col-prediction-container'>
             <h1 className='left-col-prediction-text'>Predictions</h1>
             <DropdownSelector length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
