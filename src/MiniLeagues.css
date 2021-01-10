@@ -32,3 +32,15 @@ h4.left-col-minileague-text {
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 10px;
 }
+
+.no-mini-league-statement-container {
+    display: flex;
+    height: 100vh;
+}
+
+.no-mini-league-statement {
+    margin: auto;
+    font-family: 'Montserrat';
+    color: white;
+    font-size: 1.25rem;
+}

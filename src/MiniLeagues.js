@@ -15,7 +15,8 @@ class MiniLeagues extends React.Component {
       componentName: 'Predictions',
       league_id: '',
       selectedMiniLeague: {'members':[]},
-      selectedMiniLeagueTable: []
+      selectedMiniLeagueTable: [],
+      loaded: false
     }
     this.handleSelect = this.handleSelect.bind(this)
     this.handleDropdownSelect = this.handleDropdownSelect.bind(this)
@@ -24,7 +25,9 @@ class MiniLeagues extends React.Component {
   }
   async componentDidMount() {
     var newState = await this.props.getMiniLeagues()
-    console.log(newState)
+    this.setState({
+      loaded: true
+    })
     if (newState['minileagues'].length > 0) {
       var league_id = newState['minileagues'][0]._id
       newState['league_id'] = league_id
@@ -142,19 +145,29 @@ class MiniLeagues extends React.Component {
           </div>
         </div>
         <div className='col-md-8 right-col'>
-          <Nav className='minileague-pills' fill activeKey={this.state.componentName} variant="pills" onSelect={this.handleSelect}>
-            <Nav.Item>
-              <Nav.Link eventKey='Predictions'>
-                Table
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey='MiniLeagueTable'>
-                Predictions
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-          {this.state.componentName === 'MiniLeagueTable' ? <MiniLeagueTable league_id={this.state.league_id} getUserPredictions={this.props.getUserPredictions} getMiniLeagues={this.props.getMiniLeagues} /> : <MiniLeagueRankings selectedMiniLeague={this.state.selectedMiniLeagueTable} />}
+          {this.state.minileagues.length > 0 ?
+          <div>
+            <Nav className='minileague-pills' fill activeKey={this.state.componentName} variant="pills" onSelect={this.handleSelect}>
+              <Nav.Item>
+                <Nav.Link eventKey='Predictions'>
+                  Table
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey='MiniLeagueTable'>
+                  Predictions
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
+            {this.state.componentName === 'MiniLeagueTable' ? <MiniLeagueTable league_id={this.state.league_id} getUserPredictions={this.props.getUserPredictions} getMiniLeagues={this.props.getMiniLeagues} /> : <MiniLeagueRankings selectedMiniLeague={this.state.selectedMiniLeagueTable} />}
+          </div>
+          : 
+          <div className='no-mini-league-statement-container'>
+            {this.state.loaded ? <div className='no-mini-league-statement'>
+              Please create or join a mini-league on the left to view the table and others' predictions.
+            </div> : ''}
+          </div>
+          }
         </div>
       </div>
     )
