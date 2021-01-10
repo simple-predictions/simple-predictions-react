@@ -26,6 +26,9 @@ class Register extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    if (this.state.buttonEnabled === false) {
+      return
+    }
     this.setState({
       buttonEnabled: false
     })

@@ -13,8 +13,6 @@ import FeedbackToggle from './FeedbackToggle'
 import FeedbackPopup from './FeedbackPopup'
 import {Alert} from 'react-bootstrap'
 import base_url from './globals'
-import ResetPassword from './ResetPassword'
-import CreateNewPassword from './CreateNewPassword'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';

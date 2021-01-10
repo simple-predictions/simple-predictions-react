@@ -17,6 +17,7 @@
 .left-col-scoring-outer-container {
     display: flex;
     justify-content: center;
+    min-height: 100vh;
 }
 
 .scored-match-inner-container {

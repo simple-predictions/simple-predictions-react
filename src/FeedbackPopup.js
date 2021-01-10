@@ -32,6 +32,9 @@ class FeedbackPopup extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault()
+    if (this.state.buttonEnabled === false) {
+      return
+    }
     this.setState({
       buttonEnabled: false
     })
@@ -111,8 +114,8 @@ class FeedbackPopup extends React.Component {
     return (
       <div className='feedback-popup' style={{display: this.props.display ? 'flex' : 'none'}}>
         <div className='feedback-popup-content'>
-          <h1>Bug Report</h1>
-          <img src={require('./icons/cross.png')} className="feedback-popup-close" onClick={this.props.onTogglePopup} />
+          <h1>Send feedback</h1>
+          <img alt='close-button' src={require('./icons/cross.png')} className="feedback-popup-close" onClick={this.props.onTogglePopup} />
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId='issuetype' bssize='large'>
               <FormLabel>Issue Type</FormLabel>

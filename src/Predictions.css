@@ -84,6 +84,7 @@ input[type=number] {
 }
 
 .left-col-prediction-outer-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
 }

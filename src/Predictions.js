@@ -12,7 +12,8 @@ class Predictions extends React.Component {
       user_predictions: [],
       gameweek: 0,
       successCount: 0,
-      selectorDisabled: true
+      selectorDisabled: true,
+      submitEnabled: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
@@ -35,6 +36,12 @@ class Predictions extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    if (this.state.submitEnabled === false) {
+      return
+    }
+    this.setState({
+      submitEnabled: false
+    })
     const data = new FormData(event.target);
 
     var predsData = []
@@ -71,6 +78,9 @@ class Predictions extends React.Component {
           successCount: this.state.successCount + 1
         })
       }
+      this.setState({
+        submitEnabled: true
+      })
     })
   }
 
@@ -103,7 +113,7 @@ class Predictions extends React.Component {
           <div className='left-col-prediction-container'>
             <h1 className='left-col-prediction-text'>Predictions</h1>
             <DropdownSelector enabled={this.state.selectorDisabled} length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
-            <input className='predictions-form-submit-button' type='submit' value='Submit' form='predictions-form' />
+            <input disabled={!this.state.submitEnabled} className='predictions-form-submit-button' type='submit' value='Submit' form='predictions-form' />
           </div>
         </div>
         <div className='col-md-8 right-col'>

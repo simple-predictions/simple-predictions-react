@@ -9,7 +9,8 @@ class PageSelector extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: {}
+      user: {},
+      addFriendEnabled: true
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -31,6 +32,12 @@ class PageSelector extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    if (this.state.addFriendEnabled === false) {
+      return
+    }
+    this.setState({
+      addFriendEnabled: false
+    })
     const data = new FormData(event.target);
     const friend_username = data.get('friend-username')
 
@@ -48,7 +55,8 @@ class PageSelector extends React.Component {
       return res.json()
     }).then(data => {
       this.setState({
-        responseMessage: data
+        responseMessage: data,
+        addFriendEnabled: true
       })
     })
   }
@@ -65,7 +73,7 @@ class PageSelector extends React.Component {
                 <InputGroup.Prepend>
                   <InputGroup.Text>@</InputGroup.Text>
                 </InputGroup.Prepend>
-                <Form.Control placeholder='Username' type='text' name='friend-username' />
+                <Form.Control disabled={!this.state.addFriendEnabled} placeholder='Username' type='text' name='friend-username' />
               </InputGroup>
             </Form>
             {this.state.responseMessage && <Alert variant={this.state.responseStatus >= 400 ? 'danger' : 'success'}>{this.state.responseMessage}</Alert>}

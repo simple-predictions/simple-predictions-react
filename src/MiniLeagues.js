@@ -16,7 +16,9 @@ class MiniLeagues extends React.Component {
       league_id: '',
       selectedMiniLeague: {'members':[]},
       selectedMiniLeagueTable: [],
-      loaded: false
+      loaded: false,
+      createMiniLeagueEnabled: true,
+      joinMiniLeagueEnabled: true
     }
     this.handleSelect = this.handleSelect.bind(this)
     this.handleDropdownSelect = this.handleDropdownSelect.bind(this)
@@ -73,6 +75,12 @@ class MiniLeagues extends React.Component {
 
   createMiniLeague(event) {
     event.preventDefault()
+    if (this.state.createMiniLeagueEnabled === false) {
+      return
+    }
+    this.setState({
+      createMiniLeagueEnabled: false
+    })
     const data = new FormData(event.target)
     const minileague_name = data.get('minileague-name')
 
@@ -90,13 +98,20 @@ class MiniLeagues extends React.Component {
       return res.json()
     }).then(data => {
       this.setState({
-        responseMessage: data
+        responseMessage: data,
+        createMiniLeagueEnabled: true
       })
     })
   }
 
   joinMiniLeague(event) {
     event.preventDefault()
+    if (this.state.joinMiniLeagueEnabled === false) {
+      return
+    }
+    this.setState({
+      joinMiniLeagueEnabled: false
+    })
     const data = new FormData(event.target)
     const minileague_name = data.get('minileague-name')
 
@@ -114,7 +129,8 @@ class MiniLeagues extends React.Component {
       return res.json()
     }).then(data => {
       this.setState({
-        responseMessage: data
+        responseMessage: data,
+        joinMiniLeagueEnabled: true
       })
     })
   }
@@ -132,14 +148,14 @@ class MiniLeagues extends React.Component {
             <h4 className='left-col-minileague-text'>Create mini-league</h4>
             <Form style={{marginBottom: 10}} onSubmit={this.createMiniLeague}>
               <InputGroup>
-                <Form.Control placeholder='Mini-league name' type='text' name='minileague-name' />
+                <Form.Control disabled={!this.state.createMiniLeagueEnabled} placeholder='Mini-league name' type='text' name='minileague-name' />
               </InputGroup>
             </Form>
 
             <h4 className='left-col-minileague-text'>Join mini-league</h4>
             <Form style={{marginBottom: 10}} onSubmit={this.joinMiniLeague}>
               <InputGroup>
-                <Form.Control placeholder='Mini-league name' type='text' name='minileague-name' />
+                <Form.Control disabled={!this.state.joinMiniLeagueEnabled} placeholder='Mini-league name' type='text' name='minileague-name' />
               </InputGroup>
             </Form>
           </div>
