@@ -90,7 +90,7 @@ class Scoring extends React.Component {
           </div> : 
           <div className='no-kickoffs-container'>
             <div className='no-kickoffs-text'>
-              No games from this gameweek have kicked off yet.
+              This week's games have not kicked off yet.
             </div>
           </div>}
           {this.state.user_predictions.map(match => (
