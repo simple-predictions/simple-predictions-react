@@ -9,6 +9,8 @@ class FeedbackPopup extends React.Component {
       buttonEnabled: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.updateSummary = this.updateSummary.bind(this)
+    this.updateDescription = this.updateDescription.bind(this)
   }
   getUserDetails() {
     return new Promise(resolve => {
@@ -86,11 +88,23 @@ class FeedbackPopup extends React.Component {
       credentials: 'include'
     }
 
-    fetch(base_url+'/create-jira-issue', requestOptions).then({
-      buttonEnabled: true
+    fetch(base_url+'/create-jira-issue', requestOptions).then(() => {
+      this.setState({
+        buttonEnabled: true,
+        summary: '',
+        description: ''
+      })
     })
     this.props.updateAlertMessage('Your feedback has been recorded. Thank you!')
     this.props.onTogglePopup()
+  }
+
+  updateSummary(event) {
+    this.setState({summary: event.target.value});
+  }
+
+  updateDescription(event) {
+    this.setState({description: event.target.value});
   }
 
   render() {
@@ -113,6 +127,8 @@ class FeedbackPopup extends React.Component {
                 className='form-field'
                 autoFocus
                 name="summary"
+                value={this.state.summary}
+                onChange={this.updateSummary}
               />
             </FormGroup>
             <FormGroup controlId="description" bssize="large">
@@ -121,6 +137,8 @@ class FeedbackPopup extends React.Component {
                 as='textarea'
                 className='form-field'
                 name="description"
+                value={this.state.description}
+                onChange={this.updateDescription}
               />
             </FormGroup>
             <Button disabled={!this.state.buttonEnabled} size="lg" type="submit">
