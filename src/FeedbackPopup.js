@@ -69,6 +69,7 @@ class FeedbackPopup extends React.Component {
         },
         'customfield_10031': username,
         'customfield_10033': email,
+        'customfield_10029': window.location.pathname,
         'issuetype': {
           'name': issuetype
         }
@@ -77,7 +78,6 @@ class FeedbackPopup extends React.Component {
 
     if (issuetype === 'Bug') {
       // Include some extra debugging info
-      reqBody.fields.customfield_10029 = window.location.pathname
       reqBody.fields.customfield_10032 = window.navigator.userAgent
     }
 
