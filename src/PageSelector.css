@@ -74,3 +74,13 @@ h4.left-col-follow-text {
         transform: translateX(-50%) translateY(-50%);
     }
 }
+
+.option-title-link {
+    text-decoration: none;
+    color: black;
+}
+
+.option-title-link:hover {
+    text-decoration: none;
+    color: black;
+}
