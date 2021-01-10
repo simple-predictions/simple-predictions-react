@@ -7,12 +7,16 @@ class ResetPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      redirect: null
+      redirect: null,
+      buttonEnabled: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(event) {
     event.preventDefault()
+    this.setState({
+      buttonEnabled: false
+    })
     const data = new FormData(event.target)
     const username = data.get('username')
 
@@ -23,12 +27,18 @@ class ResetPassword extends React.Component {
       credentials: 'include'
     }
 
-    fetch(base_url+'/resetpassword', requestOptions).then(res => {
+    fetch(base_url+'/resetpassword', requestOptions).then(async (res) => {
       if (res.status === 200) {
-        this.props.updateAlertMessage('Please check your email for a link.')
+        this.props.updateAlertMessage('Please check your email for a link.', 'success')
         this.setState({
           redirect: '/'
         })
+      } else {
+        this.setState({
+          buttonEnabled: true
+        })
+        const data = await res.json()
+        this.props.updateAlertMessage(data, 'danger')
       }
     })
   }
@@ -50,7 +60,7 @@ class ResetPassword extends React.Component {
               name="username"
             />
           </FormGroup>
-          <Button className='main-form-button form-buttons' size="lg" type="submit">
+          <Button disabled={!this.state.buttonEnabled} className='main-form-button form-buttons' size="lg" type="submit">
             Reset
           </Button>
         </form>

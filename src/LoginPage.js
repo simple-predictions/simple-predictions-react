@@ -11,7 +11,8 @@ class LoginPage extends React.Component {
       username: '',
       password: '',
       errorMessage: '',
-      errorCount: 0
+      errorCount: 0,
+      buttonEnabled: true
     }
     this.updateUsername = this.updateUsername.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
@@ -23,6 +24,9 @@ class LoginPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      buttonEnabled: false
+    })
     const username = this.state.username
     const password = this.state.password
 
@@ -34,11 +38,11 @@ class LoginPage extends React.Component {
     }
 
     fetch(base_url+'/login', requestOptions).then((res) => {
-      console.log(res)
       if (res.status === 200) {
         window.location.reload(false)
       } else {
         this.setState({
+          buttonEnabled: true,
           errorCount: this.state.errorCount + 1,
           errorMessage: 'Your username or password is incorrect. Please try again'
         })
@@ -79,7 +83,7 @@ class LoginPage extends React.Component {
             />
           </FormGroup>
           <Link className='secondary-form-button form-buttons' to='/register'>Sign up</Link>
-          <Button className='main-form-button form-buttons' size="lg" disabled={!this.validateForm()} type="submit">
+          <Button className='main-form-button form-buttons' size="lg" disabled={!this.validateForm() || !this.state.buttonEnabled} type="submit">
             Login
           </Button>
         </form>

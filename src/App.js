@@ -25,7 +25,8 @@ class App extends React.Component {
     this.state = {
       apiCookie: '',
       displayFeedbackPopup: false,
-      alertMessage: ''
+      alertMessage: '',
+      alertVariant: ''
     }
 
     this.clearApiCookie = this.clearApiCookie.bind(this)
@@ -129,16 +130,17 @@ class App extends React.Component {
     })
   }
 
-  updateAlertMessage(message) {
+  updateAlertMessage(message, variant='success') {
     this.setState({
-      alertMessage: message
+      alertMessage: message,
+      alertVariant: variant
     })
   }
 
   render() {
     return(
       <div>
-        {this.state.alertMessage && <div className='feedback-success-container'><Alert variant='success' className='feedback-success' onClose={() => this.setState({alertMessage: ''})} dismissible>{this.state.alertMessage}</Alert></div>}
+        {this.state.alertMessage && <div className='feedback-success-container'><Alert variant={this.state.alertVariant} className='feedback-success' onClose={() => this.setState({alertMessage: ''})} dismissible>{this.state.alertMessage}</Alert></div>}
         <FeedbackPopup updateAlertMessage={this.updateAlertMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
         <FeedbackToggle onTogglePopup={this.toggleFeedbackPopup} />
         <Router>

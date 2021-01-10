@@ -7,12 +7,16 @@ class CreateNewPassword extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      redirect: null
+      redirect: null,
+      buttonEnabled: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(event) {
     event.preventDefault()
+    this.setState({
+      buttonEnabled: false
+    })
     const data = new FormData(event.target)
     const password = data.get('password')
     const params = new URLSearchParams(this.props.location.location.search);
@@ -26,12 +30,18 @@ class CreateNewPassword extends React.Component {
       credentials: 'include'
     }
     
-    fetch(base_url+'/createnewpassword', requestOptions).then(res => {
+    fetch(base_url+'/createnewpassword', requestOptions).then(async (res) => {
       if (res.status === 200) {
         this.setState({
           redirect: '/'
         })
-        this.props.updateAlertMessage('Your password has been updated. Please login below.')
+        this.props.updateAlertMessage('Your password has been updated. Please login below.', 'success')
+      } else {
+        this.setState({
+          buttonEnabled: true
+        })
+        const data = await res.json()
+        this.props.updateAlertMessage(data, 'danger')
       }
     })
   }
@@ -54,7 +64,7 @@ class CreateNewPassword extends React.Component {
               name="password"
             />
           </FormGroup>
-          <Button className='main-form-button form-buttons' size="lg" type="submit">
+          <Button disabled={!this.state.buttonEnabled} className='main-form-button form-buttons' size="lg" type="submit">
             Reset
           </Button>
         </form>

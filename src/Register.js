@@ -11,7 +11,8 @@ class Register extends React.Component {
       password: '',
       email: '',
       errorMessage: '',
-      errorCount: 0
+      errorCount: 0,
+      buttonEnabled: true
     }
     this.updateUsername = this.updateUsername.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
@@ -25,6 +26,9 @@ class Register extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      buttonEnabled: false
+    })
     const username = this.state.username
     const password = this.state.password
     const email = this.state.email
@@ -45,7 +49,8 @@ class Register extends React.Component {
     }).then((res) => res.json()).then((data) => {
       this.setState({
         errorCount: this.state.errorCount + 1,
-        errorMessage: data.message
+        errorMessage: data.message,
+        buttonEnabled: true
       })
     })
   }
@@ -98,7 +103,7 @@ class Register extends React.Component {
               />
             </FormGroup>
             <Link className='form-buttons secondary-form-button' to='/'>Login</Link>
-            <Button className='form-buttons main-form-button' size='lg' disabled={!this.validateForm()} type="submit">
+            <Button className='form-buttons main-form-button' size='lg' disabled={!this.validateForm() || !this.state.buttonEnabled} type="submit">
               Sign up
             </Button>
           </form>
