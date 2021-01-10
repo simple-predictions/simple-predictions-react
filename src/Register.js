@@ -36,7 +36,7 @@ class Register extends React.Component {
       credentials: 'include'
     }
 
-    /*fetch(base_url+'/register', requestOptions).then((res) => {
+    fetch(base_url+'/register', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.href = '/'
       } else {
@@ -47,7 +47,7 @@ class Register extends React.Component {
         errorCount: this.state.errorCount + 1,
         errorMessage: data.message
       })
-    })*/
+    })
   }
 
   updateUsername(event) {
