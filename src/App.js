@@ -13,6 +13,8 @@ import FeedbackToggle from './FeedbackToggle'
 import FeedbackPopup from './FeedbackPopup'
 import {Alert} from 'react-bootstrap'
 import base_url from './globals'
+import ResetPassword from './ResetPassword'
+import CreateNewPassword from './CreateNewPassword'
 
 // eslint-disable-next-line
 import * as Sentry from '@sentry/browser';
@@ -23,15 +25,14 @@ class App extends React.Component {
     this.state = {
       apiCookie: '',
       displayFeedbackPopup: false,
-      feedbackMessage: '',
-      showFeedbackMessage: true
+      alertMessage: ''
     }
 
     this.clearApiCookie = this.clearApiCookie.bind(this)
     this.getUserPredictions = this.getUserPredictions.bind(this)
     this.getMiniLeagues = this.getMiniLeagues.bind(this)
     this.toggleFeedbackPopup = this.toggleFeedbackPopup.bind(this)
-    this.updateFeedbackMessage = this.updateFeedbackMessage.bind(this)
+    this.updateAlertMessage = this.updateAlertMessage.bind(this)
   }
   componentDidMount() {
     var apiCookie = Cookies.get('connect.sid')
@@ -128,17 +129,17 @@ class App extends React.Component {
     })
   }
 
-  updateFeedbackMessage() {
+  updateAlertMessage(message) {
     this.setState({
-      feedbackMessage: 'Your feedback has been recorded. Thank you!'
+      alertMessage: message
     })
   }
 
   render() {
     return(
       <div>
-        {this.state.feedbackMessage && this.state.showFeedbackMessage && <div className='feedback-success-container'><Alert variant='success' className='feedback-success' onClose={() => this.setState({showFeedbackMessage: false})} dismissible>{this.state.feedbackMessage}</Alert></div>}
-        <FeedbackPopup updateFeedbackMessage={this.updateFeedbackMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
+        {this.state.alertMessage && <div className='feedback-success-container'><Alert variant='success' className='feedback-success' onClose={() => this.setState({alertMessage: ''})} dismissible>{this.state.alertMessage}</Alert></div>}
+        <FeedbackPopup updateAlertMessage={this.updateAlertMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
         <FeedbackToggle onTogglePopup={this.toggleFeedbackPopup} />
         <Router>
           <Switch>
@@ -148,6 +149,8 @@ class App extends React.Component {
             <Route path='/predictions'><Predictions getUserPredictions={this.getUserPredictions} clearApiCookie={this.clearApiCookie} /></Route>
             <Route path='/register'><FrontPage widget={'Register'} /></Route>
             <Route path='/scores'><Scoring getUserPredictions={this.getUserPredictions} /></Route>
+            <Route path='/resetpassword'><FrontPage widget={'Reset Password'} updateAlertMessage={this.updateAlertMessage} /></Route>
+            <Route path='/createnewpassword' component={(routeProps) => <FrontPage widget={'Create new password'} location={routeProps} updateAlertMessage={this.updateAlertMessage} />}></Route>
             <Route exact path='/'>{this.state.apiCookie ? <PageSelector clearApiCookie={this.clearApiCookie} /> : <FrontPage widget={'Login'} />}</Route>
           </Switch>
         </Router>

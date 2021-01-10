@@ -83,6 +83,7 @@ class LoginPage extends React.Component {
             Login
           </Button>
         </form>
+        <Link style={{textAlign: 'right', width: '100%', marginTop:10}} className='secondary-form-button form-buttons' to='/resetpassword'>Forgot password</Link>
       </Container>
     )
   }

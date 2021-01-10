@@ -9,31 +9,34 @@ class Register extends React.Component {
     this.state = {
       username: '',
       password: '',
+      email: '',
       errorMessage: '',
       errorCount: 0
     }
     this.updateUsername = this.updateUsername.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
+    this.updateEmail = this.updateEmail.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   validateForm() {
-    return this.state.username.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0 && this.state.email.length > 0;
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const username = this.state.username
     const password = this.state.password
+    const email = this.state.email
 
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({username: username, password:password}),
+      body: JSON.stringify({username: username, password:password, email: email}),
       credentials: 'include'
     }
 
-    fetch(base_url+'/register', requestOptions).then((res) => {
+    /*fetch(base_url+'/register', requestOptions).then((res) => {
       if (res.status === 200) {
         window.location.href = '/'
       } else {
@@ -44,7 +47,7 @@ class Register extends React.Component {
         errorCount: this.state.errorCount + 1,
         errorMessage: data.message
       })
-    })
+    })*/
   }
 
   updateUsername(event) {
@@ -52,6 +55,9 @@ class Register extends React.Component {
   }
   updatePassword(event) {
     this.setState({password: event.target.value});
+  }
+  updateEmail(event) {
+    this.setState({email: event.target.value});
   }
 
   render() {
@@ -71,6 +77,16 @@ class Register extends React.Component {
                 value={this.state.username}
                 onChange={this.updateUsername}
               />
+            </FormGroup>
+            <FormGroup controlId="email" bssize="large">
+              <FormControl
+                  className='form-field'
+                  placeholder="Email"
+                  autoFocus
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.updateEmail}
+                />
             </FormGroup>
             <FormGroup controlId="password" bssize="large">
               <FormControl

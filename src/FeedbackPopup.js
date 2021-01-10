@@ -79,7 +79,7 @@ class FeedbackPopup extends React.Component {
     }
 
     fetch(base_url+'/create-jira-issue', requestOptions)
-    this.props.updateFeedbackMessage()
+    this.props.updateAlertMessage('Your feedback has been recorded. Thank you!')
     this.props.onTogglePopup()
   }
 
