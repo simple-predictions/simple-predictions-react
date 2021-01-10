@@ -13,6 +13,7 @@ class Scoring extends React.Component {
     }
     this.getFollowingList = this.getFollowingList.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
+    this.handleGameweekChange = this.handleGameweekChange.bind(this)
   }
   async componentDidMount() {
     var newState = await this.props.getUserPredictions()
@@ -22,7 +23,7 @@ class Scoring extends React.Component {
   }
 
   getFollowingList() {
-    fetch(base_url+'/friends', {credentials: 'include'}).then(res => res.json()).then(data => {
+    fetch(base_url+'/friends', {credentials: 'include'}).then(res => {if (res.status === 200) return res.json()}).then(data => {
       this.setState({
         followingList: data
       })
@@ -37,6 +38,12 @@ class Scoring extends React.Component {
     this.setState(newState)
   }
 
+  async handleGameweekChange(event) {
+    var newState = await this.props.getUserPredictions(event.target.value)
+    newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
+    this.setState(newState)
+  }
+
   render() {
     return (
       <div className='m-0 row'>
@@ -44,39 +51,48 @@ class Scoring extends React.Component {
           <HomepageButton />
           <div className='left-col-scoring-container'>
             <h1 className='left-col-scoring-text'>Scores</h1>
+            <DropdownSelector length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
           </div>
         </div>
         <div className='col-md-8 right-col'>
-          <div className='scored-header-row' style={{marginBottom: 0}}>
-            <div className='scored-header-row-inner-container' style={{paddingBottom: 0}}>
-              <div className='col-md-3'></div>
-              <div className='col-md-6'>
-                <div className='col-md-4'>
-                  <DropdownSelector arrowStyle={{marginTop: 8}} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
-                </div>
-                <div className='col-md-4'>
-                </div>
-                <div className='col-md-4'>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='scored-header-row'>
-            <div className='scored-header-row-inner-container'>
-              <div className='col-md-3'></div>
-              <div className='col-md-6'>
-                <div className='col-md-4'>
-                  Predicted Score
-                </div>
-                <div className='col-md-4'>
-                  Live Score
-                </div>
-                <div className='col-md-4'>
-                  Points
+          {this.state.user_predictions.length > 0 ? 
+          <div>
+            <div className='scored-header-row' style={{marginBottom: 0}}>
+              <div className='scored-header-row-inner-container' style={{paddingBottom: 0}}>
+                <div className='col-md-3'></div>
+                <div className='col-md-6'>
+                  <div className='col-md-4'>
+                    <DropdownSelector arrowStyle={{marginTop: 8}} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
+                  </div>
+                  <div className='col-md-4'>
+                  </div>
+                  <div className='col-md-4'>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div className='scored-header-row'>
+              <div className='scored-header-row-inner-container'>
+                <div className='col-md-3'></div>
+                <div className='col-md-6'>
+                  <div className='col-md-4'>
+                    Predicted Score
+                  </div>
+                  <div className='col-md-4'>
+                    Live Score
+                  </div>
+                  <div className='col-md-4'>
+                    Points
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> : 
+          <div className='no-kickoffs-container'>
+            <div className='no-kickoffs-text'>
+              No games from this gameweek have kicked off yet.
+            </div>
+          </div>}
           {this.state.user_predictions.map(match => (
             <div key={match.home_team} className='scored-match-container'>
               <div className='scored-match-inner-container'>

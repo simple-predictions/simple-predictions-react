@@ -105,18 +105,6 @@ class Predictions extends React.Component {
             {this.state.user_predictions.map((match) => (
               <div className='outer-container' key={match._id}>
                 <div className='outer-pred-container'>
-                    {/*<div className='points-container'>
-                      Points: {match.user_predictions[0]['points']}
-                    </div>
-                    <div style={{background: match.status === 'IN_PLAY' ? '#ff2121' : '#ffd230'}} className='live-score'>
-                      <div style={{display: match.status === 'IN_PLAY' ? 'inline-block' : 'none'}} className='pulsing-circle'></div>
-                      {match.live_home_score}
-                      -
-                      {match.live_away_score}
-                    </div>
-                    <div className='status'>
-                      Status: {match.status}
-                    </div>*/}
                   <div className='pred-container'>
                     <div className='home-team-container'>
                       <img alt="home club badge" className='club-badge' height={70} src={require('./badges/'+match.home_team+'.png')}/>

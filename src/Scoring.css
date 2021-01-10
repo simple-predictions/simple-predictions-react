@@ -95,3 +95,15 @@
     background-color: red;
     animation: pulse-dot 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
 }
+
+.no-kickoffs-container {
+    display: flex;
+    height: 100vh;
+}
+
+.no-kickoffs-text {
+    margin: auto;
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 1.25rem;
+}
