@@ -142,8 +142,8 @@ class App extends React.Component {
       <div>
         {this.state.alertMessage && <div className='feedback-success-container'><Alert variant={this.state.alertVariant} className='feedback-success' onClose={() => this.setState({alertMessage: ''})} dismissible>{this.state.alertMessage}</Alert></div>}
         <FeedbackPopup updateAlertMessage={this.updateAlertMessage} onTogglePopup={this.toggleFeedbackPopup} display={this.state.displayFeedbackPopup} />
-        <FeedbackToggle onTogglePopup={this.toggleFeedbackPopup} />
         <Router>
+          <FeedbackToggle apiCookie={this.state.apiCookie} onTogglePopup={this.toggleFeedbackPopup} />
           <Switch>
             {this.state.apiCookie==='' ? <Route path='/'><FrontPage widget={'Login'} /></Route> : null }
             <Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />
