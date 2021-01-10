@@ -3,7 +3,7 @@ import React from 'react'
 const BetaStamp = () => {
   return(
     <div className='beta-div-container'>
-      BETA
+      ALPHA
     </div>
   )
 }
