@@ -9,7 +9,9 @@ class Scoring extends React.Component {
     super(props)
     this.state = {
       user_predictions: [],
-      followingList: []
+      followingList: [],
+      gameweekDropdownDisabled: true,
+      friendDropdownDisabled: false
     }
     this.getFollowingList = this.getFollowingList.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
@@ -18,6 +20,7 @@ class Scoring extends React.Component {
   async componentDidMount() {
     var newState = await this.props.getUserPredictions()
     newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
+    newState.gameweekDropdownDisabled = false
     this.getFollowingList()
     this.setState(newState)
   }
@@ -31,16 +34,24 @@ class Scoring extends React.Component {
   }
 
   async handleUpdate(event) {
+    this.setState({
+      friendDropdownDisabled: true
+    })
     var friend_username = this.state.followingList[event.target.value-1].name
     if (friend_username === 'Mine') friend_username = null
-    var newState = await this.props.getUserPredictions(0, friend_username)
+    var newState = await this.props.getUserPredictions(this.state.gameweek, friend_username)
     newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
+    newState.friendDropdownDisabled = false
     this.setState(newState)
   }
 
   async handleGameweekChange(event) {
+    this.setState({
+      gameweekDropdownDisabled: true
+    })
     var newState = await this.props.getUserPredictions(event.target.value)
     newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
+    newState.gameweekDropdownDisabled = false
     this.setState(newState)
   }
 
@@ -51,7 +62,7 @@ class Scoring extends React.Component {
           <HomepageButton />
           <div className='left-col-scoring-container'>
             <h1 className='left-col-scoring-text'>Scores</h1>
-            <DropdownSelector length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
+            <DropdownSelector enabled={this.state.gameweekDropdownDisabled} length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
           </div>
         </div>
         <div className='col-md-8 right-col'>
@@ -62,7 +73,7 @@ class Scoring extends React.Component {
                 <div className='col-md-3'></div>
                 <div className='col-md-6'>
                   <div className='col-md-4'>
-                    <DropdownSelector arrowStyle={{marginTop: 8}} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
+                    <DropdownSelector enabled={this.state.friendDropdownDisabled} arrowStyle={{marginTop: 8}} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
                   </div>
                   <div className='col-md-4'>
                   </div>

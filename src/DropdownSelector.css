@@ -9,6 +9,10 @@ select {
     width: 100%;
 }
 
+select:disabled {
+    filter: contrast(0.4);
+}
+
 .dropdown-arrow {
     position: absolute;
     filter: invert();
