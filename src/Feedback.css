@@ -48,3 +48,45 @@
     filter: invert(0.5);
     cursor: pointer;
 }
+
+.feedback-toggle-corner {
+    width: 0;
+    height: 0;
+    border-bottom: 100px solid #defc5f;
+    border-left: 100px solid transparent;
+    position: fixed;
+    z-index: 999;
+    bottom: 0;
+    right: 0;
+}
+
+.feedback-toggle-corner:hover {
+    cursor: pointer;
+}
+
+.feedback-corner-text {
+    position: absolute;
+    right: 0;
+    transform: rotate(-45deg);
+    font-family: 'Montserrat';
+    bottom: -75px;
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .feedback-toggle-corner {
+        display: block;
+    }
+    .feedback-toggle {
+        display: none;
+    }
+}
+
+@media (min-width: 600px) {
+    .feedback-toggle-corner {
+        display: none;
+    }
+    .feedback-toggle {
+        display: block;
+    }
+}
