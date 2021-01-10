@@ -24,11 +24,14 @@ class MiniLeagues extends React.Component {
   }
   async componentDidMount() {
     var newState = await this.props.getMiniLeagues()
-    var league_id = newState['minileagues'][0]._id
-    newState['league_id'] = league_id
-    newState['selectedMiniLeague'] = newState['minileagues'][0]
-    this.getMiniLeagueRankings(league_id)
-    this.setState(newState)
+    console.log(newState)
+    if (newState['minileagues'].length > 0) {
+      var league_id = newState['minileagues'][0]._id
+      newState['league_id'] = league_id
+      newState['selectedMiniLeague'] = newState['minileagues'][0]
+      this.getMiniLeagueRankings(league_id)
+      this.setState(newState)
+    }
   }
 
   handleSelect(eventKey) {
