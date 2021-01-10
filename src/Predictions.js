@@ -11,19 +11,25 @@ class Predictions extends React.Component {
     this.state = {
       user_predictions: [],
       gameweek: 0,
-      successCount: 0
+      successCount: 0,
+      selectorDisabled: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGameweekChange = this.handleGameweekChange.bind(this)
     this.closeAlert = this.closeAlert.bind(this)
   }
   async handleGameweekChange(event) {
+    this.setState({
+      selectorDisabled: true
+    })
     var newState = await this.props.getUserPredictions(event.target.value)
+    newState.selectorDisabled = false
     this.setState(newState)
   }
 
   async componentDidMount() {
     var newState = await this.props.getUserPredictions(this.state.gameweek)
+    newState.selectorDisabled = false
     this.setState(newState)
   }
 
@@ -96,7 +102,7 @@ class Predictions extends React.Component {
           {this.state.successMessage && <Alert variant="success" dismissible onClose={this.closeAlert}>{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
           <div className='left-col-prediction-container'>
             <h1 className='left-col-prediction-text'>Predictions</h1>
-            <DropdownSelector length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
+            <DropdownSelector enabled={this.state.selectorDisabled} length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
             <input className='predictions-form-submit-button' type='submit' value='Submit' form='predictions-form' />
           </div>
         </div>
