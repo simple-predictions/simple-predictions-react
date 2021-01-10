@@ -5,9 +5,12 @@ import base_url from './globals'
 class FeedbackPopup extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      buttonEnabled: true
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  getUsername() {
+  getUserDetails() {
     return new Promise(resolve => {
       fetch(base_url+'/userinfo', {credentials: 'include'}).then(res => {
         if (res.status === 200) {
@@ -18,7 +21,7 @@ class FeedbackPopup extends React.Component {
         }
       }).then(data => {
         if (data) {
-          resolve(data.username)
+          resolve({username: data.username, email: data.email})
           return
         }
       })
@@ -27,12 +30,16 @@ class FeedbackPopup extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault()
+    this.setState({
+      buttonEnabled: false
+    })
     const data = new FormData(event.target)
     const summary = data.get('summary')
     const description = data.get('description')
     const issuetype = data.get('issuetype')
-    const username = await this.getUsername()
-    console.log(username)
+    const userdetails = await this.getUserDetails()
+    const username = userdetails.username
+    const email = userdetails.email
 
     var reqBody = {
       'fields': {
@@ -59,6 +66,7 @@ class FeedbackPopup extends React.Component {
           ]
         },
         'customfield_10031': username,
+        'customfield_10033': email,
         'issuetype': {
           'name': issuetype
         }
@@ -78,7 +86,9 @@ class FeedbackPopup extends React.Component {
       credentials: 'include'
     }
 
-    fetch(base_url+'/create-jira-issue', requestOptions)
+    fetch(base_url+'/create-jira-issue', requestOptions).then({
+      buttonEnabled: true
+    })
     this.props.updateAlertMessage('Your feedback has been recorded. Thank you!')
     this.props.onTogglePopup()
   }
@@ -113,7 +123,7 @@ class FeedbackPopup extends React.Component {
                 name="description"
               />
             </FormGroup>
-            <Button size="lg" type="submit">
+            <Button disabled={!this.state.buttonEnabled} size="lg" type="submit">
               Submit
             </Button>
           </form>
