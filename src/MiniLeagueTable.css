@@ -2,6 +2,7 @@
     color: black;
     border-collapse: collapse;
     border-spacing: 0 30px;
+    table-layout: fixed;
 }
 
 .minileague-prediction-table > thead {

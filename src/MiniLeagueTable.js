@@ -56,7 +56,7 @@ class MiniLeagueTable extends React.Component {
         <Table borderless className='minileague-prediction-table mini-table'>
           <thead>
             <tr>
-              <th>Home Team/Away Team</th>
+              <th>Home Team vs Away Team</th>
               <th>Predictions</th>
               {/*this.state.minileague.members.map((member) => (
                 <th key={member.username}>{member.username}</th>

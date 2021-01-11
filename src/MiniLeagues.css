@@ -44,3 +44,7 @@ h4.left-col-minileague-text {
     color: white;
     font-size: 1.25rem;
 }
+
+.nav-fill .nav-item {
+    flex: 1;
+}
