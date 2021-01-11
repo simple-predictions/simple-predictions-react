@@ -64,7 +64,7 @@ class PageSelector extends React.Component {
   render() {
     return (
       <div className='m-0 row selector'>
-        <div className='col-md-4 left-col'>
+        <div className='col-lg-4 left-col'>
           <div className='left-col-container'>
             <h1 className='left-col-text'>Hi {this.state.user.username}</h1>
             <h4 className='left-col-follow-text'>Follow someone</h4>
@@ -79,7 +79,7 @@ class PageSelector extends React.Component {
             {this.state.responseMessage && <Alert variant={this.state.responseStatus >= 400 ? 'danger' : 'success'}>{this.state.responseMessage}</Alert>}
           </div>
         </div>
-        <div className='col-md-8 selector-col'>
+        <div className='col-lg-8 selector-col'>
           <div className='row'>
             <div className='col-md-2'></div>
               <div className='col-md-2'>

@@ -1,6 +1,6 @@
 .minileague-prediction-table {
     color: black;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0 30px;
 }
 
@@ -8,21 +8,44 @@
     color: white;
 }
 
-.minileague-prediction-table-row > td {
+.minileague-prediction-table-row-inner-container {
     padding: 20px;
     background-color: #defc5f;
+    border-radius: 10px;
 }
 
-.minileague-prediction-table-row > td:first-child {
-    border-radius: 10px 0 0 10px;
-    -moz-border-radius: 10px 0 0 10px;
-  }
-  
-.minileague-prediction-table-row > td:last-child {
-    border-radius: 0 10px 10px 0; 
-    -moz-border-radius: 0 10px 10px 0;
+.minileague-prediction-table-row > td {
+    margin: 10px;
 }
 
 .minileague-prediction-container {
     margin: 0 30px;
+}
+
+tr.minileague-prediction-table-row-temp {
+    border-top: 1px solid black;
+}
+
+tr.minileague-prediction-table-row-temp > td:first-child {
+    margin-top: 0;
+    border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0 0 10px 10px;
+}
+
+tr.hide-curved-corners > td:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+tr.hide-curved-corners > td:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+@media (max-width: 767px) {
+    table.minileague-prediction-table thead {
+        display: none;
+    }
+
+    table.minileague-prediction-table td {
+        display: block;
+    }
 }

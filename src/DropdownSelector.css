@@ -1,12 +1,15 @@
 select {
     appearance: none;
-    border: none;
+    border: 1px #323232 solid;
     background-color: #323232;
     padding: 5px 10px;
     color: white;
     font-family: 'Montserrat';
     background-image: url('icons/arrow.png');
     width: 100%;
+    padding-right: 25px;
+    width: fit-content;
+    min-width: 100%;
 }
 
 select:disabled {
@@ -16,7 +19,7 @@ select:disabled {
 .dropdown-arrow {
     position: absolute;
     filter: invert();
-    margin-top: 7px;
+    margin-top: 0.5rem;
     right: 7px;
     pointer-events: none;
 }

@@ -141,3 +141,64 @@ input[type=number] {
   top: 50%;
   transform: translateY(-50%);
 }
+
+.prediction-score-input {
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.predictions-form-submit-button-mobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .club-badge {
+    height: 50px;
+  }
+
+  .prediction-circle {
+    height: 70px;
+    width: 70px;
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+  .pred-container {
+    padding: 0;
+  }
+
+  div.pred-container > div.home-team-container, div.pred-container > div.away-team-container {
+    min-width: 20%;
+  }
+
+  .pred-container > div {
+    width: 100%;
+  }
+
+  .prediction-score-input {
+    height: 40px;
+    width: 40px;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 991px) {
+  input.predictions-form-submit-button-mobile {
+    display: block;
+    margin: auto;
+    background-color: #defc5f;
+    color: black;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
+
+  .predictions-form-submit-button {
+    display: none
+  }
+
+  form.predictions-form .outer-container:nth-last-child(2) > .outer-pred-container {
+    margin-bottom: 20px;
+  }
+}

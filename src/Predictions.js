@@ -107,7 +107,7 @@ class Predictions extends React.Component {
 
     return (
       <div className='m-0 row'>
-        <div className='col-md-4 left-col-prediction-outer-container'>
+        <div className='col-lg-4 left-col-prediction-outer-container'>
           <HomepageButton />
           {this.state.successMessage && <Alert variant="success" dismissible onClose={this.closeAlert}>{this.state.successMessage} - <strong>{this.state.successCount} attempt(s)</strong></Alert>}
           <div className='left-col-prediction-container'>
@@ -116,7 +116,7 @@ class Predictions extends React.Component {
             <input disabled={!this.state.submitEnabled} className='predictions-form-submit-button' type='submit' value='Submit' form='predictions-form' />
           </div>
         </div>
-        <div className='col-md-8 right-col'>
+        <div className='col-lg-8 right-col'>
           <form id='predictions-form' className='predictions-form' onSubmit={this.handleSubmit}>
             {this.state.user_predictions.map((match) => (
               <div className='outer-container' key={match._id}>
@@ -133,9 +133,9 @@ class Predictions extends React.Component {
                       {match.kick_off_time.getHours()}:
                       {("0" + match.kick_off_time.getMinutes()).slice(-2)}
                       </div>
-                      <input disabled={match.locked ? true : false} name={`${match._id}[home-pred]`} type='number' style={{width:20, textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['home_pred']} />
+                      <input className='prediction-score-input' disabled={match.locked ? true : false} name={`${match._id}[home-pred]`} type='number' style={{textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['home_pred']} />
                       -
-                      <input disabled={match.locked ? true : false} name={`${match._id}[away-pred]`} type='number' style={{width:20, textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['away_pred']} />
+                      <input className='prediction-score-input' disabled={match.locked ? true : false} name={`${match._id}[away-pred]`} type='number' style={{textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : ''}} defaultValue={match.user_predictions[0]['away_pred']} />
                     </div>
                     <div className='away-team-container'>
                       <img alt="away club badge" className='club-badge' height={70} src={require('./badges/'+match.away_team+'.png')}/>
@@ -145,6 +145,7 @@ class Predictions extends React.Component {
                 </div>
               </div>
             ))}
+            <input disabled={!this.state.submitEnabled} className='predictions-form-submit-button predictions-form-submit-button-mobile' type='submit' value='Submit' form='predictions-form' />
           </form>
         </div>
       </div>

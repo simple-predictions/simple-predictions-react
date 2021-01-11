@@ -58,34 +58,44 @@ class Scoring extends React.Component {
   render() {
     return (
       <div className='m-0 row'>
-        <div className='col-md-4 left-col-scoring-outer-container'>
+        <div className='col-lg-4 left-col-scoring-outer-container'>
           <HomepageButton />
           <div className='left-col-scoring-container'>
             <h1 className='left-col-scoring-text'>Scores</h1>
             <DropdownSelector enabled={this.state.gameweekDropdownDisabled} length={38} onValueUpdate={this.handleGameweekChange} startingValue={this.state.gameweek} />
           </div>
         </div>
-        <div className='col-md-8 right-col'>
+        <div className='col-lg-8 right-col'>
           {this.state.user_predictions.length > 0 ? 
           <div>
             <div className='scored-header-row' style={{marginBottom: 0}}>
               <div className='scored-header-row-inner-container' style={{paddingBottom: 0}}>
-                <div className='col-md-3'></div>
-                <div className='col-md-6'>
+                <div className='home-team-container col-md-2' style={{opacity: 0}}>
+                  <img alt="home club badge" className='club-badge' height={70} src={require('./badges/Arsenal.png')}/>
+                  <span className='prediction-circle'/>
+                </div>
+                <div className='col-md-8 scored-match-data-container scored-match-data-header'>
                   <div className='col-md-4'>
-                    <DropdownSelector enabled={this.state.friendDropdownDisabled} arrowStyle={{marginTop: 8}} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
+                    <DropdownSelector enabled={this.state.friendDropdownDisabled} style={{border: 'solid 1px #defc5f'}} onValueUpdate={this.handleUpdate} length={this.state.followingList.length} minileagueArr={this.state.followingList} />
                   </div>
                   <div className='col-md-4'>
                   </div>
                   <div className='col-md-4'>
                   </div>
                 </div>
+                <div className='away-team-container col-md-2' style={{opacity: 0}}>
+                  <img alt="away club badge" className='club-badge' height={70} src={require('./badges/Arsenal.png')}/>
+                  <span className='prediction-circle'/>
+                </div>
               </div>
             </div>
             <div className='scored-header-row'>
-              <div className='scored-header-row-inner-container'>
-                <div className='col-md-3'></div>
-                <div className='col-md-6'>
+              <div className='scored-header-row-inner-container' style={{paddingTop: 0}}>
+                <div className='home-team-container col-md-2' style={{opacity: 0}}>
+                  <img alt="home club badge" className='club-badge' height={70} src={require('./badges/Arsenal.png')}/>
+                  <span className='prediction-circle'/>
+                </div>
+                <div className='col-md-8 scored-match-data-container scored-match-data-header'>
                   <div className='col-md-4'>
                     Predicted Score
                   </div>
@@ -95,6 +105,10 @@ class Scoring extends React.Component {
                   <div className='col-md-4'>
                     Points
                   </div>
+                </div>
+                <div className='away-team-container col-md-2' style={{opacity: 0}}>
+                  <img alt="away club badge" className='club-badge' height={70} src={require('./badges/Arsenal.png')}/>
+                  <span className='prediction-circle'/>
                 </div>
               </div>
             </div>
@@ -107,11 +121,11 @@ class Scoring extends React.Component {
           {this.state.user_predictions.map(match => (
             <div key={match.home_team} className='scored-match-container'>
               <div className='scored-match-inner-container'>
-                <div className='home-team-container col-md-3'>
+                <div className='home-team-container col-md-2'>
                   <img alt="home club badge" className='club-badge' height={70} src={require('./badges/'+match.home_team+'.png')}/>
                   <span className='prediction-circle'/>
                 </div>
-                <div className='scored-match-data-container col-md-6'>
+                <div className='scored-match-data-container col-md-8'>
                   <div className='predicted-score-container col-md-4' style={{backgroundColor: '#defc5f'}}>
                     {match.user_predictions[0].home_pred} - {match.user_predictions[0].away_pred}
                   </div>
@@ -125,7 +139,7 @@ class Scoring extends React.Component {
                     <span className='points-circle prediction-circle' style={{backgroundColor: match.user_predictions[0].points > 0 ? 'green' : match.user_predictions[0].points < 0 ? 'red' : 'gray'}}/>
                   </div>
                 </div>
-                <div className='away-team-container col-md-3'>
+                <div className='away-team-container col-md-2'>
                   <img alt="away club badge" className='club-badge' height={70} src={require('./badges/'+match.away_team+'.png')}/>
                   <span className='prediction-circle'/>
                 </div>

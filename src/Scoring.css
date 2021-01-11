@@ -37,6 +37,11 @@
 
 .scored-match-data-container > div {
     margin: auto 20px;
+    flex: 1;
+}
+
+.scored-points-container {
+    padding: 10px;
 }
 
 .live-score-container, .predicted-score-container {
@@ -107,4 +112,27 @@
     color: white;
     font-family: 'Montserrat';
     font-size: 1.25rem;
+}
+
+div.scored-match-data-header > div {
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
+}
+
+@media (max-width: 900px) {
+    .scored-match-data-container > div {
+        margin: auto 10px;
+    }
+    .scored-match-data-container {
+        min-width: 50vw;
+        flex: 1;
+        padding: 0;
+    }
+    .col-lg-8.right-col {
+        padding: 0;
+    }
+    .scored-match-inner-container {
+        padding: 10px;
+    }
 }

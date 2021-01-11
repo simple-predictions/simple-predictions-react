@@ -138,7 +138,7 @@ class MiniLeagues extends React.Component {
   render() {
     return (
       <div className='m-0 row'>
-        <div className='col-md-4 left-col-prediction-outer-container'>
+        <div className='col-lg-4 left-col-prediction-outer-container'>
           <HomepageButton />
           {this.state.responseMessage && <Alert variant={this.state.responseStatus >= 400 ? 'danger' : 'success'}>{this.state.responseMessage}</Alert>}
           <div className='left-col-prediction-container'>
@@ -160,7 +160,7 @@ class MiniLeagues extends React.Component {
             </Form>
           </div>
         </div>
-        <div className='col-md-8 right-col'>
+        <div className='col-lg-8 right-col'>
           {this.state.minileagues.length > 0 ?
           <div>
             <Nav className='minileague-pills' fill activeKey={this.state.componentName} variant="pills" onSelect={this.handleSelect}>
