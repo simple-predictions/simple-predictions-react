@@ -9,6 +9,10 @@
     color: white;
 }
 
+.minileague-prediction-table th {
+    text-align: center;
+}
+
 .minileague-prediction-table-row-inner-container {
     padding: 20px;
     background-color: #defc5f;
@@ -16,7 +20,7 @@
 }
 
 .minileague-prediction-table-row > td {
-    margin: 10px;
+    margin: 10px 0;
 }
 
 .minileague-prediction-container {
