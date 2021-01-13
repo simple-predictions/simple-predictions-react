@@ -45,6 +45,22 @@ tr.hide-curved-corners > td:last-child {
     border-radius: 0 10px 0 0;
 }
 
+.minileague-scoring-circle {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+div.minileague-prediction-table-row-inner-container > div:last-child {
+    margin-bottom: 0;
+}
+
+.minileague-prediction-row {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
 @media (max-width: 767px) {
     table.minileague-prediction-table thead {
         display: none;

@@ -23,3 +23,7 @@ select:disabled {
     right: 7px;
     pointer-events: none;
 }
+
+.dropdown-container {
+    position: relative;
+}

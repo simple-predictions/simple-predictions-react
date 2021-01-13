@@ -4,6 +4,7 @@ import DropdownSelector from './DropdownSelector'
 import {Alert} from 'react-bootstrap'
 import HomepageButton from './HomepageButton'
 import base_url from './globals'
+import { findAllByTestId } from '@testing-library/react'
 
 class Predictions extends React.Component {
   constructor(props) {
