@@ -6,7 +6,14 @@ export const getUserInfo = createAsyncThunk(
   async () => await new Promise((resolve, reject) => {
     fetch(base_url+'/userinfo', {credentials: 'include'}).then(res => {
       if (res.status === 200) {
-        res.json().then(data => resolve(data))
+        res.json().then(data => {
+          data.friends = data.friends.map(friend => {
+            friend.name = friend.username
+            delete friend.username
+            return friend
+          })
+          resolve(data)
+        })
       } else {
         reject('Unsuccessful')
       }
@@ -28,11 +35,7 @@ export const userSlice = createSlice({
     [getUserInfo.fulfilled]: (state, action) => {
       state.username = action.payload.username
       state.email = action.payload.email
-      state.friends = action.payload.friends.map(friend => {
-        friend.name = friend.username
-        delete friend.username
-        return friend
-      })
+      state.friends = action.payload.friends
       state.loggedIn = true
     },
     [getUserInfo.rejected]: state => {
