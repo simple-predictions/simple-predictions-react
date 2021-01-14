@@ -6,84 +6,15 @@ import MiniLeagueRankings from './MiniLeagueRankings'
 import './MiniLeagues.css'
 import HomepageButton from '../HomepageButton'
 import {useSelector, useDispatch} from 'react-redux'
-import {selectAllMinileagues, updateSelectedIdx, selectSelectedMinileague} from './minileaguesSlice'
+import {selectAllMinileagues, updateSelectedIdx, selectSelectedMinileague, selectMinileaguesStatus} from './minileaguesSlice'
 import base_url from '../globals'
 
 const MiniLeagues = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      minileagues: [],
-      componentName: 'Predictions',
-      league_id: '',
-      selectedMiniLeague: {'members':[]},
-      selectedMiniLeagueTable: [],
-      loaded: false,
-      createMiniLeagueEnabled: true,
-      joinMiniLeagueEnabled: true
-    }
-    this.handleSelect = this.handleSelect.bind(this)
-    this.handleDropdownSelect = this.handleDropdownSelect.bind(this)
-    this.createMiniLeague = this.createMiniLeague.bind(this)
-    this.joinMiniLeague = this.joinMiniLeague.bind(this)
-  }
-  async componentDidMount() {
-    var newState = await this.props.getMiniLeagues()
-    this.setState({
-      loaded: true
-    })
-    if (newState['minileagues'].length > 0) {
-      var league_id = newState['minileagues'][0]._id
-      newState['league_id'] = league_id
-      newState['selectedMiniLeague'] = newState['minileagues'][0]
-      this.getMiniLeagueRankings(league_id)
-      this.setState(newState)
-    }
-  }
-
-  handleSelect(eventKey) {
-    this.setState({
-      componentName: eventKey
-    })
-  }
-
-  handleDropdownSelect(event) {
-    var idx = event.target.value - 1
-    var league_id = this.state.minileagues[idx]._id
-    this.setState({
-      league_id: league_id,
-      selectedMiniLeague: this.state.minileagues[idx],
-    })
-    this.getMiniLeagueRankings(league_id)
-  }
-
-  getMiniLeagueRankings(league_id) {
-    fetch(base_url+'/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
-      this.setState({
-        selectedMiniLeagueTable: data
-      })
-    })
-  }
-
-  updateSelectedMinileague(event) {
-    var idx = event.target.value - 1
-    var league_id = this.state.minileagues[idx]._id
-    fetch(base_url+'/minileaguetable?league_id='+league_id, {credentials: "include"}).then(res => res.json()).then(data => {
-      this.setState({
-        selectedMinileague: data
-      })
-    })
-  }
-
-  */
-  //const [minileagues, setMinileagues] = useState([])
   const dispatch = useDispatch()
   const minileagues = useSelector(selectAllMinileagues)
   const [componentName, setComponentName] = useState('MiniLeagueTable')
-  const [leagueID, setLeagueID] = useState('')
-  const selectedMiniLeague = useSelector(selectSelectedMinileague)
-  const [selectedMiniLeagueTable, setSelectedMiniLeagueTable] = useState([])
-  const [loaded, setLoaded] = useState(false)
+  const loaded = useSelector(selectMinileaguesStatus)
+  console.log(loaded)
   const [createMiniLeagueEnabled, setCreateMiniLeagueEnabled] = useState(true)
   const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true)
   const [responseMessage, setResponseMessage] = useState('')
@@ -178,13 +109,13 @@ const MiniLeagues = () => {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          {componentName === 'MiniLeagueTable' ? <MiniLeagueTable league_id={leagueID} /> : <MiniLeagueRankings />}
+          {componentName === 'MiniLeagueTable' ? <MiniLeagueTable /> : <MiniLeagueRankings />}
         </div>
         : 
         <div className='no-mini-league-statement-container'>
-          {loaded ? <div className='no-mini-league-statement'>
+          {loaded === 'success' && <div className='no-mini-league-statement'>
             Please create or join a mini-league on the left to view the table and others' predictions.
-          </div> : ''}
+          </div>}
         </div>
         }
       </div>

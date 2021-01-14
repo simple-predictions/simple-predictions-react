@@ -7,26 +7,6 @@ import {getUserInfo} from './User/userSlice'
 import {useDispatch} from 'react-redux'
 
 const LoginPage = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      errorMessage: '',
-      errorCount: 0,
-      buttonEnabled: true
-    }
-    this.updateUsername = this.updateUsername.bind(this)
-    this.updatePassword = this.updatePassword.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  updateUsername(event) {
-    this.setState({username: event.target.value});
-  }
-  updatePassword(event) {
-    this.setState({password: event.target.value});
-  }*/
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')

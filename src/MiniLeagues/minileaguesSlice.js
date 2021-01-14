@@ -58,7 +58,11 @@ export const minileaguesSlice = createSlice({
     }
   },
   extraReducers: {
+    [getMinileagues.pending]: state => {
+      state.status = 'pending'
+    },
     [getMinileagues.fulfilled]: (state, action) => {
+      state.status = 'success'
       state.all = action.payload.minileagues
     },
     [getMinileaguePreds.pending]: state => {

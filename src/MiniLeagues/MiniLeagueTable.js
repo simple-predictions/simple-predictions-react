@@ -8,58 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {getMinileaguePreds, selectSelectedMinileaguePreds, selectSelectedMinileagueGameweek, selectMinileaguesStatus} from './minileaguesSlice'
 
 const MiniLeagueTable = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      minileague: {members:[], matches:[]},
-      isOpenArr: [],
-      gameweek: 0
-    }
-    this.toggleIsOpen = this.toggleIsOpen.bind(this)
-    this.handleGameweekChange = this.handleGameweekChange.bind(this)
-  }
-
-  toggleIsOpen(id) {
-    var isOpenArr = this.state.isOpenArr
-    isOpenArr[id] = !(this.state.isOpenArr[id])
-    console.log(isOpenArr)
-    this.setState({
-      isOpenArr: isOpenArr
-    })
-  }
-  componentDidMount() {
-    this.getMiniLeague(0)
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
-      this.getMiniLeague(0)
-    }
-  } 
-
-  getMiniLeague(gameweek) {
-    var url = base_url+'/minileaguepredictions?league_id='+this.props.league_id+'&gameweek='+gameweek
-
-    fetch(url, {credentials: "include"}).then(response => {
-      if (response.status === 401) {
-        Cookies.remove('connect.sid')
-        this.props.clearApiCookie()
-        return []
-      }
-      return response.json()
-    }).then((data) => {
-      const isOpenArr = Object.assign({}, ...data['preds']['matches'].map(match => ({[match._id]: false})))
-      this.setState({
-        minileague: data['preds'],
-        isOpenArr: isOpenArr,
-        gameweek: data['gameweek']
-      })
-    })
-  }
-
-  async handleGameweekChange(event) {
-    this.getMiniLeague(event.target.value)
-  }*/
-
   const gameweek = useSelector(selectSelectedMinileagueGameweek)
   const preds = useSelector(selectSelectedMinileaguePreds)
   const updatingStatus = useSelector(selectMinileaguesStatus)
@@ -82,9 +30,6 @@ const MiniLeagueTable = () => {
           <tr>
             <th>Home Team vs Away Team</th>
             <th>Predictions</th>
-            {/*this.state.minileague.members.map((member) => (
-              <th key={member.username}>{member.username}</th>
-            ))*/}
         </tr>
         </thead>
         <tbody>

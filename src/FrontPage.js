@@ -6,13 +6,6 @@ import ResetPassword from './ResetPassword'
 import CreateNewPassword from './CreateNewPassword'
 
 const FrontPage = ({widget, location}) => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      errorMessage: '',
-      errorCount: 0
-    }
-  }*/
   window.scrollTo(0, 0)
   
   return (

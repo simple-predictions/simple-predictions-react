@@ -6,15 +6,6 @@ import {useDispatch} from 'react-redux'
 import {updateAlert} from './Alerts/alertsSlice'
 
 const ResetPassword = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      redirect: null,
-      buttonEnabled: true
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  */
   const dispatch = useDispatch()
   const [redirect, setRedirect] = useState()
   const [buttonEnabled, setButtonEnabled] = useState(true)

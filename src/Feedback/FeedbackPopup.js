@@ -8,40 +8,6 @@ import {selectUserUsername, selectUserEmail} from '../User/userSlice'
 import {updateAlert} from '../Alerts/alertsSlice'
 
 const FeedbackPopup = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      buttonEnabled: true
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.updateSummary = this.updateSummary.bind(this)
-    this.updateDescription = this.updateDescription.bind(this)
-  }
-  getUserDetails() {
-    return new Promise(resolve => {
-      fetch(base_url+'/userinfo', {credentials: 'include'}).then(res => {
-        if (res.status === 200) {
-          return res.json()
-        } else {
-          resolve('')
-          return 
-        }
-      }).then(data => {
-        if (data) {
-          resolve({username: data.username, email: data.email})
-          return
-        }
-      })
-    })
-  }
-
-  updateSummary(event) {
-    this.setState({summary: event.target.value});
-  }
-
-  updateDescription(event) {
-    this.setState({description: event.target.value});
-  }*/
   const display = useSelector(selectPopupOpen)
   const [summary, setSummary] = useState('')
   const [description, setDescription] = useState('')
@@ -112,7 +78,6 @@ const FeedbackPopup = () => {
       setSummary('')
       setDescription('')
     })
-    //this.props.updateAlertMessage('Your feedback has been recorded. Thank you!')
     dispatch(updateAlert({message: 'Your feedback has been recorded. Thank you!'}))
     dispatch(closePopup())
   }

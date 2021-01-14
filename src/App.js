@@ -50,8 +50,6 @@ const App = () => {
       <Router>
         <FeedbackToggle apiCookie={apiCookie} />
         <Switch>
-          {/*!apiCookie ? <Route path='/'><FrontPage widget={'Login'} /></Route> : null */}
-          {/*<Route path={'/minileague/:id'} component={(routeProps) => <MiniLeagueTable routeProps={routeProps} clearApiCookie={this.clearApiCookie} />} />*/}
           {apiCookie && <Route path='/minileagues'><MiniLeagues /></Route>}
           {apiCookie &&<Route path='/predictions'><Predictions /></Route>}
           {apiCookie &&<Route path='/scores'><Scoring /></Route>}

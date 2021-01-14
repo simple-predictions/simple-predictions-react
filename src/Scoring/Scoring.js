@@ -8,64 +8,13 @@ import { getScoredPreds, selectScoredMatches, selectScoringStatus, selectSelecte
 import { selectFriends } from '../User/userSlice'
 
 const Scoring = () => {
-  /*constructor(props) {
-    super(props)
-    this.state = {
-      user_predictions: [],
-      followingList: [],
-      gameweekDropdownDisabled: true,
-      friendDropdownDisabled: false
-    }
-    this.getFollowingList = this.getFollowingList.bind(this)
-    this.handleUpdate = this.handleUpdate.bind(this)
-    this.handleGameweekChange = this.handleGameweekChange.bind(this)
-  }
-  async componentDidMount() {
-    var newState = await this.props.getUserPredictions()
-    newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
-    newState.gameweekDropdownDisabled = false
-    this.getFollowingList()
-    this.setState(newState)
-  }
-
-  getFollowingList() {
-    fetch(base_url+'/friends', {credentials: 'include'}).then(res => {if (res.status === 200) return res.json()}).then(data => {
-      this.setState({
-        followingList: data
-      })
-    })
-  }
-
-  async handleUpdate(event) {
-    this.setState({
-      friendDropdownDisabled: true
-    })
-    var friend_username = this.state.followingList[event.target.value-1].name
-    if (friend_username === 'Mine') friend_username = null
-    var newState = await this.props.getUserPredictions(this.state.gameweek, friend_username)
-    newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
-    newState.friendDropdownDisabled = false
-    this.setState(newState)
-  }
-
-  async handleGameweekChange(event) {
-    this.setState({
-      gameweekDropdownDisabled: true
-    })
-    var newState = await this.props.getUserPredictions(event.target.value)
-    newState.user_predictions = newState.user_predictions.filter((val) => val.kick_off_time < Date.now())
-    newState.gameweekDropdownDisabled = false
-    this.setState(newState)
-  }*/
   const dispatch = useDispatch()
-  const [followingList, setFollowingList] = useState([])
   const [gameweekDropdownDisabled, setGameweekDropdownDisabled] = useState(true)
   const [friendDropdownDisabled, setFriendDropdownDisabled] = useState(false)
   const status = useSelector(selectScoringStatus)
   const gameweek = useSelector(selectSelectedGameweek)
   const matches = useSelector(selectScoredMatches)
   const friends = useSelector(selectFriends)
-  console.log(matches)
 
   if (status === 'pending' && (!gameweekDropdownDisabled || !friendDropdownDisabled)) {
     setGameweekDropdownDisabled(true)
