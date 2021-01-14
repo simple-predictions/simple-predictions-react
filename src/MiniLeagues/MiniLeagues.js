@@ -6,7 +6,7 @@ import MiniLeagueRankings from './MiniLeagueRankings'
 import './MiniLeagues.css'
 import HomepageButton from '../HomepageButton'
 import {useSelector, useDispatch} from 'react-redux'
-import {selectAllMinileagues, updateSelectedIdx, selectSelectedMinileague, selectMinileaguesStatus} from './minileaguesSlice'
+import {selectAllMinileagues, updateSelectedIdx, selectMinileaguesStatus} from './minileaguesSlice'
 import base_url from '../globals'
 
 const MiniLeagues = () => {
@@ -14,7 +14,6 @@ const MiniLeagues = () => {
   const minileagues = useSelector(selectAllMinileagues)
   const [componentName, setComponentName] = useState('MiniLeagueTable')
   const loaded = useSelector(selectMinileaguesStatus)
-  console.log(loaded)
   const [createMiniLeagueEnabled, setCreateMiniLeagueEnabled] = useState(true)
   const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true)
   const [responseMessage, setResponseMessage] = useState('')

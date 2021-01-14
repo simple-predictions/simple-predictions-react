@@ -1,18 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import FrontPage from './FrontPage'
 import PageSelector from './PageSelector'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import Cookies from 'js-cookie'
 import Predictions from './Predictions/Predictions'
 import MiniLeagues from './MiniLeagues/MiniLeagues'
-import MiniLeagueTable from './MiniLeagues/MiniLeagueTable'
 import Scoring from './Scoring/Scoring'
 import FeedbackToggle from './Feedback/FeedbackToggle'
 import FeedbackPopup from './Feedback/FeedbackPopup'
 import {Alert} from 'react-bootstrap'
-import base_url from './globals'
 
 import {getUserInfo, selectLoggedIn} from './User/userSlice'
 import {getPredictions} from './Predictions/predictionsSlice'
@@ -30,8 +27,6 @@ const App = () => {
 
   const alertVariant = useSelector(selectAlertVariant)
   const alertMessage = useSelector(selectAlertMessage)
-
-  const [displayFeedbackPopup, setDisplayFeedbackPopup] = useState(false)
   const apiCookie = useSelector(selectLoggedIn)
 
   if (apiCookie) {

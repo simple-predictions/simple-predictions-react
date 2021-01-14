@@ -4,7 +4,7 @@ import './index.css';
 import * as Sentry from '@sentry/browser';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import store from './store/store'
 
 const environment = process.env.NODE_ENV || 'development';

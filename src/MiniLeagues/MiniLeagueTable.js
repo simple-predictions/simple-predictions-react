@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
-import Cookies from 'js-cookie'
 import {Table} from 'react-bootstrap'
 import './MiniLeagueTable.css'
-import base_url from '../globals'
 import DropdownSelector from '../DropdownSelector'
 import { useDispatch, useSelector } from 'react-redux'
 import {getMinileaguePreds, selectSelectedMinileaguePreds, selectSelectedMinileagueGameweek, selectMinileaguesStatus} from './minileaguesSlice'
