@@ -19,14 +19,20 @@ export const userSlice = createSlice({
   initialState: {
     username: '',
     loggedIn: false,
-    friends: []
+    friends: [],
+    email: ''
   },
   reducers: {
   },
   extraReducers: {
     [getUserInfo.fulfilled]: (state, action) => {
       state.username = action.payload.username
-      state.friends = action.payload.friends
+      state.email = action.payload.email
+      state.friends = action.payload.friends.map(friend => {
+        friend.name = friend.username
+        delete friend.username
+        return friend
+      })
       state.loggedIn = true
     },
     [getUserInfo.rejected]: state => {
@@ -36,5 +42,8 @@ export const userSlice = createSlice({
 })
 
 export const selectLoggedIn = state => state.user.loggedIn
+export const selectFriends = state => [{name: 'Mine'},...state.user.friends]
+export const selectUserUsername = state => state.user.username
+export const selectUserEmail = state => state.user.email
 
 export default userSlice.reducer

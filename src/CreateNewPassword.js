@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {FormControl, FormGroup, Container, Button} from 'react-bootstrap'
 import base_url from './globals'
 import {Redirect} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {updateAlert} from './Alerts/alertsSlice'
 
-class CreateNewPassword extends React.Component {
-  constructor(props) {
+const CreateNewPassword = ({location}) => {
+  /*constructor(props) {
     super(props)
     this.state = {
       redirect: null,
@@ -12,17 +14,22 @@ class CreateNewPassword extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleSubmit(event) {
-    event.preventDefault()
-    if (this.state.buttonEnabled === false) {
+  */
+
+  const dispatch = useDispatch()
+  const [redirect, setRedirect] = useState()
+  const [buttonEnabled, setButtonEnabled] = useState(true)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (buttonEnabled === false) {
       return
     }
-    this.setState({
-      buttonEnabled: false
-    })
-    const data = new FormData(event.target)
+    setButtonEnabled(false)
+
+    const data = new FormData(e.target)
     const password = data.get('password')
-    const params = new URLSearchParams(this.props.location.location.search);
+    const params = new URLSearchParams(location.location.search);
     const verification_token = params.get('verification_token');
     const username = params.get('username')
 
@@ -35,45 +42,39 @@ class CreateNewPassword extends React.Component {
     
     fetch(base_url+'/createnewpassword', requestOptions).then(async (res) => {
       if (res.status === 200) {
-        this.setState({
-          redirect: '/'
-        })
-        this.props.updateAlertMessage('Your password has been updated. Please login below.', 'success')
+        setRedirect('/')
+        dispatch(updateAlert({message: 'Your password has been updated. Please login below.', variant: 'success'}))
       } else {
-        this.setState({
-          buttonEnabled: true
-        })
+        setButtonEnabled(true)
         const data = await res.json()
+        dispatch(updateAlert({message: data, variant: 'danger'}))
         this.props.updateAlertMessage(data, 'danger')
       }
     })
   }
 
-  render() {
-    if (this.state.redirect) {
-      console.log(this.state.redirect)
-      return <Redirect to={this.state.redirect} />
-    }
-    return(
-      <Container style={{maxWidth: 400}}>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="username" bssize="large">
-            <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
-            <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
-            <FormControl
-              className='form-field'
-              placeholder='New password'
-              autoFocus
-              name="password"
-            />
-          </FormGroup>
-          <Button disabled={!this.state.buttonEnabled} className='main-form-button form-buttons' size="lg" type="submit">
-            Reset
-          </Button>
-        </form>
-      </Container>
-    )
+  if (redirect) {
+    return <Redirect to={redirect} />
   }
+  return(
+    <Container style={{maxWidth: 400}}>
+      <form onSubmit={handleSubmit}>
+        <FormGroup controlId="username" bssize="large">
+          <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
+          <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
+          <FormControl
+            className='form-field'
+            placeholder='New password'
+            autoFocus
+            name="password"
+          />
+        </FormGroup>
+        <Button disabled={!buttonEnabled} className='main-form-button form-buttons' size="lg" type="submit">
+          Reset
+        </Button>
+      </form>
+    </Container>
+  )
 }
 
 export default CreateNewPassword

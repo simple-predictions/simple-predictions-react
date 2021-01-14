@@ -3,17 +3,13 @@ import base_url from '../globals'
 
 export const getScoredPreds = createAsyncThunk(
   'scoring/getScoredPreds',
-  async ([username, gameweek]) => await new Promise(resolve => {
-    if (username) {
-      var url = base_url+'/friendpredictions?username='+username
-      if (gameweek) {
-        url += '&gameweek='+gameweek
-      }
+  async ([username, gameweek], {getState}) => await new Promise(resolve => {
+    const gameweek_req = gameweek || getState().scoring.selectedGameweek
+    const username_req = username || getState().scoring.selectedUser
+    if (username_req && username_req !== 'Mine') {
+      var url = base_url+'/friendpredictions?username='+username_req+'&gameweek='+gameweek_req
     } else {
-      url = base_url+'/getuserpredictions'
-      if (gameweek) {
-        url += '?gameweek='+gameweek
-      }
+      url = base_url+'/getuserpredictions?gameweek='+gameweek_req
     }
 
     return fetch(url, {credentials: "include"}).then(response => response.json()).then((data) => {
@@ -37,7 +33,7 @@ export const getScoredPreds = createAsyncThunk(
       resolve({
         gameweek: gameweek_num,
         matches: final_games_arr,
-        username: username
+        username: username_req
       })
     })
   })
@@ -56,7 +52,7 @@ export const scoringSlice = createSlice({
     [getScoredPreds.fulfilled]: (state, action) => {
       state.matches = action.payload.matches
       state.selectedGameweek = action.payload.gameweek
-      state.selectedUsername = action.payload.username
+      state.selectedUser = action.payload.username
       state.status = 'success'
     },
     [getScoredPreds.pending]: state => {

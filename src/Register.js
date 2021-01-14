@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Button, FormControl, FormGroup, Alert, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import base_url from './globals'
 
-class Register extends React.Component {
-  constructor(props) {
+const Register = () => {
+  /*constructor(props) {
     super(props)
     this.state = {
       username: '',
@@ -20,21 +20,29 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  validateForm() {
-    return this.state.username.length > 0 && this.state.password.length > 0 && this.state.email.length > 0;
+  updateUsername(event) {
+    this.setState({username: event.target.value});
   }
+  updatePassword(event) {
+    this.setState({password: event.target.value});
+  }
+  updateEmail(event) {
+    this.setState({email: event.target.value});
+  }*/
 
-  handleSubmit(event) {
-    event.preventDefault();
-    if (this.state.buttonEnabled === false) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [errorCount, setErrorCount] = useState(0)
+  const [buttonEnabled, setButtonEnabled] = useState(true)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (buttonEnabled === false) {
       return
     }
-    this.setState({
-      buttonEnabled: false
-    })
-    const username = this.state.username
-    const password = this.state.password
-    const email = this.state.email
+    setButtonEnabled(false)
 
     const requestOptions = {
       method: 'POST',
@@ -50,70 +58,60 @@ class Register extends React.Component {
         return res
       }
     }).then((res) => res.json()).then((data) => {
-      this.setState({
-        errorCount: this.state.errorCount + 1,
-        errorMessage: data.message,
-        buttonEnabled: true
-      })
+      setErrorCount(errorCount + 1)
+      setErrorMessage(data.message)
+      setButtonEnabled(true)
     })
   }
 
-  updateUsername(event) {
-    this.setState({username: event.target.value});
-  }
-  updatePassword(event) {
-    this.setState({password: event.target.value});
-  }
-  updateEmail(event) {
-    this.setState({email: event.target.value});
+  const validateForm = () => {
+    return username.length > 0 && password.length > 0 && email.length > 0;
   }
 
-  render() {
-    return(
-      <div className='register-form'>
-        <Container style={{maxWidth: 400}}>
-          {this.state.errorMessage && <Alert variant="danger">{this.state.errorMessage} - <strong>{this.state.errorCount} attempt(s)</strong></Alert>}
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="username" bssize="large">
-              <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
-              <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign up to view, make and share predictions with live results and scoring.</p>
-              <FormControl
+  return(
+    <div className='register-form'>
+      <Container style={{maxWidth: 400}}>
+        {errorMessage && <Alert variant="danger">{errorMessage} - <strong>{errorCount} attempt(s)</strong></Alert>}
+        <form onSubmit={handleSubmit}>
+          <FormGroup controlId="username" bssize="large">
+            <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
+            <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign up to view, make and share predictions with live results and scoring.</p>
+            <FormControl
+              className='form-field'
+              placeholder="Username"
+              autoFocus
+              type="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup controlId="email" bssize="large">
+            <FormControl
                 className='form-field'
-                placeholder="Username"
+                placeholder="Email"
                 autoFocus
-                type="username"
-                value={this.state.username}
-                onChange={this.updateUsername}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            </FormGroup>
-            <FormGroup controlId="email" bssize="large">
-              <FormControl
-                  className='form-field'
-                  placeholder="Email"
-                  autoFocus
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.updateEmail}
-                />
-            </FormGroup>
-            <FormGroup controlId="password" bssize="large">
-              <FormControl
-                className='form-field'
-                placeholder="Password"
-                value={this.state.password}
-                type="password"
-                onChange={this.updatePassword}
-              />
-            </FormGroup>
-            <Link className='form-buttons secondary-form-button' to='/'>Login</Link>
-            <Button className='form-buttons main-form-button' size='lg' disabled={!this.validateForm() || !this.state.buttonEnabled} type="submit">
-              Sign up
-            </Button>
-          </form>
-        </Container>
-      </div>
-    )
-  }
+          </FormGroup>
+          <FormGroup controlId="password" bssize="large">
+            <FormControl
+              className='form-field'
+              placeholder="Password"
+              value={password}
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormGroup>
+          <Link className='form-buttons secondary-form-button' to='/'>Login</Link>
+          <Button className='form-buttons main-form-button' size='lg' disabled={!validateForm() || !buttonEnabled} type="submit">
+            Sign up
+          </Button>
+        </form>
+      </Container>
+    </div>
+  )
 }
 
 export default Register

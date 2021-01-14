@@ -4,8 +4,8 @@ import HomepageButton from '../HomepageButton'
 import DropdownSelector from '../DropdownSelector'
 import base_url from '../globals'
 import {useSelector, useDispatch} from 'react-redux'
-import { selectUserPredictions } from '../Predictions/predictionsSlice'
 import { getScoredPreds, selectScoredMatches, selectScoringStatus, selectSelectedGameweek } from './scoringSlice'
+import { selectFriends } from '../User/userSlice'
 
 const Scoring = () => {
   /*constructor(props) {
@@ -64,6 +64,8 @@ const Scoring = () => {
   const status = useSelector(selectScoringStatus)
   const gameweek = useSelector(selectSelectedGameweek)
   const matches = useSelector(selectScoredMatches)
+  const friends = useSelector(selectFriends)
+  console.log(matches)
 
   if (status === 'pending' && (!gameweekDropdownDisabled || !friendDropdownDisabled)) {
     setGameweekDropdownDisabled(true)
@@ -95,7 +97,7 @@ const Scoring = () => {
               </div>
               <div className='col-md-8 scored-match-data-container scored-match-data-header'>
                 <div className='col-md-4'>
-                  <DropdownSelector enabled={friendDropdownDisabled} style={{border: 'solid 1px #defc5f'}} onValueUpdate={(e) => dispatch(getScoredPreds(e.target.value, ))} length={followingList.length} minileagueArr={followingList} />
+                  <DropdownSelector enabled={friendDropdownDisabled} style={{border: 'solid 1px #defc5f'}} onValueUpdate={(e) => dispatch(getScoredPreds([friends[e.target.value-1].name, ]))} length={friends.length} minileagueArr={friends} />
                 </div>
                 <div className='col-md-4'>
                 </div>
