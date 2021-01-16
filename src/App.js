@@ -51,7 +51,7 @@ const App = () => {
           <Route path='/register'><FrontPage widget={'Register'} /></Route>
           <Route path='/resetpassword'><FrontPage widget={'Reset Password'} /></Route>
           <Route path='/createnewpassword' component={(routeProps) => <FrontPage widget={'Create new password'} location={routeProps} />}></Route>
-          <Route exact path='/'>{apiCookie ? <PageSelector /> : <FrontPage widget={'Login'} />}</Route>
+          <Route path='/'>{apiCookie ? <PageSelector /> : <FrontPage widget={'Login'} />}</Route>
         </Switch>
       </Router>
     </div>

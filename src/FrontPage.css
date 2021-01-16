@@ -1,0 +1,121 @@
+.key-feature-icon-circle {
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50px) translateX(-50px);
+    background-color: #323232;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+}
+
+.app-description-row {
+    font-family: 'Montserrat';
+}
+
+.key-features-row {
+    background-color: black;
+}
+
+.saltbeef-background-col {
+    filter: grayscale(1) contrast(0.7);
+}
+
+.three-steps-step {
+    font-family: 'Share Tech Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-number-container {
+    font-size: 260px;
+    line-height: 260px;
+}
+
+hr.step-divider {
+    width: 100%;
+    border-top: 4px solid black;
+    margin-top: 0;
+    width: 86%;
+}
+
+.step-title-container {
+    font-weight: 700;
+    text-align: left;
+    width: 241px;
+    text-transform: uppercase;
+    font-size: 30px;
+}
+
+.step-description-container {
+    width: 241px;
+}
+
+.step-number-row-container, .step-text-row-container {
+    display: flex;
+    width: 100%;
+}
+
+.three-steps-step-text {
+    justify-content: start;
+}
+
+.step-text-outer-container {
+    font-family: 'Montserrat';
+}
+
+.three-steps-row {
+    min-height: fit-content;
+}
+
+.outer-about-row-container {
+    background-color: black;
+    color: white;
+}
+
+.about-row-image-container {
+    stroke: white;
+    width: 150px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-row-icon {
+    filter: invert(1);
+    position: absolute;
+    width: 100px;
+}
+
+.about-row-icon-hex-outline {
+    position: absolute;
+    width: 200px;
+}
+
+.about-row {
+    min-height: 200px;
+    margin: 25px 0;
+    width: 100%;
+    display: flex;
+    height: fit-content;
+}
+
+.about-row-header-container {
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.about-row-text-container {
+    height: fit-content;
+}
+
+.outer-about-row-container {
+    min-height: fit-content;
+    padding: 100px 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');

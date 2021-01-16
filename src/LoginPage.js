@@ -6,7 +6,7 @@ import base_url from './globals'
 import {getUserInfo} from './User/userSlice'
 import {useDispatch} from 'react-redux'
 
-const LoginPage = () => {
+const LoginPage = ({popupOpen, setPopupOpen}) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -44,37 +44,40 @@ const LoginPage = () => {
   }
 
   return (
-    <Container style={{maxWidth: 400}}>
-      {errorMessage && <Alert variant="danger">{errorMessage} - <strong>{errorCount} attempt(s)</strong></Alert>}
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="username" bssize="large">
-          <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
-          <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
-          <FormControl
-            className='form-field'
-            placeholder='Username'
-            autoFocus
-            type="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bssize="large">
-          <FormControl
-            className='form-field'
-            placeholder='Password'
-            value={password}
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormGroup>
-        <Link className='secondary-form-button form-buttons' to='/register'>Sign up</Link>
-        <Button className='main-form-button form-buttons' size="lg" disabled={!validateForm() || !buttonEnabled} type="submit">
-          Login
-        </Button>
-      </form>
-      <Link style={{textAlign: 'right', width: '100%', marginTop:10}} className='secondary-form-button form-buttons' to='/resetpassword'>Forgot password</Link>
-    </Container>
+    <div className='login-popup' style={{display: popupOpen ? 'flex' : 'none'}}>
+      <Container style={{maxWidth: 400}} className='login-popup-content'>
+        <img alt='close-button' src={require('./icons/cross.png')} className="login-popup-close" onClick={() => setPopupOpen(false)} />
+        {errorMessage && <Alert variant="danger">{errorMessage} - <strong>{errorCount} attempt(s)</strong></Alert>}
+        <form onSubmit={handleSubmit}>
+          <FormGroup controlId="username" bssize="large">
+            <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
+            <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
+            <FormControl
+              className='form-field'
+              placeholder='Username'
+              autoFocus
+              type="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bssize="large">
+            <FormControl
+              className='form-field'
+              placeholder='Password'
+              value={password}
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormGroup>
+          <Link className='secondary-form-button form-buttons' to='/register'>Sign up</Link>
+          <Button className='main-form-button form-buttons' size="lg" disabled={!validateForm() || !buttonEnabled} type="submit">
+            Login
+          </Button>
+        </form>
+        <Link style={{textAlign: 'right', width: '100%', marginTop:10}} className='secondary-form-button form-buttons' to='/resetpassword'>Forgot password</Link>
+      </Container>
+    </div>
   )
 }
 

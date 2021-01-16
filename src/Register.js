@@ -3,7 +3,7 @@ import {Button, FormControl, FormGroup, Alert, Container} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import base_url from './globals'
 
-const Register = () => {
+const Register = ({popupOpen, setPopupOpen}) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -43,8 +43,9 @@ const Register = () => {
   }
 
   return(
-    <div className='register-form'>
-      <Container style={{maxWidth: 400}}>
+    <div className='login-popup' style={{display: popupOpen ? 'flex' : 'none'}}>
+      <Container style={{maxWidth: 400}} className='login-popup-content'>
+        <img alt='close-button' src={require('./icons/cross.png')} className="login-popup-close" onClick={() => setPopupOpen(false)} />
         {errorMessage && <Alert variant="danger">{errorMessage} - <strong>{errorCount} attempt(s)</strong></Alert>}
         <form onSubmit={handleSubmit}>
           <FormGroup controlId="username" bssize="large">
