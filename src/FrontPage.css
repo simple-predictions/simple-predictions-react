@@ -67,8 +67,10 @@ hr.step-divider {
     font-family: 'Montserrat';
 }
 
-.three-steps-row {
+div.three-steps-row {
     min-height: fit-content;
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;
 }
 
 .outer-about-row-container {
@@ -83,6 +85,7 @@ hr.step-divider {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 170px;
 }
 
 .about-row-icon {
@@ -98,10 +101,11 @@ hr.step-divider {
 
 .about-row {
     min-height: 200px;
-    margin: 25px 0;
+    margin: 25px 0 !important;
     width: 100%;
     display: flex;
     height: fit-content;
+    font-family: 'Montserrat'
 }
 
 .about-row-header-container {
@@ -116,6 +120,15 @@ hr.step-divider {
 .outer-about-row-container {
     min-height: fit-content;
     padding: 100px 0;
+}
+
+.personal-site-link {
+    color: rgb(145, 145, 145);
+}
+
+.personal-site-link:hover {
+    color: rgb(95, 95, 95);
+    text-decoration: none;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
