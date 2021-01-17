@@ -7,6 +7,8 @@ import { getScoredPreds, selectScoredMatches, selectScoringStatus, selectSelecte
 import { selectFriends } from '../User/userSlice'
 
 const Scoring = () => {
+  window.scrollTo(0,35)
+
   const dispatch = useDispatch()
   const [gameweekDropdownDisabled, setGameweekDropdownDisabled] = useState(true)
   const [friendDropdownDisabled, setFriendDropdownDisabled] = useState(false)
@@ -99,7 +101,6 @@ const Scoring = () => {
                   {match.user_predictions[0].home_pred} - {match.user_predictions[0].away_pred}
                 </div>
                 <div className='live-score-container col-md-4' style={{backgroundColor: '#defc5f'}}>
-                  {match.status === 'IN_PLAY' ? <div style={{display: 'inline-block', width:25}}/> : <div />}
                   {match.live_home_score} - {match.live_away_score}
                   {match.status === 'IN_PLAY' ? <div className='pulsing-circle' /> : <div />}
                 </div>

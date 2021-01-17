@@ -78,6 +78,7 @@ div.three-steps-row {
     margin-bottom: 50px !important;
     display: flex;
     align-items: center;
+    min-height: fit-content;
 }
 
 .outer-about-row-container {

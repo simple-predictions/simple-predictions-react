@@ -23,7 +23,7 @@
 .scored-match-inner-container {
     display: flex;
     margin-bottom: 50px;
-    padding: 20px;
+    padding: 10px;
 }
 
 .scored-match-container > div > div {
@@ -64,7 +64,7 @@
 
 .scored-header-row-inner-container {
     display: flex;
-    padding: 20px;
+    padding: 10px;
 }
 
 .scored-header-row-inner-container > div {
@@ -91,6 +91,10 @@
 }
 
 .pulsing-circle {
+    transform: translateY(-50%);
+    top: 50%;
+    right: 0;
+    position: absolute;
     display: inline-block;
     margin-left: 10px;
     margin-right: 5px;
@@ -122,7 +126,7 @@ div.scored-match-data-header > div {
 
 @media (max-width: 900px) {
     .scored-match-data-container > div {
-        margin: auto 10px;
+        margin: auto 5px;
     }
     .scored-match-data-container {
         min-width: 50vw;
@@ -133,6 +137,24 @@ div.scored-match-data-header > div {
         padding: 0;
     }
     .scored-match-inner-container {
-        padding: 10px;
+        padding: 5px;
+    }
+    .scored-header-row-inner-container {
+        padding: 5px;
+    }
+    span.prediction-circle.points-circle {
+        width: 30px;
+        height: 30px;
+    }
+    div.scored-points-container {
+        margin-left:-10px;
+        margin-right:-10px;
+    }
+    .scored-match-container .club-badge {
+        height: 40px;
+    }
+    .scored-match-container .prediction-circle {
+        height: 60px;
+        width: 60px;
     }
 }

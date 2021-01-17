@@ -10,6 +10,8 @@ import {selectAllMinileagues, updateSelectedIdx, selectMinileaguesStatus} from '
 import base_url from '../globals'
 
 const MiniLeagues = () => {
+  window.scrollTo(0,35)
+
   const dispatch = useDispatch()
   const minileagues = useSelector(selectAllMinileagues)
   const [componentName, setComponentName] = useState('MiniLeagueTable')

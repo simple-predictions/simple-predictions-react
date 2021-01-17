@@ -8,6 +8,7 @@ import {getPredictions, selectUserPredictions, selectUserPredictionsGameweek, se
 import {useDispatch, useSelector} from 'react-redux'
 
 const Predictions = () => {
+  window.scrollTo(0,35)
   const userPredictions = useSelector(selectUserPredictions)
   const gameweek = useSelector(selectUserPredictionsGameweek)
   const status = useSelector(selectUserPredictionsStatus)

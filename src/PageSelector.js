@@ -57,7 +57,7 @@ const PageSelector = () => {
       <div className='col-lg-8 selector-col'>
         <div className='row'>
           <div className='col-md-2'></div>
-            <div className='col-md-2'>
+            <div className='col-md-2 selector-image-container'>
               <span className='option-circle' />
               <Link to='/predictions' className='option-icon'>
                 <img alt='question mark icon' className='option-icon' height={50} src={require('./icons/question-mark.png')}/>
@@ -73,7 +73,7 @@ const PageSelector = () => {
         </div>
         <div className='row'>
           <div className='col-md-2'></div>
-          <div className='col-md-2'>
+          <div className='col-md-2 selector-image-container'>
             <span className='option-circle' />
             <Link to='/minileagues' className='option-icon'>
               <img alt='trophy icon' className='option-icon' height={50} src={require('./icons/trophy.png')}/>
@@ -89,7 +89,7 @@ const PageSelector = () => {
         </div>
         <div className='row'>
           <div className='col-md-2'></div>
-          <div className='col-md-2'>
+          <div className='col-md-2 selector-image-container'>
             <span className='option-circle' />
             <Link to='/scores' className='option-icon'>
               <img alt='correct icon' className='option-icon' height={50} src={require('./icons/correct.png')}/>
