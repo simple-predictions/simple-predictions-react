@@ -31,7 +31,7 @@ const Scoring = () => {
         <HomepageButton />
         <div className='left-col-scoring-container'>
           <h1 className='left-col-scoring-text'>Scores</h1>
-          <DropdownSelector enabled={gameweekDropdownDisabled} length={38} onValueUpdate={(e) => dispatch(getScoredPreds([, e.target.value]))} startingValue={gameweek} />
+          <DropdownSelector enabled={gameweekDropdownDisabled} length={38} onValueUpdate={(e) => dispatch(getScoredPreds([false , e.target.value]))} startingValue={gameweek} />
         </div>
       </div>
       <div className='col-lg-8 right-col'>

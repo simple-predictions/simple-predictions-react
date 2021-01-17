@@ -7,7 +7,6 @@ import ResetPassword from './ResetPassword'
 import CreateNewPassword from './CreateNewPassword'
 import { Button } from 'react-bootstrap'
 import $ from 'jquery';
-import { set } from 'js-cookie'
 
 
 const FrontPage = ({widget, location}) => {
@@ -15,33 +14,37 @@ const FrontPage = ({widget, location}) => {
   const [buttonBackgroundColor, setButtonBackgroundColor] = useState('#defc5f')
 
   const handleScroll = (e) => {
-    const yellowBackgroundHeight = $('.three-steps-row').offset().top
-    const blackBackgroundHeight = $('.outer-about-row-container').offset().top
-    const currentScrollHeight = $(window).scrollTop()
-    const windowHeight = $(window).height()
-    const windowWidth = $(window).width()
-    if (windowWidth > 600) {
-      if ((currentScrollHeight+80 > yellowBackgroundHeight/2) && (currentScrollHeight+50 < blackBackgroundHeight-yellowBackgroundHeight/2)) {
-        $('.feedback-toggle').css('background-color', 'black')
-        $('.feedback-toggle').css('color', '#defc5f')
+    const yellowBackground = $('.three-steps-row-outer-container')
+    const blackBackground = $('.outer-about-row-container')
+    if (yellowBackground[0] && blackBackground[0]) {
+      const yellowBackgroundHeight = yellowBackground.offset().top
+      const blackBackgroundHeight = blackBackground.offset().top
+      const currentScrollHeight = $(window).scrollTop()
+      const windowHeight = $(window).height()
+      const windowWidth = $(window).width()
+      if (windowWidth > 600) {
+        if ((currentScrollHeight+80 > yellowBackgroundHeight/2) && (currentScrollHeight+50 < blackBackgroundHeight-yellowBackgroundHeight/2)) {
+          $('.feedback-toggle').css('background-color', 'black')
+          $('.feedback-toggle').css('color', '#defc5f')
+        } else {
+          $('.feedback-toggle').css('background-color', '#defc5f')
+          $('.feedback-toggle').css('color', 'black')
+        }
       } else {
-        $('.feedback-toggle').css('background-color', '#defc5f')
-        $('.feedback-toggle').css('color', 'black')
+        if (currentScrollHeight > 50 && currentScrollHeight-50 < blackBackgroundHeight-windowHeight) {
+          $('.feedback-toggle-corner').css('border-bottom-color', 'black')
+          $('.feedback-toggle-corner').css('color', '#defc5f')
+        } else {
+          $('.feedback-toggle-corner').css('border-bottom-color', '#defc5f')
+          $('.feedback-toggle-corner').css('color', 'black')
+        }
       }
-    } else {
-      if (currentScrollHeight > 50 && currentScrollHeight-50 < blackBackgroundHeight-windowHeight) {
-        $('.feedback-toggle-corner').css('border-bottom-color', 'black')
-        $('.feedback-toggle-corner').css('color', '#defc5f')
-      } else {
-        $('.feedback-toggle-corner').css('border-bottom-color', '#defc5f')
-        $('.feedback-toggle-corner').css('color', 'black')
-      }
-    }
 
-    if ((currentScrollHeight+50 > yellowBackgroundHeight) && (currentScrollHeight+50 < blackBackgroundHeight)) {
-      setButtonBackgroundColor('black')
-    } else {
-      setButtonBackgroundColor('#defc5f')
+      if ((currentScrollHeight+50 > yellowBackgroundHeight) && (currentScrollHeight+50 < blackBackgroundHeight)) {
+        setButtonBackgroundColor('black')
+      } else {
+        setButtonBackgroundColor('#defc5f')
+      }
     }
   }
 
@@ -60,35 +63,37 @@ const FrontPage = ({widget, location}) => {
         </div>
       </div>
       <div className='front-page-scrollover'>
-        <div className='row m-0 three-steps-row'>
-          <div className='col-lg-4 three-steps-step'>
-            <div className='step-number-outer-container'>
-              <div className='step-number-container'>01</div>
-              <hr className='step-divider' />
+        <div className='three-steps-row-outer-container'>
+          <div className='row m-0 three-steps-row'>
+            <div className='col-lg-4 three-steps-step'>
+              <div className='step-number-outer-container'>
+                <div className='step-number-container'>01</div>
+                <hr className='step-divider' />
+              </div>
+              <div className='step-text-outer-container'>
+                <div className='step-title-container'>Predict</div>
+                <p className='step-description-container'>Predict the outcome of all the Premier League fixtures each week.</p>
+              </div>
             </div>
-            <div className='step-text-outer-container'>
-              <div className='step-title-container'>Predict</div>
-              <p className='step-description-container'>Predict the outcome of all the Premier League fixtures each week.</p>
+            <div className='col-lg-4 three-steps-step'>
+              <div className='step-number-outer-container'>
+                <div className='step-number-container'>02</div>
+                <hr className='step-divider' />
+              </div>
+              <div className='step-text-outer-container'>
+                <div className='step-title-container'>Score</div>
+                <p className='step-description-container'>Watch your points accumulate as the goals come in.</p>
+              </div>
             </div>
-          </div>
-          <div className='col-lg-4 three-steps-step'>
-            <div className='step-number-outer-container'>
-              <div className='step-number-container'>02</div>
-              <hr className='step-divider' />
-            </div>
-            <div className='step-text-outer-container'>
-              <div className='step-title-container'>Score</div>
-              <p className='step-description-container'>Watch your points accumulate as the goals come in.</p>
-            </div>
-          </div>
-          <div className='col-lg-4 three-steps-step'>
-            <div className='step-number-outer-container'>
-              <div className='step-number-container'>03</div>
-              <hr className='step-divider' />
-            </div>
-            <div className='step-text-outer-container'>
-              <div className='step-title-container'>Compete</div>
-              <p className='step-description-container'>Join a mini-league to track your progress against competitors throughout the season.</p>
+            <div className='col-lg-4 three-steps-step'>
+              <div className='step-number-outer-container'>
+                <div className='step-number-container'>03</div>
+                <hr className='step-divider' />
+              </div>
+              <div className='step-text-outer-container'>
+                <div className='step-title-container'>Compete</div>
+                <p className='step-description-container'>Join a mini-league to track your progress against competitors throughout the season.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -111,7 +116,7 @@ const FrontPage = ({widget, location}) => {
                         L26,10
                         A12,12 0 0,1 38,2' />
               </svg>
-              <img src={require('./icons/book.png')} className='about-row-icon' />
+              <img alt='book icon' src={require('./icons/book.png')} className='about-row-icon' />
             </div>
             <div className='about-row-text-container col-lg-6'>
               <div className='about-row-header-container'>Our story</div>
@@ -137,11 +142,11 @@ const FrontPage = ({widget, location}) => {
                         L26,10
                         A12,12 0 0,1 38,2' />
               </svg>
-              <img src={require('./icons/eye.png')} className='about-row-icon' />
+              <img alt='eye icon' src={require('./icons/eye.png')} className='about-row-icon' />
             </div>
             <div className='about-row-text-container col-lg-6'>
               <div className='about-row-header-container'>Our vision</div>
-              <div className='about-row-description-container'>I haven't yet decided the future of this site, however at the moment I don't plan on running it full-time in production. It is a showcase of my skills and shows that I can think creatively to problem solve. For example, I haven't paid for any live data and the live scoring works by parsing the Premier League tweets from the Twitter API. I'm keen to get as much feedback and user input as possible to improve this Alpha version further.</div>
+              <div className='about-row-description-container'>At the moment the site is a showcase of my skills and shows that I can think creatively to problem solve. For example, I haven't paid for any live data and the live scoring works by parsing the Premier League tweets from the Twitter API. I'm keen to get as much feedback and user input as possible to improve this Alpha version further.</div>
             </div>
             <div className='col-lg-2'></div>
           </div>
@@ -163,11 +168,11 @@ const FrontPage = ({widget, location}) => {
                         L26,10
                         A12,12 0 0,1 38,2' />
               </svg>
-              <img src={require('./icons/person.png')} className='about-row-icon' />
+              <img alt='person icon' src={require('./icons/person.png')} className='about-row-icon' />
             </div>
             <div className='about-row-text-container col-lg-6'>
               <div className='about-row-header-container'>About me</div>
-              <div className='about-row-description-container'>I'm a Year 12 student with a passion for programming and problem solving. As my only formal coding education has been a work experience placement at Forensic Architecture, I am entirely self-taught and have learnt by practise and experimentation, such as this site. If you'd like to find out more about me, please go to my <a className='personal-site-link' href='https://www.solabrahams.tech'>personal site.</a></div>
+              <div className='about-row-description-container'>I'm a Year 12 student with a passion for programming and problem solving. My only formal coding education has been a work experience placement at Forensic Architecture so I am entirely self-taught and have learnt by practise and experimentation. If you'd like to find out more about me, please go to my <a className='personal-site-link' href='https://www.solabrahams.tech'>personal site.</a></div>
             </div>
             <div className='col-lg-2'></div>
           </div>

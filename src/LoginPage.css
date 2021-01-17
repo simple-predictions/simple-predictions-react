@@ -129,13 +129,15 @@ div.login-button-outer-container {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.login-popup-content {
+div.login-popup-content {
+    border-radius: 15px;
     background-color: #fefefe;
     margin: auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 20px 30px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 450px; /* Could be more or less, depending on screen size */
     position: relative;
+    font-family: 'Montserrat';
 }
 
 .login-popup-close {

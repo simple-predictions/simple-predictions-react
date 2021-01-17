@@ -47,23 +47,25 @@ const CreateNewPassword = ({location}) => {
     return <Redirect to={redirect} />
   }
   return(
-    <Container style={{maxWidth: 400}}>
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="username" bssize="large">
-          <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
-          <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
-          <FormControl
-            className='form-field'
-            placeholder='New password'
-            autoFocus
-            name="password"
-          />
-        </FormGroup>
-        <Button disabled={!buttonEnabled} className='main-form-button form-buttons' size="lg" type="submit">
-          Reset
-        </Button>
-      </form>
-    </Container>
+    <div className='standalone-outer-container'>
+      <Container className='standalone-inner-container' style={{maxWidth: 400}}>
+        <form onSubmit={handleSubmit}>
+          <FormGroup controlId="username" bssize="large">
+            <img style={{width:50, display: 'block', margin: 'auto'}} src={require('./icons/football.png')} alt='football icon' />
+            <p style={{textAlign: 'center', fontSize: 14, margin: '20px 0'}}>Sign in to view, make and share predictions with live results and scoring.</p>
+            <FormControl
+              className='form-field'
+              placeholder='New password'
+              autoFocus
+              name="password"
+            />
+          </FormGroup>
+          <Button disabled={!buttonEnabled} className='standalone-submit-button main-form-button form-buttons' size="lg" type="submit">
+            Reset
+          </Button>
+        </form>
+      </Container>
+    </div>
   )
 }
 

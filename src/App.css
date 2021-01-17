@@ -58,3 +58,23 @@ div.feedback-success {
   margin-left: 10px;
   bottom: 0;
 }
+
+.standalone-outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+.standalone-inner-container {
+  /*border: 1px solid black;*/
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #defc5f
+}
+
+button.standalone-submit-button {
+  display: block;
+  margin: auto;
+}

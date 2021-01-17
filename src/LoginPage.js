@@ -45,7 +45,7 @@ const LoginPage = ({popupOpen, setPopupOpen}) => {
 
   return (
     <div className='login-popup' style={{display: popupOpen ? 'flex' : 'none'}}>
-      <Container style={{maxWidth: 400}} className='login-popup-content'>
+      <Container style={{maxWidth: '90vw'}} className='login-popup-content'>
         <img alt='close-button' src={require('./icons/cross.png')} className="login-popup-close" onClick={() => setPopupOpen(false)} />
         {errorMessage && <Alert variant="danger">{errorMessage} - <strong>{errorCount} attempt(s)</strong></Alert>}
         <form onSubmit={handleSubmit}>

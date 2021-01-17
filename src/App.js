@@ -10,6 +10,8 @@ import Scoring from './Scoring/Scoring'
 import FeedbackToggle from './Feedback/FeedbackToggle'
 import FeedbackPopup from './Feedback/FeedbackPopup'
 import {Alert} from 'react-bootstrap'
+import ResetPassword from './ResetPassword'
+import CreateNewPassword from './CreateNewPassword'
 
 import {getUserInfo, selectLoggedIn} from './User/userSlice'
 import {getPredictions} from './Predictions/predictionsSlice'
@@ -49,8 +51,8 @@ const App = () => {
           {apiCookie &&<Route path='/predictions'><Predictions /></Route>}
           {apiCookie &&<Route path='/scores'><Scoring /></Route>}
           <Route path='/register'><FrontPage widget={'Register'} /></Route>
-          <Route path='/resetpassword'><FrontPage widget={'Reset Password'} /></Route>
-          <Route path='/createnewpassword' component={(routeProps) => <FrontPage widget={'Create new password'} location={routeProps} />}></Route>
+          <Route path='/resetpassword'><ResetPassword /></Route>
+          <Route path='/createnewpassword' component={(routeProps) => <CreateNewPassword location={routeProps} />}></Route>
           <Route path='/'>{apiCookie ? <PageSelector /> : <FrontPage widget={'Login'} />}</Route>
         </Switch>
       </Router>
