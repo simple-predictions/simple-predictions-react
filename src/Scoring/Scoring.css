@@ -150,10 +150,10 @@ div.scored-match-data-header > div {
         margin-left:-10px;
         margin-right:-10px;
     }
-    .scored-match-container .club-badge {
+    .scored-match-container .club-badge, .scored-header-row-inner-container .club-badge {
         height: 40px;
     }
-    .scored-match-container .prediction-circle {
+    .scored-match-container .prediction-circle, .scored-header-row-inner-container .prediction-circle {
         height: 60px;
         width: 60px;
     }
