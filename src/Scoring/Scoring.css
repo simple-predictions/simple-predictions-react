@@ -156,5 +156,10 @@ div.scored-match-data-header > div {
     .scored-match-container .prediction-circle, .scored-header-row-inner-container .prediction-circle {
         height: 60px;
         width: 60px;
+        transform: translateY(-50%) translateX(-50%);
+    }
+
+    .scored-match-data-container.scored-match-data-header > div:first-child, .scored-match-data-container.scored-match-data-header > div:nth-child(2) {
+        min-width: calc(33% + 10px);
     }
 }
