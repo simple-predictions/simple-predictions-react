@@ -56,7 +56,7 @@
     border-bottom: 100px solid #defc5f;
     border-left: 100px solid transparent;
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     bottom: 0;
     right: 0;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
