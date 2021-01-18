@@ -30,7 +30,7 @@ DropdownSelector.defaultProps = {
   minileagueArr: [],
   enabled: false,
   style: {},
-  startingValue: 0,
+  startingValue: undefined,
 };
 
 export default DropdownSelector;
