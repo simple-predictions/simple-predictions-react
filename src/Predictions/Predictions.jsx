@@ -92,11 +92,9 @@ const Predictions = () => {
         <HomepageButton />
         {successMessage && (
         <Alert variant="success" dismissible onClose={() => setSuccessMessage('')}>
-          {successMessage}
-          -
+          {`${successMessage} - `}
           <strong>
-            {successCount}
-            attempt(s)
+            {`${successCount} attempt(s)`}
           </strong>
         </Alert>
         )}
