@@ -43,5 +43,8 @@ module.exports = {
       ignore: ['node_modules', 'webpack.config.js'],
       configFile: 'sentry.properties'
     })
-  ]
+  ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
 };

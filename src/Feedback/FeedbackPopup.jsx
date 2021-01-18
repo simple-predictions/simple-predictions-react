@@ -86,7 +86,7 @@ const FeedbackPopup = () => {
     <div className="feedback-popup" style={{ display: display ? 'flex' : 'none' }}>
       <div className="feedback-popup-content">
         <h1>Send feedback</h1>
-        <button type="button" onClick={() => dispatch(closePopup())}><img alt="close-button" src={crossIcon} className="feedback-popup-close" /></button>
+        <button type="button" onClick={() => dispatch(closePopup())} alt="close-button" style={{ background: `url(${crossIcon})` }} className="feedback-popup-close" />
         <form onSubmit={handleSubmit}>
           <FormGroup controlId="issuetype" bssize="large">
             <FormLabel>Issue Type</FormLabel>

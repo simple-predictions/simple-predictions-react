@@ -6,8 +6,8 @@ export const feedbackSlice = createSlice({
     popupOpen: false,
   },
   reducers: {
-    openPopup: (state) => {state.popupOpen = true},
-    closePopup: (state) => {state.popupOpen = false}
+    openPopup: (state) => { state.popupOpen = true; },
+    closePopup: (state) => { state.popupOpen = false; },
   },
 });
 

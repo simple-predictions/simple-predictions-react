@@ -1,18 +1,18 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import base_url from '../globals'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import baseUrl from '../globals';
 
 export const getUserInfo = createAsyncThunk(
   'user/getUserInfo',
-  async () => await new Promise((resolve, reject) => {
-    fetch(base_url+'/userinfo', {credentials: 'include'}).then(res => {
+  async () => new Promise((resolve, reject) => {
+    fetch(`${baseUrl}/userinfo`, { credentials: 'include' }).then((res) => {
       if (res.status === 200) {
-        res.json().then(data => resolve(data))
+        res.json().then((data) => resolve(data));
       } else {
-        reject('Unsuccessful')
+        reject(new Error('Unsuccessful'));
       }
-    })
-  })
-)
+    });
+  }),
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -20,30 +20,31 @@ export const userSlice = createSlice({
     username: '',
     loggedIn: false,
     friends: [],
-    email: ''
+    email: '',
   },
   reducers: {
   },
   extraReducers: {
     [getUserInfo.fulfilled]: (state, action) => {
-      state.username = action.payload.username
-      state.email = action.payload.email
-      state.friends = action.payload.friends.map(friend => {
-        friend.name = friend.username
-        delete friend.username
-        return friend
-      })
-      state.loggedIn = true
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.friends = action.payload.friends.map((friend) => {
+        const friendCopy = friend;
+        friendCopy.name = friendCopy.username;
+        delete friendCopy.username;
+        return friendCopy;
+      });
+      state.loggedIn = true;
     },
-    [getUserInfo.rejected]: state => {
-      state.loggedIn = false
-    }
-  }
-})
+    [getUserInfo.rejected]: (state) => {
+      state.loggedIn = false;
+    },
+  },
+});
 
-export const selectLoggedIn = state => state.user.loggedIn
-export const selectFriends = state => [{name: 'Mine'},...state.user.friends]
-export const selectUserUsername = state => state.user.username
-export const selectUserEmail = state => state.user.email
+export const selectLoggedIn = (state) => state.user.loggedIn;
+export const selectFriends = (state) => [{ name: 'Mine' }, ...state.user.friends];
+export const selectUserUsername = (state) => state.user.username;
+export const selectUserEmail = (state) => state.user.email;
 
-export default userSlice.reducer
+export default userSlice.reducer;
