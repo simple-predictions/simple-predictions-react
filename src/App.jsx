@@ -53,7 +53,7 @@ const App = () => {
           {apiCookie && <Route path="/scores"><Scoring /></Route>}
           <Route path="/register"><FrontPage widget="Register" /></Route>
           <Route path="/resetpassword"><ResetPassword /></Route>
-          <Route path="/createnewpassword" component={(routeProps) => <CreateNewPassword location={routeProps} />} />
+          <Route path="/createnewpassword" component={(routeProps) => <CreateNewPassword location={routeProps.location} />} />
           <Route path="/">{apiCookie ? <PageSelector /> : <FrontPage widget="Login" />}</Route>
         </Switch>
       </Router>

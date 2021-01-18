@@ -6,13 +6,6 @@ import PropTypes from 'prop-types';
 import { openPopup } from './feedbackSlice';
 
 const FeedbackToggle = ({ apiCookie }) => {
-  FeedbackToggle.propTypes = {
-    apiCookie: PropTypes.string,
-  };
-  FeedbackToggle.defaultProps = {
-    apiCookie: '',
-  };
-
   const dispatch = useDispatch();
 
   return (
@@ -25,6 +18,13 @@ const FeedbackToggle = ({ apiCookie }) => {
       </button>
     </div>
   );
+};
+
+FeedbackToggle.propTypes = {
+  apiCookie: PropTypes.bool,
+};
+FeedbackToggle.defaultProps = {
+  apiCookie: false,
 };
 
 export default withRouter(FeedbackToggle);

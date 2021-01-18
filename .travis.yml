@@ -2,4 +2,4 @@ language: node_js
 node_js:
   - "stable"
 script:
-  - npx eslint ./src
+  - npx eslint src/**/*.{js,jsx}

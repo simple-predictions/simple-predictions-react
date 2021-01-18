@@ -12,10 +12,10 @@ export const alertsSlice = createSlice({
       state.alertVariant = action.payload.variant || 'success';
     },
     clearAlert: (state) => {
-      state.alertMessage = ''
-    }
-  }
-})
+      state.alertMessage = '';
+    },
+  },
+});
 
 export const { updateAlert, clearAlert } = alertsSlice.actions;
 
