@@ -6,7 +6,7 @@ import DropdownSelector from '../DropdownSelector';
 import {
   getScoredPreds, selectScoredMatches, selectScoringStatus, selectSelectedGameweek,
 } from './scoringSlice';
-import { selectFriends } from '../User/userSlice';
+import { selectFriends, selectUserTotalPoints } from '../User/userSlice';
 
 const Scoring = () => {
   window.scrollTo(0, 35);
@@ -18,6 +18,7 @@ const Scoring = () => {
   const gameweek = useSelector(selectSelectedGameweek);
   const matches = useSelector(selectScoredMatches);
   const friends = useSelector(selectFriends);
+  const totalPoints = useSelector(selectUserTotalPoints);
 
   if (status === 'pending' && (!gameweekDropdownDisabled || !friendDropdownDisabled)) {
     setGameweekDropdownDisabled(true);
@@ -41,6 +42,7 @@ const Scoring = () => {
             onValueUpdate={(e) => dispatch(getScoredPreds([false, e.target.value]))}
             startingValue={gameweek}
           />
+          <div className="total-points-container">{`Total points: ${totalPoints}`}</div>
         </div>
       </div>
       <div className="col-lg-8 right-col">

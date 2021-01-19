@@ -124,6 +124,13 @@ div.scored-match-data-header > div {
     padding: 0;
 }
 
+.total-points-container {
+    text-align: center;
+    font-family: 'Montserrat';
+    margin-top: 20px;
+    font-size: 1.25rem;
+}
+
 @media (max-width: 900px) {
     .scored-match-data-container > div {
         margin: auto 5px;
