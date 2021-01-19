@@ -48,3 +48,13 @@ h4.left-col-minileague-text {
 .nav-fill .nav-item {
     flex: 1;
 }
+
+div.ask-friends-minileague {
+    top: 50%;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: calc(100% - 40px);
+}

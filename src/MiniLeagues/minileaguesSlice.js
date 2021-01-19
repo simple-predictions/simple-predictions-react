@@ -89,6 +89,9 @@ export const selectSelectedMinileaguePreds = (state) => (
 export const selectSelectedMinileagueGameweek = (state) => (
   state.minileagues.all[state.minileagues.selectedIdx].table.gameweek
 );
+export const selectSelectedMinileagueName = (state) => (
+  state.minileagues.all[state.minileagues.selectedIdx].name
+);
 
 export const { updateSelectedIdx } = minileaguesSlice.actions;
 
