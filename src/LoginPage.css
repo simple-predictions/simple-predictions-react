@@ -62,7 +62,7 @@ div.front-page-outer-container > div.front-page-scrollover {
     height: 100vh;
 }
 div.front-page-outer-container > div.front-page-scrollover > div {
-    height: 100vh;
+    min-height: 100vh;
 }
 div.front-page-outer-container > div.front-page-scrollover > div > div.widget-container {
     display: flex;
