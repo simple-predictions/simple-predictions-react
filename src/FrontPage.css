@@ -113,12 +113,14 @@ div.three-steps-row {
     width: 100%;
     display: flex;
     height: fit-content;
-    font-family: 'Montserrat'
+    font-family: 'Montserrat';
+    justify-content: center;
 }
 
 .about-row-header-container {
     font-weight: 700;
     font-size: 40px;
+    text-align: center;
 }
 
 .about-row-text-container {

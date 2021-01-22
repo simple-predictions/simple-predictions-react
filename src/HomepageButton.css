@@ -1,6 +1,7 @@
 .homepage-button-container {
     margin-right: auto;
     margin-top: 10px;
+    z-index: 9999999;
 }
 
 .homepage-button-container > a {

@@ -137,7 +137,7 @@ const FrontPage = ({ widget, location }) => {
               <img alt="book icon" src="./icons/book.png" className="about-row-icon" />
             </div>
             <div className="about-row-text-container col-lg-6">
-              <div className="about-row-header-container">Our story</div>
+              <div className="about-row-header-container text-lg-left">Our story</div>
               <div className="about-row-description-container">The Salt Beef League began as an annual competition between two families on the now discontinued talkSport predictor site. The first iteration of my site used an API provided by talkSport to get users&#39; predictions and displayed them in a clear table. It also scored the games live as the goals came in. This latest iteration, which I&#39;m sure won&#39;t be the last, is a standalone website which doesn&#39;t depend on talkSport. </div>
             </div>
             <div className="col-lg-2" />
@@ -164,7 +164,7 @@ const FrontPage = ({ widget, location }) => {
               <img alt="eye icon" src="/icons/eye.png" className="about-row-icon" />
             </div>
             <div className="about-row-text-container col-lg-6">
-              <div className="about-row-header-container">Our vision</div>
+              <div className="about-row-header-container text-lg-left">Our vision</div>
               <div className="about-row-description-container">At the moment the site is a showcase of my skills and shows that I can think creatively to problem solve. For example, I haven&#39;t paid for any live data and the live scoring works by parsing the Premier League tweets from the Twitter API. I&#39;m keen to get as much feedback and user input as possible to improve this Alpha version further.</div>
             </div>
             <div className="col-lg-2" />
@@ -191,7 +191,7 @@ const FrontPage = ({ widget, location }) => {
               <img alt="person icon" src="/icons/person.png" className="about-row-icon" />
             </div>
             <div className="about-row-text-container col-lg-6">
-              <div className="about-row-header-container">About me</div>
+              <div className="about-row-header-container text-lg-left">About me</div>
               <div className="about-row-description-container">
                 {`I'm a Year 12 student with a passion for programming and problem solving.
                 My only formal coding education has been a work experience placement at 
