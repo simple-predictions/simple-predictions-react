@@ -154,6 +154,16 @@ input[type=number] {
   display: none;
 }
 
+.chips-container {
+  margin-top: 10px;
+  margin-bottom: -5px;
+}
+
+.chip-icon-button {
+  border: none;
+  background: none;
+}
+
 @media (max-width: 600px) {
   .club-badge {
     height: 50px;
