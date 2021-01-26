@@ -168,12 +168,12 @@ const PredictionRow = ({ kickOffTime, match }) => {
             {/* eslint-disable-next-line no-underscore-dangle */}
             <input className="prediction-score-input" disabled={!!match.locked} name={`${match._id}[away-pred]`} type="number" style={{ textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : '' }} defaultValue={match.user_predictions[0].away_pred} />
             <div className="chips-container">
-              <button type="button" style={{ opacity: bankerEnabled ? 1 : 0.3 }} className="chip-icon-button" onClick={() => setBankerEnabled(!bankerEnabled)}><img className="chip-icon" alt="dollar icon" src="/icons/dollar.png" height={30} /></button>
+              <button disabled={!!match.locked} type="button" style={{ opacity: bankerEnabled ? 1 : 0.3 }} className="chip-icon-button" onClick={() => setBankerEnabled(!bankerEnabled)}><img className="chip-icon" alt="dollar icon" src="/icons/dollar.png" height={30} /></button>
               {/* eslint-disable-next-line no-underscore-dangle */}
-              <input type="hidden" name={`${match._id}[banker]`} value={bankerEnabled} />
-              <button type="button" style={{ opacity: insuranceEnabled ? 1 : 0.3 }} className="chip-icon-button" onClick={() => setInsuranceEnabled(!insuranceEnabled)}><img className="chip-icon" alt="padlock icon" src="/icons/padlock.png" height={30} /></button>
+              <input disabled={!!match.locked} type="hidden" name={`${match._id}[banker]`} value={bankerEnabled} />
+              <button disabled={!!match.locked} type="button" style={{ opacity: insuranceEnabled ? 1 : 0.3 }} className="chip-icon-button" onClick={() => setInsuranceEnabled(!insuranceEnabled)}><img className="chip-icon" alt="padlock icon" src="/icons/padlock.png" height={30} /></button>
               {/* eslint-disable-next-line no-underscore-dangle */}
-              <input type="hidden" name={`${match._id}[insurance]`} value={insuranceEnabled} />
+              <input disabled={!!match.locked} type="hidden" name={`${match._id}[insurance]`} value={insuranceEnabled} />
             </div>
           </div>
           <div className="away-team-container">

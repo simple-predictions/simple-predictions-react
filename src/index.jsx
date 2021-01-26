@@ -9,10 +9,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
 
-LogRocket.init(`simple-predictions/react-${process.env.NODE_ENV}`);
-setupLogRocketReact(LogRocket);
-
 const environment = process.env.NODE_ENV || 'development';
+
+LogRocket.init(`simple-predictions/react-${environment}`);
+setupLogRocketReact(LogRocket);
 
 Sentry.init({ dsn: 'https://0c405d571e4a4582b1cc30e23089964f@o342120.ingest.sentry.io/5267310', environment });
 
