@@ -1,3 +1,4 @@
+import LogRocket from 'logrocket';
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../User/userSlice';
 import predictionsReducer from '../Predictions/predictionsSlice';
@@ -15,4 +16,5 @@ export default configureStore({
     feedback: feedbackReducer,
     alerts: alertsReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(LogRocket.reduxMiddleware()),
 });

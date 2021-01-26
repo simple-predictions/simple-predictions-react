@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as Sentry from '@sentry/browser';
 import { Provider } from 'react-redux';
+import LogRocket from 'logrocket';
+import setupLogRocketReact from 'logrocket-react';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
+
+LogRocket.init(`simple-predictions/react-${process.env.NODE_ENV}`);
+setupLogRocketReact(LogRocket);
 
 const environment = process.env.NODE_ENV || 'development';
 

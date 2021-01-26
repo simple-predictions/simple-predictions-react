@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import LogRocket from 'logrocket';
 import baseUrl from '../globals';
 
 export const getUserInfo = createAsyncThunk(
@@ -28,6 +29,11 @@ export const userSlice = createSlice({
     [getUserInfo.fulfilled]: (state, action) => {
       state.username = action.payload.username;
       state.email = action.payload.email;
+      // eslint-disable-next-line no-underscore-dangle
+      LogRocket.identify(action.payload._id, {
+        name: action.payload.username,
+        email: action.payload.email,
+      });
       state.totalPoints = action.payload.totalPoints;
       state.friends = action.payload.friends.map((friend) => {
         const friendCopy = friend;
