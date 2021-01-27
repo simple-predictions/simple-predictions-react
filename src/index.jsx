@@ -16,6 +16,12 @@ setupLogRocketReact(LogRocket);
 
 Sentry.init({ dsn: 'https://0c405d571e4a4582b1cc30e23089964f@o342120.ingest.sentry.io/5267310', environment });
 
+LogRocket.getSessionURL((sessionURL) => {
+  Sentry.configureScope((scope) => {
+    scope.setExtra('sessionURL', sessionURL);
+  });
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
