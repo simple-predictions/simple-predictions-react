@@ -21,7 +21,7 @@ import ResetPassword from './ResetPassword';
 import CreateNewPassword from './CreateNewPassword';
 
 // eslint-disable-next-line
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
 import BetaStamp from './BetaStamp';
 import { selectAlertVariant, selectAlertMessage, clearAlert } from './Alerts/alertsSlice';
 

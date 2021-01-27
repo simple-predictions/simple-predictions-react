@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import LogRocket from 'logrocket';
+import * as Sentry from '@sentry/react';
 import baseUrl from '../globals';
 
 export const getUserInfo = createAsyncThunk(
@@ -33,6 +34,14 @@ export const userSlice = createSlice({
       LogRocket.identify(action.payload._id, {
         name: action.payload.username,
         email: action.payload.email,
+      });
+      Sentry.configureScope((scope) => {
+        scope.setUser({
+          name: action.payload.username,
+          email: action.payload.email,
+          // eslint-disable-next-line no-underscore-dangle
+          id: action.payload._id,
+        });
       });
       state.totalPoints = action.payload.totalPoints;
       state.friends = action.payload.friends.map((friend) => {
