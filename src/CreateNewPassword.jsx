@@ -5,7 +5,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import handleSubmit from './CreateNewPasswordLogic';
+import handleSubmit from './Logic/CreateNewPasswordLogic';
 
 const CreateNewPassword = ({ location }) => {
   CreateNewPassword.propTypes = {

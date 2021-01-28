@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import handleSubmit from './ResetPasswordLogic';
+import handleSubmit from './Logic/ResetPasswordLogic';
 
 const ResetPassword = () => {
   const dispatch = useDispatch();

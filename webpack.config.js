@@ -8,32 +8,32 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets:['@babel/react']
-        }
+          presets: ['@babel/react'],
+        },
       },
       {
         test: /\.html$/,
         use: [
-          "htmllint-loader",
+          'htmllint-loader',
           {
-            loader: "html-loader"
-          }
-        ]
+            loader: 'html-loader',
+          },
+        ],
       },
       {
         test: /\.css$/i,
-        use: ['style-loader','css-loader']
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(jpg|png|svg)$/,
         use: {
-            loader: 'url-loader',
-            options: {
-                limit: 25000
-            }
-        }
-      }
-    ]
+          loader: 'url-loader',
+          options: {
+            limit: 25000,
+          },
+        },
+      },
+    ],
   },
   // other configuration
   plugins: [
@@ -41,10 +41,10 @@ module.exports = {
       include: '.',
       ignoreFile: '.sentrycliignore',
       ignore: ['node_modules', 'webpack.config.js'],
-      configFile: 'sentry.properties'
-    })
+      configFile: 'sentry.properties',
+    }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx']
-  }
+    extensions: ['.js', '.jsx'],
+  },
 };

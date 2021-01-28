@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectPopupOpen, closePopup } from './feedbackSlice';
 import { selectUserUsername, selectUserEmail } from '../User/userSlice';
 import { updateAlert } from '../Alerts/alertsSlice';
-import { handleSubmit, setIP } from './FeedbackLogic';
+import { handleSubmit, setIP } from '../Logic/FeedbackLogic';
 
 const crossIcon = require('../icons/cross.png');
 

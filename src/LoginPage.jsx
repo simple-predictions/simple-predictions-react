@@ -7,7 +7,7 @@ import './LoginPage.css';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUserInfo } from './User/userSlice';
-import handleSubmit from './LoginPageLogic';
+import handleSubmit from './Logic/LoginPageLogic';
 
 const LoginPage = ({ popupOpen, setPopupOpen }) => {
   const [username, setUsername] = useState('');

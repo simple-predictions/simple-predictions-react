@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import handleSubmit from './RegisterLogic';
+import handleSubmit from './Logic/RegisterLogic';
 
 const Register = ({ popupOpen, setPopupOpen }) => {
   const [username, setUsername] = useState('');

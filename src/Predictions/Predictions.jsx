@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DropdownSelector from '../DropdownSelector';
 import HomepageButton from '../HomepageButton';
-import handleSubmit from './PredictionsLogic';
+import handleSubmit from '../Logic/PredictionsLogic';
 import {
   getPredictions, selectUserPredictions, selectUserPredictionsGameweek, selectUserPredictionsStatus,
 } from './predictionsSlice';

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Form, InputGroup, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectUserUsername } from './User/userSlice';
-import handleSubmit from './PageSelectorLogic';
+import handleSubmit from './Logic/PageSelectorLogic';
 
 const PageSelector = () => {
   const username = useSelector(selectUserUsername);

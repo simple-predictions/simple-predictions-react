@@ -1,17 +1,18 @@
-import baseUrl from './globals';
+import baseUrl from '../globals';
 
 const handleSubmit = (
-  e,
+  event,
   buttonEnabled,
   setButtonEnabled,
   username,
   password,
-  email,
+  dispatch,
+  getUserInfo,
   setErrorCount,
   errorCount,
   setErrorMessage,
 ) => {
-  e.preventDefault();
+  event.preventDefault();
   if (buttonEnabled === false) {
     return;
   }
@@ -20,19 +21,18 @@ const handleSubmit = (
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, email }),
+    body: JSON.stringify({ username, password }),
     credentials: 'include',
   };
 
-  fetch(`${baseUrl}/register`, requestOptions).then((res) => {
+  fetch(`${baseUrl}/login`, requestOptions).then((res) => {
     if (res.status === 200) {
-      window.location.href = '/';
+      dispatch(getUserInfo());
+    } else {
+      setButtonEnabled(true);
+      setErrorCount(errorCount + 1);
+      setErrorMessage('Your username or password is incorrect. Please try again');
     }
-    return res;
-  }).then((res) => res.json()).then((data) => {
-    setErrorCount(errorCount + 1);
-    setErrorMessage(data.message);
-    setButtonEnabled(true);
   });
 };
 

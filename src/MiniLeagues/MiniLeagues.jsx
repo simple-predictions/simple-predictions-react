@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Alert, Nav, Form, InputGroup,
 } from 'react-bootstrap';
-import { createMiniLeague, joinMiniLeague } from './MiniLeagueLogic';
+import { createMiniLeague, joinMiniLeague } from '../Logic/MiniLeagueLogic';
 import MiniLeagueTable from './MiniLeagueTable';
 import DropdownSelector from '../DropdownSelector';
 import MiniLeagueRankings from './MiniLeagueRankings';
