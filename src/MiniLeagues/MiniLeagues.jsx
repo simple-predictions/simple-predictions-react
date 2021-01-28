@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Alert, Nav, Form, InputGroup,
 } from 'react-bootstrap';
+import { createMiniLeague, joinMiniLeague } from './MiniLeagueLogic';
 import MiniLeagueTable from './MiniLeagueTable';
 import DropdownSelector from '../DropdownSelector';
 import MiniLeagueRankings from './MiniLeagueRankings';
 import './MiniLeagues.css';
 import HomepageButton from '../HomepageButton';
 import { selectAllMinileagues, updateSelectedIdx, selectMinileaguesStatus } from './minileaguesSlice';
-import baseUrl from '../globals';
 
 const MiniLeagues = () => {
   window.scrollTo(0, 35);
@@ -22,56 +22,6 @@ const MiniLeagues = () => {
   const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true);
   const [responseMessage, setResponseMessage] = useState('');
   const [responseStatus, setResponseStatus] = useState();
-
-  const createMiniLeague = (e) => {
-    e.preventDefault();
-    if (createMiniLeagueEnabled === false) {
-      return;
-    }
-    setCreateMiniLeagueEnabled(false);
-    const formData = new FormData(e.target);
-    const minileagueName = formData.get('minileague-name');
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ league_name: minileagueName }),
-      credentials: 'include',
-    };
-
-    fetch(`${baseUrl}/createminileague`, requestOptions).then((res) => {
-      setResponseStatus(res.status);
-      return res.json();
-    }).then((data) => {
-      setResponseMessage(data);
-      setCreateMiniLeagueEnabled(true);
-    });
-  };
-
-  const joinMiniLeague = (e) => {
-    e.preventDefault();
-    if (joinMiniLeagueEnabled === false) {
-      return;
-    }
-    setJoinMiniLeagueEnabled(false);
-    const formData = new FormData(e.target);
-    const minileagueName = formData.get('minileague-name');
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ league_name: minileagueName }),
-      credentials: 'include',
-    };
-
-    fetch(`${baseUrl}/joinminileague`, requestOptions).then((res) => {
-      setResponseStatus(res.status);
-      return res.json();
-    }).then((data) => {
-      setResponseMessage(data);
-      setJoinMiniLeagueEnabled(true);
-    });
-  };
 
   return (
     <div className="m-0 row">
@@ -86,14 +36,30 @@ const MiniLeagues = () => {
             minileagueArr={minileagues}
           />
           <h4 className="left-col-minileague-text">Create mini-league</h4>
-          <Form style={{ marginBottom: 10 }} onSubmit={createMiniLeague}>
+          <Form
+            style={{ marginBottom: 10 }}
+            onSubmit={(e) => createMiniLeague(
+              e,
+              createMiniLeagueEnabled,
+              setCreateMiniLeagueEnabled,
+              setResponseStatus,
+              setResponseMessage,
+            )}
+          >
             <InputGroup>
               <Form.Control disabled={!createMiniLeagueEnabled} placeholder="Mini-league name" type="text" name="minileague-name" />
             </InputGroup>
           </Form>
 
           <h4 className="left-col-minileague-text">Join mini-league</h4>
-          <Form style={{ marginBottom: 10 }} onSubmit={joinMiniLeague}>
+          <Form
+            style={{ marginBottom: 10 }}
+            onSubmit={(e) => joinMiniLeague(e,
+              joinMiniLeagueEnabled,
+              setJoinMiniLeagueEnabled,
+              setResponseStatus,
+              setResponseMessage)}
+          >
             <InputGroup>
               <Form.Control disabled={!joinMiniLeagueEnabled} placeholder="Mini-league name" type="text" name="minileague-name" />
             </InputGroup>

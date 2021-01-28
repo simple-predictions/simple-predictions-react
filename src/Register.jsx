@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import baseUrl from './globals';
+import handleSubmit from './RegisterLogic';
 
 const Register = ({ popupOpen, setPopupOpen }) => {
   const [username, setUsername] = useState('');
@@ -13,32 +13,6 @@ const Register = ({ popupOpen, setPopupOpen }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [errorCount, setErrorCount] = useState(0);
   const [buttonEnabled, setButtonEnabled] = useState(true);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (buttonEnabled === false) {
-      return;
-    }
-    setButtonEnabled(false);
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, email }),
-      credentials: 'include',
-    };
-
-    fetch(`${baseUrl}/register`, requestOptions).then((res) => {
-      if (res.status === 200) {
-        window.location.href = '/';
-      }
-      return res;
-    }).then((res) => res.json()).then((data) => {
-      setErrorCount(errorCount + 1);
-      setErrorMessage(data.message);
-      setButtonEnabled(true);
-    });
-  };
 
   const validateForm = () => username.length > 0 && password.length > 0 && email.length > 0;
 
@@ -52,7 +26,16 @@ const Register = ({ popupOpen, setPopupOpen }) => {
           <strong>{`${errorCount} attempt(s)`}</strong>
         </Alert>
         )}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e,
+          buttonEnabled,
+          setButtonEnabled,
+          username,
+          password,
+          email,
+          setErrorCount,
+          errorCount,
+          setErrorMessage)}
+        >
           <FormGroup controlId="username" bssize="large">
             <img style={{ width: 50, display: 'block', margin: 'auto' }} src="/icons/football.png" alt="football icon" />
             <p style={{ textAlign: 'center', fontSize: 14, margin: '20px 0' }}>Sign up to view, make and share predictions with live results and scoring.</p>

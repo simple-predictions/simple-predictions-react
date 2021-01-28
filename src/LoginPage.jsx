@@ -7,7 +7,7 @@ import './LoginPage.css';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUserInfo } from './User/userSlice';
-import baseUrl from './globals';
+import handleSubmit from './LoginPageLogic';
 
 const LoginPage = ({ popupOpen, setPopupOpen }) => {
   const [username, setUsername] = useState('');
@@ -19,31 +19,6 @@ const LoginPage = ({ popupOpen, setPopupOpen }) => {
 
   const validateForm = () => username.length > 0 && password.length > 0;
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (buttonEnabled === false) {
-      return;
-    }
-    setButtonEnabled(false);
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-      credentials: 'include',
-    };
-
-    fetch(`${baseUrl}/login`, requestOptions).then((res) => {
-      if (res.status === 200) {
-        dispatch(getUserInfo());
-      } else {
-        setButtonEnabled(true);
-        setErrorCount(errorCount + 1);
-        setErrorMessage('Your username or password is incorrect. Please try again');
-      }
-    });
-  };
-
   return (
     <div className="login-popup" style={{ display: popupOpen ? 'flex' : 'none' }}>
       <Container style={{ maxWidth: '90vw' }} className="login-popup-content">
@@ -54,7 +29,19 @@ const LoginPage = ({ popupOpen, setPopupOpen }) => {
           <strong>{`${errorCount} attempt(s)`}</strong>
         </Alert>
         )}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(event) => handleSubmit(
+          event,
+          buttonEnabled,
+          setButtonEnabled,
+          username,
+          password,
+          dispatch,
+          getUserInfo,
+          setErrorCount,
+          errorCount,
+          setErrorMessage,
+        )}
+        >
           <FormGroup controlId="username" bssize="large">
             <img style={{ width: 50, display: 'block', margin: 'auto' }} src="/icons/football.png" alt="football icon" />
             <p style={{ textAlign: 'center', fontSize: 14, margin: '20px 0' }}>Sign in to view, make and share predictions with live results and scoring.</p>
