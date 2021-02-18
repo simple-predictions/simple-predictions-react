@@ -44,7 +44,6 @@ const handleSubmit = (e, submitPredictions) => {
   }
   for (let i = 0; i < predsData.length; i += 1) {
     const pred = predsData[i];
-    console.log(pred.home_pred);
     const MUTATION = `
       pred${i}: updatePrediction(
         matchID: "${pred.game_id}",

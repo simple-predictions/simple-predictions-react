@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Predictions.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import DropdownSelector from '../DropdownSelector';
 import HomepageButton from '../HomepageButton';
 import handleSubmit from '../Logic/PredictionsLogic';
-import {
-  setPredictionsGameweek, selectUserPredictionsGameweek, selectUserPredictionsStatus,
-} from './predictionsSlice';
 import { selectUserID } from '../User/userSlice';
 
 const Predictions = () => {
   window.scrollTo(0, 35);
-  const dispatch = useDispatch();
 
-  const gameweek = useSelector(selectUserPredictionsGameweek);
   const userID = useSelector(selectUserID);
+  const [gameweek, setGameweek] = useState();
+
   const QUERY = gql`
     query {
       matchMany(filter: {gameweek: ${gameweek || 0}}) {
@@ -45,9 +42,9 @@ const Predictions = () => {
 
   useEffect(() => {
     if (queryData?.matchMany[0].gameweek !== gameweek && queryData) {
-      dispatch(setPredictionsGameweek(queryData.matchMany[0].gameweek));
+      setGameweek(queryData.matchMany[0].gameweek);
     }
-  }, [queryData, gameweek, dispatch]);
+  }, [queryData, gameweek]);
 
   const BATCHED_MUTATION = gql`
     mutation {
@@ -66,17 +63,6 @@ const Predictions = () => {
     throw new Error(mutationError);
   }
 
-  const status = useSelector(selectUserPredictionsStatus);
-  const [selectorDisabled, setSelectorDisabled] = useState(true);
-
-  if (gameweek && selectorDisabled && status !== 'pending') {
-    setSelectorDisabled(false);
-  }
-
-  if (status === 'pending' && !selectorDisabled) {
-    setSelectorDisabled(true);
-  }
-
   return (
     <div className="m-0 row">
       <div className="col-lg-4 left-col-prediction-outer-container">
@@ -91,7 +77,7 @@ const Predictions = () => {
           <DropdownSelector
             enabled={queryLoading}
             length={38}
-            onValueUpdate={(e) => dispatch(setPredictionsGameweek(parseInt(e.target.value, 10)))}
+            onValueUpdate={(e) => setGameweek(parseInt(e.target.value, 10))}
             startingValue={gameweek}
           />
           <input disabled={mutationLoading} className="predictions-form-submit-button" type="submit" value="Submit" form="predictions-form" />
