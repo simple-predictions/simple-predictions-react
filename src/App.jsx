@@ -6,7 +6,6 @@ import { Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getUserInfo, selectLoggedIn } from './User/userSlice';
-import { getPredictions } from './Predictions/predictionsSlice';
 import { getMinileagues } from './MiniLeagues/minileaguesSlice';
 import { getScoredPreds } from './Scoring/scoringSlice';
 
@@ -31,7 +30,6 @@ const App = () => {
   const apiCookie = useSelector(selectLoggedIn);
 
   if (apiCookie) {
-    dispatch(getPredictions());
     dispatch(getMinileagues());
     dispatch(getScoredPreds([]));
   } else {

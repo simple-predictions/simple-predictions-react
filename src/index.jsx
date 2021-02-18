@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/react';
 import { Provider } from 'react-redux';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
@@ -20,9 +21,16 @@ LogRocket.getSessionURL((sessionURL) => {
   Sentry.setTag('logrocket', sessionURL);
 });
 
+const client = new ApolloClient({
+  uri: 'http://192.168.0.16:5000/graphql',
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </Provider>,
   document.getElementById('root'),
 );
