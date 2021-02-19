@@ -9,7 +9,7 @@ const DropdownSelector = ({
     <img alt="dropdown arrow" className="dropdown-arrow" height={20} src="/icons/arrow.png" />
     <select disabled={enabled} style={style} value={startingValue} onChange={onValueUpdate}>
       {[...Array(length)].map((x, i) => (
-        // eslint-disable-next-line react/no-array-index-key
+        // eslint-disable-next-line react/no-array-index-key, no-underscore-dangle
         <option key={i + 1} value={minileagueArr[i]?._id || i + 1}>{minileagueArr.length > 0 ? minileagueArr[i].name : `Gameweek ${i + 1}`}</option>
       ))}
     </select>
