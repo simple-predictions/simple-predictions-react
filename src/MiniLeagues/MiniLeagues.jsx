@@ -57,7 +57,7 @@ const SingleMiniLeague = ({
 
   useEffect(() => {
     setLoaded(!queryLoading);
-  }, [queryLoading]);
+  }, [queryLoading, setLoaded]);
 
   useEffect(() => {
     if (queryData) {
@@ -84,7 +84,7 @@ const SingleMiniLeague = ({
       setTable(tablePrep);
 
       if (tablePrep[0].gameweek !== gameweek && queryData) {
-        setGameweek(tablePrep[0].gameweek);
+        setGameweek(parseInt(tablePrep[0].gameweek, 10));
       }
     }
   }, [queryData, gameweek]);
@@ -103,7 +103,7 @@ const SingleMiniLeague = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {componentName === 'MiniLeagueTable' ? <MiniLeagueTable table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings rankings={rankings} />}
+      {componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings rankings={rankings} />}
     </div>
   );
 };
