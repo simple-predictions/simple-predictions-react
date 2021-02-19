@@ -24,7 +24,7 @@ const Predictions = () => {
         kick_off_time
         gameweek
         locked
-        predictions${userID ? `(user: "${userID}")` : ''} {
+        predictions${userID ? `(users: ["${userID}"])` : ''} {
           _id
           home_pred
           away_pred

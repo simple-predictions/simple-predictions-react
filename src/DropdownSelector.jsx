@@ -10,7 +10,7 @@ const DropdownSelector = ({
     <select disabled={enabled} style={style} value={startingValue} onChange={onValueUpdate}>
       {[...Array(length)].map((x, i) => (
         // eslint-disable-next-line react/no-array-index-key
-        <option key={i + 1} value={i + 1}>{minileagueArr.length > 0 ? minileagueArr[i].name : `Gameweek ${i + 1}`}</option>
+        <option key={i + 1} value={minileagueArr[i]?._id || i + 1}>{minileagueArr.length > 0 ? minileagueArr[i].name : `Gameweek ${i + 1}`}</option>
       ))}
     </select>
   </div>
