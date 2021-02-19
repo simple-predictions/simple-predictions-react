@@ -1,39 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Table } from 'react-bootstrap';
 import './MiniLeagueTable.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import DropdownSelector from '../DropdownSelector';
 import {
-  getMinileaguePreds,
-  selectSelectedMinileaguePreds,
-  selectSelectedMinileagueGameweek,
-  selectMinileaguesStatus,
   selectSelectedMinileagueName,
 } from './minileaguesSlice';
 
-const MiniLeagueTable = () => {
-  const gameweek = useSelector(selectSelectedMinileagueGameweek);
-  const preds = useSelector(selectSelectedMinileaguePreds);
-  const updatingStatus = useSelector(selectMinileaguesStatus);
+const MiniLeagueTable = ({
+  table,
+  setGameweek,
+  gameweek,
+  loaded,
+}) => {
   const selectedMiniLeagueName = useSelector(selectSelectedMinileagueName);
-  const [enabledStatus, setEnabledStatus] = useState(true);
-  const dispatch = useDispatch();
-
-  if ((updatingStatus === 'idle' || updatingStatus === 'success') && enabledStatus === false) {
-    setEnabledStatus(true);
-  }
-
-  if (updatingStatus === 'pending' && enabledStatus === true) {
-    setEnabledStatus(false);
-  }
 
   return (
     <div className="minileague-prediction-container">
-      {preds.members.length > 1 ? (
+      {table.length > 1 ? (
         <>
           <DropdownSelector
-            enabled={!enabledStatus}
-            onValueUpdate={(e) => dispatch(getMinileaguePreds(e.target.value))}
+            enabled={!loaded}
+            onValueUpdate={(e) => setGameweek(e.target.value)}
             startingValue={gameweek}
             length={38}
           />
@@ -45,7 +34,7 @@ const MiniLeagueTable = () => {
               </tr>
             </thead>
             <tbody>
-              {preds.matches.map((match) => (
+              {table.map((match) => (
                 // eslint-disable-next-line no-underscore-dangle
                 <React.Fragment key={match._id}>
                   <tr className="minileague-prediction-table-row-clickable minileague-prediction-table-row">
@@ -72,10 +61,8 @@ const MiniLeagueTable = () => {
                         {Date.parse(match.kick_off_time) < Date.now()
                           ? (
                             <>
-                              {preds.members.map((member) => {
-                                let pred = match.predictions.find(
-                                  (obj) => obj.username === member.username,
-                                );
+                              {match.members.map((member) => {
+                                let pred = member.prediction;
                                 if (pred) { if (pred.home_pred === null) { pred = null; } }
                                 let backgroundColor;
                                 if (pred) {
@@ -141,6 +128,15 @@ const MiniLeagueTable = () => {
       )}
     </div>
   );
+};
+
+MiniLeagueTable.propTypes = {
+  setGameweek: PropTypes.func.isRequired,
+  gameweek: PropTypes.number.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  table: PropTypes.arrayOf(PropTypes.shape({
+    home_team: PropTypes.string,
+  })).isRequired,
 };
 
 export default MiniLeagueTable;

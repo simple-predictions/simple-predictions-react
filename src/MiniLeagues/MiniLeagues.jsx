@@ -11,37 +11,81 @@ import DropdownSelector from '../DropdownSelector';
 import MiniLeagueRankings from './MiniLeagueRankings';
 import './MiniLeagues.css';
 import HomepageButton from '../HomepageButton';
-import { selectAllMinileagues, selectMinileaguesStatus } from './minileaguesSlice';
+import { selectAllMinileagues } from './minileaguesSlice';
 
-const SingleMiniLeague = ({ componentName, setComponentName, selectedMiniLeagueID }) => {
+const SingleMiniLeague = ({
+  componentName,
+  setComponentName,
+  selectedMiniLeagueID,
+  setLoaded,
+  loaded,
+}) => {
   const [gameweek, setGameweek] = useState(0);
   const QUERY = gql`
   query {
-    minileagueOne(filter: { _id: "${selectedMiniLeagueID}" }) {
+    minileagueOne(filter: {_id: "${selectedMiniLeagueID}"}){
       name
+      _id
       members {
-        username
+        _id
         totalPoints
-        predictions(gameweek: ${gameweek || 0}) {
+        username
+        predictions(gameweek: ${gameweek}) {
           home_pred
           away_pred
           points
           match {
-            home_team
-            away_team
-            gameweek
+            _id
           }
         }
       }
     }
+    matchMany(filter: { gameweek: ${gameweek} }) {
+      _id
+      home_team
+      away_team
+      live_home_score
+      live_away_score
+      gameweek
+      kick_off_time
+    }
   }`;
 
-  const { data: queryData } = useQuery(QUERY);
-  console.log(queryData);
+  const { data: queryData, loading: queryLoading } = useQuery(QUERY);
+  const [rankings, setRankings] = useState();
+  const [table, setTable] = useState([]);
 
   useEffect(() => {
-    if (queryData?.miniLeagueOne.members[0].predictions[0].match.gameweek !== gameweek && queryData) {
-      setGameweek(queryData.miniLeagueOne.members[0].predictions[0].match.gameweek);
+    setLoaded(!queryLoading);
+  }, [queryLoading]);
+
+  useEffect(() => {
+    if (queryData) {
+      const rankingsPrep = { ...queryData.minileagueOne };
+      rankingsPrep.members = rankingsPrep.members.map((member) => {
+        const { predictions, ...obj } = member;
+        return obj;
+      });
+      setRankings(rankingsPrep);
+
+      let tablePrep = [...queryData.matchMany];
+      tablePrep = tablePrep.map((match) => {
+        const members = queryData.minileagueOne.members.map((member) => {
+          // eslint-disable-next-line no-underscore-dangle
+          const pred = member.predictions.find((innerPred) => innerPred.match._id === match._id);
+          return { username: member.username, prediction: pred };
+        });
+
+        const retMatch = { ...match };
+        retMatch.members = members;
+
+        return retMatch;
+      });
+      setTable(tablePrep);
+
+      if (tablePrep[0].gameweek !== gameweek && queryData) {
+        setGameweek(tablePrep[0].gameweek);
+      }
     }
   }, [queryData, gameweek]);
 
@@ -59,7 +103,7 @@ const SingleMiniLeague = ({ componentName, setComponentName, selectedMiniLeagueI
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {componentName === 'MiniLeagueTable' ? <MiniLeagueTable /> : <MiniLeagueRankings />}
+      {componentName === 'MiniLeagueTable' ? <MiniLeagueTable table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings rankings={rankings} />}
     </div>
   );
 };
@@ -68,6 +112,8 @@ SingleMiniLeague.propTypes = {
   componentName: PropTypes.string.isRequired,
   setComponentName: PropTypes.func.isRequired,
   selectedMiniLeagueID: PropTypes.string,
+  setLoaded: PropTypes.func.isRequired,
+  loaded: PropTypes.bool.isRequired,
 };
 
 SingleMiniLeague.defaultProps = {
@@ -97,19 +143,25 @@ const MiniLeagues = () => {
       }
     }
   }`;
-  const { loading: queryLoading, error: queryError, data: queryData } = useQuery(QUERY);
+
+  const [selectedMiniLeagueID, setSelectedMiniLeagueID] = useState('');
+
+  const { error: queryError, data: queryData } = useQuery(
+    QUERY,
+    // eslint-disable-next-line no-underscore-dangle
+    { onCompleted: () => setSelectedMiniLeagueID(queryData.minileagueMany[0]._id) },
+  );
   if (queryError) {
     throw new Error(queryError);
   }
 
-  const [selectedMiniLeagueID, setSelectedMiniLeagueID] = useState('');
   const minileagues = useSelector(selectAllMinileagues);
   const [componentName, setComponentName] = useState('MiniLeagueTable');
-  const loaded = useSelector(selectMinileaguesStatus);
   const [createMiniLeagueEnabled, setCreateMiniLeagueEnabled] = useState(true);
   const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true);
   const [responseMessage, setResponseMessage] = useState('');
   const [responseStatus, setResponseStatus] = useState();
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div className="m-0 row">
@@ -122,6 +174,7 @@ const MiniLeagues = () => {
             onValueUpdate={(e) => setSelectedMiniLeagueID(e.target.value)}
             length={queryData?.minileagueMany.length || 0}
             minileagueArr={queryData?.minileagueMany}
+            enabled={!loaded}
           />
           <h4 className="left-col-minileague-text">Create mini-league</h4>
           <Form
@@ -156,7 +209,13 @@ const MiniLeagues = () => {
       </div>
       <div className="col-lg-8 right-col">
         {minileagues.length > 0 ? (
-          <SingleMiniLeague componentName={componentName} setComponentName={setComponentName} selectedMiniLeagueID={selectedMiniLeagueID} />
+          <SingleMiniLeague
+            setLoaded={setLoaded}
+            loaded={loaded}
+            componentName={componentName}
+            setComponentName={setComponentName}
+            selectedMiniLeagueID={selectedMiniLeagueID}
+          />
         ) : (
           <div className="no-mini-league-statement-container">
             {loaded === 'success' && (
