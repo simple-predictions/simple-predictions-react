@@ -31,6 +31,8 @@ export const userSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       // eslint-disable-next-line no-underscore-dangle
+      state.id = action.payload._id;
+      // eslint-disable-next-line no-underscore-dangle
       LogRocket.identify(action.payload._id, {
         name: action.payload.username,
         email: action.payload.email,
@@ -63,5 +65,6 @@ export const selectFriends = (state) => [{ name: 'Mine' }, ...state.user.friends
 export const selectUserUsername = (state) => state.user.username;
 export const selectUserEmail = (state) => state.user.email;
 export const selectUserTotalPoints = (state) => state.user.totalPoints;
+export const selectUserID = (state) => state.user.id;
 
 export default userSlice.reducer;

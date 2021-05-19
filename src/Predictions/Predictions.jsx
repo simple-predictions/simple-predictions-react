@@ -1,65 +1,96 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Predictions.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import DropdownSelector from '../DropdownSelector';
 import HomepageButton from '../HomepageButton';
 import handleSubmit from '../Logic/PredictionsLogic';
-import {
-  getPredictions, selectUserPredictions, selectUserPredictionsGameweek, selectUserPredictionsStatus,
-} from './predictionsSlice';
+import { selectUserID } from '../User/userSlice';
 
 const Predictions = () => {
   window.scrollTo(0, 35);
-  const userPredictions = useSelector(selectUserPredictions);
-  const gameweek = useSelector(selectUserPredictionsGameweek);
-  const status = useSelector(selectUserPredictionsStatus);
-  const [successCount, setSuccessCount] = useState(0);
-  const [selectorDisabled, setSelectorDisabled] = useState(true);
-  const [submitEnabled, setSubmitEnabled] = useState(true);
-  const [successMessage, setSuccessMessage] = useState();
-  const dispatch = useDispatch();
 
-  if (gameweek && selectorDisabled && status !== 'pending') {
-    setSelectorDisabled(false);
+  const userID = useSelector(selectUserID);
+  const [gameweek, setGameweek] = useState();
+
+  const QUERY = gql`
+    query {
+      matchMany(filter: {gameweek: ${gameweek || 0}}) {
+        _id
+        home_team
+        away_team
+        kick_off_time
+        gameweek
+        locked
+        predictions${userID ? `(users: ["${userID}"])` : ''} {
+          _id
+          home_pred
+          away_pred
+          banker
+          insurance
+        }
+      }
+    }
+  `;
+
+  const { loading: queryLoading, error: queryError, data: queryData } = useQuery(QUERY);
+  if (queryError) {
+    throw new Error(queryError);
   }
 
-  if (status === 'pending' && !selectorDisabled) {
-    setSelectorDisabled(true);
+  useEffect(() => {
+    if (queryData?.matchMany[0].gameweek !== gameweek && queryData) {
+      setGameweek(queryData.matchMany[0].gameweek);
+    }
+  }, [queryData, gameweek]);
+
+  const BATCHED_MUTATION = gql`
+    mutation {
+      updatePrediction {
+        home_pred
+      }
+    }
+  `;
+
+  const [updatePredictions, {
+    error: mutationError,
+    loading: mutationLoading,
+    called: mutationCalled,
+  }] = useMutation(BATCHED_MUTATION);
+  if (mutationError) {
+    throw new Error(mutationError);
   }
 
   return (
     <div className="m-0 row">
       <div className="col-lg-4 left-col-prediction-outer-container">
         <HomepageButton />
-        {successMessage && (
-        <Alert variant="success" dismissible onClose={() => setSuccessMessage('')}>
-          {`${successMessage} - `}
-          <strong>
-            {`${successCount} attempt(s)`}
-          </strong>
+        {!mutationLoading && !mutationError && mutationCalled && (
+        <Alert variant="success">
+          Predictions successfully updated!
         </Alert>
         )}
         <div className="left-col-prediction-container">
           <h1 className="left-col-prediction-text">Predictions</h1>
           <DropdownSelector
-            enabled={selectorDisabled}
+            enabled={queryLoading}
             length={38}
-            onValueUpdate={(e) => dispatch(getPredictions(e.target.value))}
+            onValueUpdate={(e) => setGameweek(parseInt(e.target.value, 10))}
             startingValue={gameweek}
           />
-          <input disabled={!submitEnabled} className="predictions-form-submit-button" type="submit" value="Submit" form="predictions-form" />
+          <input disabled={mutationLoading} className="predictions-form-submit-button" type="submit" value="Submit" form="predictions-form" />
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        <form id="predictions-form" className="predictions-form" onSubmit={(e) => handleSubmit(e, setSubmitEnabled, setSuccessMessage, successCount, setSuccessCount)}>
-          {userPredictions.map((match) => {
+        <form id="predictions-form" className="predictions-form" onSubmit={(e) => handleSubmit(e, updatePredictions)}>
+          {queryData && queryData.matchMany.map((match) => {
             const kickOffTime = new Date(match.kick_off_time);
             // eslint-disable-next-line no-underscore-dangle
             return <PredictionRow key={match._id} kickOffTime={kickOffTime} match={match} />;
           })}
-          <input disabled={!submitEnabled} className="predictions-form-submit-button predictions-form-submit-button-mobile" type="submit" value="Submit" form="predictions-form" />
+          <input disabled={mutationLoading} className="predictions-form-submit-button predictions-form-submit-button-mobile" type="submit" value="Submit" form="predictions-form" />
         </form>
       </div>
     </div>
@@ -81,8 +112,8 @@ const PredictionRow = ({ kickOffTime, match }) => {
   month[10] = 'November';
   month[11] = 'December';
 
-  const [bankerEnabled, setBankerEnabled] = useState(!!match.user_predictions[0].banker);
-  const [insuranceEnabled, setInsuranceEnabled] = useState(!!match.user_predictions[0].insurance);
+  const [bankerEnabled, setBankerEnabled] = useState(!!match.predictions[0]?.banker);
+  const [insuranceEnabled, setInsuranceEnabled] = useState(!!match.predictions[0]?.insurance);
 
   return (
     // eslint-disable-next-line no-underscore-dangle
@@ -104,10 +135,10 @@ const PredictionRow = ({ kickOffTime, match }) => {
               {(`0${kickOffTime.getMinutes()}`).slice(-2)}
             </div>
             {/* eslint-disable-next-line no-underscore-dangle */}
-            <input className="prediction-score-input" disabled={!!match.locked} name={`${match._id}[home-pred]`} type="number" style={{ textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : '' }} defaultValue={match.user_predictions[0].home_pred} />
+            <input className="prediction-score-input" disabled={!!match.locked} name={`${match._id}[home-pred]`} type="number" style={{ textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : '' }} defaultValue={match.predictions[0]?.home_pred} />
             -
             {/* eslint-disable-next-line no-underscore-dangle */}
-            <input className="prediction-score-input" disabled={!!match.locked} name={`${match._id}[away-pred]`} type="number" style={{ textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : '' }} defaultValue={match.user_predictions[0].away_pred} />
+            <input className="prediction-score-input" disabled={!!match.locked} name={`${match._id}[away-pred]`} type="number" style={{ textAlign: 'center', backgroundColor: match.locked ? '#c5ccd6' : '' }} defaultValue={match.predictions[0]?.away_pred} />
             <div className="chips-container">
               <button disabled={!!match.locked} type="button" style={{ opacity: bankerEnabled ? 1 : 0.3 }} className="chip-icon-button" onClick={() => setBankerEnabled(!bankerEnabled)}><img className="chip-icon" alt="dollar icon" src="/icons/dollar.png" height={30} /></button>
               {/* eslint-disable-next-line no-underscore-dangle */}
@@ -134,9 +165,9 @@ PredictionRow.propTypes = {
     home_team: PropTypes.string,
     away_team: PropTypes.string,
     locked: PropTypes.bool,
-    user_predictions: PropTypes.arrayOf(PropTypes.shape({
-      home_pred: PropTypes.string,
-      away_pred: PropTypes.string,
+    predictions: PropTypes.arrayOf(PropTypes.shape({
+      home_pred: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      away_pred: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       banker: PropTypes.bool,
       insurance: PropTypes.bool,
     })),
