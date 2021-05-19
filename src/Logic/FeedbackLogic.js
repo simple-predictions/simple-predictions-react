@@ -14,7 +14,8 @@ const handleSubmit = async (
   setDescription,
   updateAlert,
   closePopup,
-  dispatch) => {
+  dispatch
+) => {
   e.preventDefault();
   if (buttonEnabled === false) {
     return;
