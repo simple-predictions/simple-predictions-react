@@ -9,7 +9,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
-import baseUrl from '../globals';
+import baseUrl from './globals';
 
 const environment = process.env.NODE_ENV || 'development';
 
