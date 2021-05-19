@@ -9,6 +9,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store/store';
+import baseUrl from '../globals';
 
 const environment = process.env.NODE_ENV || 'development';
 
@@ -22,7 +23,7 @@ LogRocket.getSessionURL((sessionURL) => {
 });
 
 const client = new ApolloClient({
-  uri: 'http://192.168.0.16:5000/graphql',
+  uri: `${baseUrl}/graphql`,
   cache: new InMemoryCache(),
 });
 
