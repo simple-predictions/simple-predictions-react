@@ -25,6 +25,7 @@ LogRocket.getSessionURL((sessionURL) => {
 const client = new ApolloClient({
   uri: `${baseUrl}/graphql`,
   cache: new InMemoryCache(),
+  credentials: 'include',
 });
 
 ReactDOM.render(
