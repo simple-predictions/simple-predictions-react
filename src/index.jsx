@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 import { Provider } from 'react-redux';
 import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
@@ -16,7 +17,15 @@ const environment = process.env.NODE_ENV || 'development';
 LogRocket.init(`simple-predictions/react-${environment}`);
 setupLogRocketReact(LogRocket);
 
-Sentry.init({ dsn: 'https://0c405d571e4a4582b1cc30e23089964f@o342120.ingest.sentry.io/5267310', environment, normalizeDepth: 10 });
+Sentry.init({
+  dsn: 'https://0c405d571e4a4582b1cc30e23089964f@o342120.ingest.sentry.io/5267310',
+  environment,
+  normalizeDepth: 10,
+  integrations: [new Integrations.BrowserTracing({
+    tracingOrigins: ['192.168.0.22:5000', '192.168.0.22', 'api.saltbeefleague.co.uk'],
+  })],
+  tracesSampleRate: 1.0,
+});
 
 LogRocket.getSessionURL((sessionURL) => {
   Sentry.setTag('logrocket', sessionURL);

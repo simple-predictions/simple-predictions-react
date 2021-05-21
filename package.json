@@ -10,6 +10,7 @@
     "@reduxjs/toolkit": "^1.5.0",
     "@sentry/cli": "^1.54.0",
     "@sentry/react": "^6.0.2",
+    "@sentry/tracing": "^6.4.1",
     "@sentry/wizard": "^1.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
