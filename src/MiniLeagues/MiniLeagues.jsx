@@ -19,7 +19,6 @@ const SingleMiniLeague = ({
   setComponentName,
   selectedMiniLeagueID,
   setLoaded,
-  loaded,
 }) => {
   const PREQUERY = gql`
   query {
@@ -34,6 +33,7 @@ const SingleMiniLeague = ({
     onCompleted: (data) => {
       setGameweek(data.findGameweek.number);
     },
+    returnPartialData: true,
   });
 
   const QUERY = gql`
@@ -66,7 +66,9 @@ const SingleMiniLeague = ({
     }
   }`;
 
-  const { data: queryData, loading: queryLoading } = useQuery(QUERY);
+  const { data: queryData, loading: queryLoading } = useQuery(QUERY, {
+    returnPartialData: true,
+  });
   const [rankings, setRankings] = useState();
   const [table, setTable] = useState([]);
 
@@ -75,7 +77,9 @@ const SingleMiniLeague = ({
   }, [queryLoading, setLoaded]);
 
   useEffect(() => {
-    if (queryData) {
+    if (queryData.minileagueOne
+      && queryData.matchMany
+      && queryData.minileagueOne.members[0].predictions) {
       const rankingsPrep = { ...queryData.minileagueOne };
       rankingsPrep.members = rankingsPrep.members.map((member) => {
         const { predictions, ...obj } = member;
@@ -114,10 +118,10 @@ const SingleMiniLeague = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {loaded ? (
-        componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings loaded={loaded} rankings={rankings} />
+      {queryData.minileagueOne ? (
+        componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />
       ) : (
-        <div className="no-mini-league-statement-container">
+        <div className="no-mini-league-statement-container query-data-single">
           <div className="no-mini-league-statement">
             Loading...
           </div>
@@ -132,7 +136,6 @@ SingleMiniLeague.propTypes = {
   setComponentName: PropTypes.func.isRequired,
   selectedMiniLeagueID: PropTypes.string,
   setLoaded: PropTypes.func.isRequired,
-  loaded: PropTypes.bool.isRequired,
 };
 
 SingleMiniLeague.defaultProps = {
@@ -167,12 +170,20 @@ const MiniLeagues = () => {
 
   const { error: queryError, data: queryData, loading: queryLoading } = useQuery(
     QUERY,
-    // eslint-disable-next-line no-underscore-dangle
-    { onCompleted: () => setSelectedMiniLeagueID(queryData.minileagueMany[0]?._id) },
+    {
+      returnPartialData: true,
+    },
   );
   if (queryError) {
     throw new Error(queryError);
   }
+
+  useEffect(() => {
+    if (queryData.minileagueMany && selectedMiniLeagueID === '') {
+      // eslint-disable-next-line no-underscore-dangle
+      setSelectedMiniLeagueID(queryData.minileagueMany[0]?._id);
+    }
+  }, [queryData]);
 
   const minileagues = useSelector(selectAllMinileagues);
   const [componentName, setComponentName] = useState('MiniLeagueTable');
@@ -191,7 +202,7 @@ const MiniLeagues = () => {
           <h1 className="left-col-prediction-text">Mini-leagues</h1>
           <DropdownSelector
             onValueUpdate={(e) => setSelectedMiniLeagueID(e.target.value)}
-            length={queryData?.minileagueMany.length || 0}
+            length={queryData?.minileagueMany?.length || 0}
             minileagueArr={queryData?.minileagueMany}
             enabled={!loaded}
           />
@@ -227,7 +238,7 @@ const MiniLeagues = () => {
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {!queryLoading && selectedMiniLeagueID ? (
+        {queryData && selectedMiniLeagueID ? (
           minileagues.length > 0 ? (
             <SingleMiniLeague
               setLoaded={setLoaded}
@@ -237,7 +248,7 @@ const MiniLeagues = () => {
               selectedMiniLeagueID={selectedMiniLeagueID}
             />
           ) : (
-            <div className="no-mini-league-statement-container">
+            <div className="no-mini-league-statement-container length-zero">
               {!queryLoading && (
               <div className="no-mini-league-statement">
                 Please create or join a mini-league on the left
@@ -247,7 +258,7 @@ const MiniLeagues = () => {
             </div>
           )
         ) : (
-          <div className="no-mini-league-statement-container">
+          <div className="no-mini-league-statement-container query-data">
             <div className="no-mini-league-statement">
               Loading...
             </div>
