@@ -1,12 +1,11 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectSelectedMinileagueRankings, selectSelectedMinileagueName } from './minileaguesSlice';
+import PropTypes from 'prop-types';
 import './MiniLeagueRankings.css';
 
-const MiniLeagueRankings = () => {
-  const selectedMiniLeague = useSelector(selectSelectedMinileagueRankings);
-  const selectedMiniLeagueName = useSelector(selectSelectedMinileagueName);
+const MiniLeagueRankings = ({ rankings }) => {
+  const selectedMiniLeagueName = rankings.name;
+  const selectedMiniLeague = rankings.members.sort((a, b) => b.totalPoints - a.totalPoints);
 
   return (
     <div className="minileague-rankings-container">
@@ -24,7 +23,7 @@ const MiniLeagueRankings = () => {
               <tr key={player.username} className="ranking-table-row">
                 <td>{idx + 1}</td>
                 <td>{player.username}</td>
-                <td>{player.points}</td>
+                <td>{player.totalPoints}</td>
               </tr>
             ))}
           </tbody>
@@ -36,6 +35,16 @@ const MiniLeagueRankings = () => {
       )}
     </div>
   );
+};
+
+MiniLeagueRankings.propTypes = {
+  rankings: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    members: PropTypes.arrayOf(PropTypes.shape({
+      totalPoints: PropTypes.number.isRequired,
+      username: PropTypes.string.isRequired,
+    })),
+  }).isRequired,
 };
 
 export default MiniLeagueRankings;

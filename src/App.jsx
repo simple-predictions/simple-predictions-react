@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { gql, useQuery } from '@apollo/client';
 
 import { getUserInfo, selectLoggedIn } from './User/userSlice';
 import { getMinileagues } from './MiniLeagues/minileaguesSlice';
@@ -35,6 +36,15 @@ const App = () => {
   } else {
     dispatch(getUserInfo());
   }
+
+  const QUERY = gql`
+  query {
+    findGameweek {
+      number
+    }
+  }`;
+
+  useQuery(QUERY);
 
   return (
     <div>

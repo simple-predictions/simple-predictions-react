@@ -21,7 +21,21 @@ const SingleMiniLeague = ({
   setLoaded,
   loaded,
 }) => {
+  const PREQUERY = gql`
+  query {
+    findGameweek {
+      number
+    }
+  }`;
+
   const [gameweek, setGameweek] = useState(0);
+
+  useQuery(PREQUERY, {
+    onCompleted: (data) => {
+      setGameweek(data.findGameweek.number);
+    },
+  });
+
   const QUERY = gql`
   query {
     minileagueOne(filter: {_id: "${selectedMiniLeagueID}"}){
@@ -83,10 +97,6 @@ const SingleMiniLeague = ({
         return retMatch;
       });
       setTable(tablePrep);
-
-      if (tablePrep[0].gameweek !== gameweek && queryData) {
-        setGameweek(parseInt(tablePrep[0].gameweek, 10));
-      }
     }
   }, [queryData, gameweek]);
 
@@ -217,7 +227,7 @@ const MiniLeagues = () => {
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {!queryLoading ? (
+        {!queryLoading && selectedMiniLeagueID ? (
           minileagues.length > 0 ? (
             <SingleMiniLeague
               setLoaded={setLoaded}
