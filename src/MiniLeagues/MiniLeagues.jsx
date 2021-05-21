@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -103,7 +104,15 @@ const SingleMiniLeague = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings rankings={rankings} />}
+      {loaded ? (
+        componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={loaded} /> : <MiniLeagueRankings loaded={loaded} rankings={rankings} />
+      ) : (
+        <div className="no-mini-league-statement-container">
+          <div className="no-mini-league-statement">
+            Loading...
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -146,10 +155,10 @@ const MiniLeagues = () => {
 
   const [selectedMiniLeagueID, setSelectedMiniLeagueID] = useState('');
 
-  const { error: queryError, data: queryData } = useQuery(
+  const { error: queryError, data: queryData, loading: queryLoading } = useQuery(
     QUERY,
     // eslint-disable-next-line no-underscore-dangle
-    { onCompleted: () => setSelectedMiniLeagueID(queryData.minileagueMany[0]._id) },
+    { onCompleted: () => setSelectedMiniLeagueID(queryData.minileagueMany[0]?._id) },
   );
   if (queryError) {
     throw new Error(queryError);
@@ -208,22 +217,30 @@ const MiniLeagues = () => {
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {minileagues.length > 0 ? (
-          <SingleMiniLeague
-            setLoaded={setLoaded}
-            loaded={loaded}
-            componentName={componentName}
-            setComponentName={setComponentName}
-            selectedMiniLeagueID={selectedMiniLeagueID}
-          />
+        {!queryLoading ? (
+          minileagues.length > 0 ? (
+            <SingleMiniLeague
+              setLoaded={setLoaded}
+              loaded={loaded}
+              componentName={componentName}
+              setComponentName={setComponentName}
+              selectedMiniLeagueID={selectedMiniLeagueID}
+            />
+          ) : (
+            <div className="no-mini-league-statement-container">
+              {!queryLoading && (
+              <div className="no-mini-league-statement">
+                Please create or join a mini-league on the left
+                to view the table and others&#39; predictions.
+              </div>
+              )}
+            </div>
+          )
         ) : (
           <div className="no-mini-league-statement-container">
-            {loaded === 'success' && (
             <div className="no-mini-league-statement">
-              Please create or join a mini-league on the left
-              to view the table and others&#39; predictions.
+              Loading...
             </div>
-            )}
           </div>
         )}
       </div>
