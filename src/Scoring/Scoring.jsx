@@ -57,7 +57,7 @@ const Scoring = () => {
                   </div>
                   <div className="col-md-8 scored-match-data-container scored-match-data-header">
                     <div className="col-md-4">
-                      <DropdownSelector enabled={friendDropdownDisabled} style={{ border: 'solid 1px #defc5f' }} onValueUpdate={(e) => dispatch(getScoredPreds([friends[e.target.value - 1].name, false]))} length={friends.length} minileagueArr={friends} />
+                      <DropdownSelector enabled={friendDropdownDisabled} style={{ border: 'solid 1px #defc5f' }} onValueUpdate={(e) => dispatch(getScoredPreds([friends[e.target.value - 1].name, false]))} length={friends.length} minileagueArr={friends.map((friend) => ({ name: friend.name }))} />
                     </div>
                     <div className="col-md-4" />
                     <div className="col-md-4" />
