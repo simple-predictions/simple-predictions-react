@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { gql, useQuery } from '@apollo/client';
-import * as Sentry from "@sentry/react";
+import * as Sentry from '@sentry/react';
 
 import { getUserInfo, selectLoggedIn } from './User/userSlice';
 import { getMinileagues } from './MiniLeagues/minileaguesSlice';
