@@ -150,19 +150,6 @@ const MiniLeagues = () => {
     minileagueMany {
       _id
       name
-      members {
-        username
-        totalPoints
-        predictions(gameweek: 0) {
-          home_pred
-          away_pred
-          points
-          match {
-            home_team
-            away_team
-          }
-        }
-      }
     }
   }`;
 
