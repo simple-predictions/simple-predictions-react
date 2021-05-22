@@ -118,7 +118,7 @@ const SingleMiniLeague = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {queryData.minileagueOne ? (
+      {(queryData.minileagueOne && rankings) ? (
         componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />
       ) : (
         <div className="no-mini-league-statement-container query-data-single">
