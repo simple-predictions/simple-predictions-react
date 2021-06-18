@@ -8,7 +8,6 @@ import { gql, useQuery } from '@apollo/client';
 import * as Sentry from '@sentry/react';
 
 import { getUserInfo, selectLoggedIn } from './User/userSlice';
-import { getMinileagues } from './MiniLeagues/minileaguesSlice';
 
 import Predictions from './Predictions/Predictions';
 import MiniLeagues from './MiniLeagues/MiniLeagues';
@@ -30,9 +29,7 @@ const App = () => {
   const alertMessage = useSelector(selectAlertMessage);
   const apiCookie = useSelector(selectLoggedIn);
 
-  if (apiCookie) {
-    dispatch(getMinileagues());
-  } else {
+  if (!apiCookie) {
     dispatch(getUserInfo());
   }
 

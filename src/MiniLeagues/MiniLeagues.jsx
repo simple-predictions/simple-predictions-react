@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Alert, Nav, Form, InputGroup,
 } from 'react-bootstrap';
@@ -12,7 +11,6 @@ import DropdownSelector from '../DropdownSelector';
 import MiniLeagueRankings from './MiniLeagueRankings';
 import './MiniLeagues.css';
 import HomepageButton from '../HomepageButton';
-import { selectAllMinileagues } from './minileaguesSlice';
 
 const SingleMiniLeague = ({
   componentName,
@@ -172,7 +170,6 @@ const MiniLeagues = () => {
     }
   }, [queryData]);
 
-  const minileagues = useSelector(selectAllMinileagues);
   const [componentName, setComponentName] = useState('MiniLeagueTable');
   const [createMiniLeagueEnabled, setCreateMiniLeagueEnabled] = useState(true);
   const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true);
@@ -226,7 +223,7 @@ const MiniLeagues = () => {
       </div>
       <div className="col-lg-8 right-col">
         {queryData && selectedMiniLeagueID ? (
-          minileagues.length > 0 ? (
+          queryData.minileagueMany.length > 0 ? (
             <SingleMiniLeague
               setLoaded={setLoaded}
               loaded={loaded}
