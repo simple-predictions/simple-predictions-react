@@ -89,7 +89,7 @@ const SingleMiniLeague = ({
       tablePrep = tablePrep.map((match) => {
         const members = queryData.minileagueOne.members.map((member) => {
           // eslint-disable-next-line no-underscore-dangle
-          const pred = member.predictions.find((innerPred) => innerPred.match._id === match._id);
+          const pred = member.predictions?.find((innerPred) => innerPred.match._id === match._id);
           return { username: member.username, prediction: pred };
         });
 
