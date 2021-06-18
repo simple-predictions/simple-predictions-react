@@ -3,7 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import * as Sentry from '@sentry/react';
 import userReducer from '../User/userSlice';
 import minileaguesReducer from '../MiniLeagues/minileaguesSlice';
-import scoringReducer from '../Scoring/scoringSlice';
 import feedbackReducer from '../Feedback/feedbackSlice';
 import alertsReducer from '../Alerts/alertsSlice';
 
@@ -15,7 +14,6 @@ export default configureStore({
   reducer: {
     user: userReducer,
     minileagues: minileaguesReducer,
-    scoring: scoringReducer,
     feedback: feedbackReducer,
     alerts: alertsReducer,
   },
