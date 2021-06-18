@@ -9,7 +9,6 @@ import * as Sentry from '@sentry/react';
 
 import { getUserInfo, selectLoggedIn } from './User/userSlice';
 import { getMinileagues } from './MiniLeagues/minileaguesSlice';
-import { getScoredPreds } from './Scoring/scoringSlice';
 
 import Predictions from './Predictions/Predictions';
 import MiniLeagues from './MiniLeagues/MiniLeagues';
@@ -33,7 +32,6 @@ const App = () => {
 
   if (apiCookie) {
     dispatch(getMinileagues());
-    dispatch(getScoredPreds([]));
   } else {
     dispatch(getUserInfo());
   }
