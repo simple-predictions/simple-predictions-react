@@ -1,16 +1,34 @@
 import React, { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import './PageSelector.css';
 import { Link } from 'react-router-dom';
 import { Form, InputGroup, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectUserUsername } from './User/userSlice';
-import handleSubmit from './Logic/PageSelectorLogic';
 
 const PageSelector = () => {
   const username = useSelector(selectUserUsername);
-  const [addFriendEnabled, setAddFriendEnabled] = useState(true);
   const [responseMessage, setResponseMessage] = useState();
   const [responseStatus, setResponseStatus] = useState();
+
+  const addFriendMutation = gql`
+    mutation($friendUsername: String!) {
+      addFriend(friendUsername: $friendUsername) {
+        username
+      }
+    }
+  `;
+
+  const [addFriend, { loading: addFriendLoading }] = useMutation(addFriendMutation, {
+    onError: (error) => {
+      setResponseMessage(error.message);
+      setResponseStatus(400);
+    },
+    onCompleted: () => {
+      setResponseMessage('Success');
+      setResponseStatus(200);
+    },
+  });
 
   return (
     <div className="m-0 row selector">
@@ -20,19 +38,18 @@ const PageSelector = () => {
           <h4 className="left-col-follow-text">Follow someone</h4>
           <Form
             style={{ marginBottom: 10 }}
-            onSubmit={(e) => handleSubmit(
-              e,
-              addFriendEnabled,
-              setAddFriendEnabled,
-              setResponseStatus,
-              setResponseMessage,
-            )}
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const friendUsername = formData.get('friend-username');
+              addFriend({ variables: { friendUsername } });
+            }}
           >
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>@</InputGroup.Text>
               </InputGroup.Prepend>
-              <Form.Control disabled={!addFriendEnabled} placeholder="Username" type="text" name="friend-username" />
+              <Form.Control disabled={addFriendLoading} placeholder="Username" type="text" name="friend-username" />
             </InputGroup>
           </Form>
           {responseMessage && <Alert variant={responseStatus >= 400 ? 'danger' : 'success'}>{responseMessage}</Alert>}
