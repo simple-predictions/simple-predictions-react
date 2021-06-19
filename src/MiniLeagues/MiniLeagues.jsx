@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Alert, Nav, Form, InputGroup,
 } from 'react-bootstrap';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
-import { createMiniLeague, joinMiniLeague } from '../Logic/MiniLeagueLogic';
 import MiniLeagueTable from './MiniLeagueTable';
 import DropdownSelector from '../DropdownSelector';
 import MiniLeagueRankings from './MiniLeagueRankings';
@@ -171,11 +170,46 @@ const MiniLeagues = () => {
   }, [queryData]);
 
   const [componentName, setComponentName] = useState('MiniLeagueTable');
-  const [createMiniLeagueEnabled, setCreateMiniLeagueEnabled] = useState(true);
-  const [joinMiniLeagueEnabled, setJoinMiniLeagueEnabled] = useState(true);
   const [responseMessage, setResponseMessage] = useState('');
   const [responseStatus, setResponseStatus] = useState();
   const [loaded, setLoaded] = useState(false);
+
+  const joinMinileagueMutation = gql`
+    mutation($leagueName: String!) {
+      joinMinileague(leagueName: $leagueName) {
+        name
+      }
+    }
+  `;
+  const [joinMinileague, { loading: joinMutationLoading }] = useMutation(joinMinileagueMutation, {
+    onError: (error) => {
+      setResponseMessage(error.message);
+      setResponseStatus(400);
+    },
+    onCompleted: () => {
+      setResponseMessage('Success');
+      setResponseStatus(200);
+    },
+  });
+
+  const createMinileagueMutation = gql`
+    mutation($leagueName: String!) {
+      createMinileague(leagueName: $leagueName) {
+        name
+      }
+    }
+  `;
+  const [createMinileague,
+    { loading: createMutationLoading }] = useMutation(createMinileagueMutation, {
+    onError: (error) => {
+      setResponseMessage(error.message);
+      setResponseStatus(400);
+    },
+    onCompleted: () => {
+      setResponseMessage('Success');
+      setResponseStatus(200);
+    },
+  });
 
   return (
     <div className="m-0 row">
@@ -193,37 +227,37 @@ const MiniLeagues = () => {
           <h4 className="left-col-minileague-text">Create mini-league</h4>
           <Form
             style={{ marginBottom: 10 }}
-            onSubmit={(e) => createMiniLeague(
-              e,
-              createMiniLeagueEnabled,
-              setCreateMiniLeagueEnabled,
-              setResponseStatus,
-              setResponseMessage,
-            )}
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const minileagueName = formData.get('minileague-name');
+              createMinileague({ variables: { leagueName: minileagueName } });
+            }}
           >
             <InputGroup>
-              <Form.Control disabled={!createMiniLeagueEnabled} placeholder="Mini-league name" type="text" name="minileague-name" />
+              <Form.Control disabled={createMutationLoading} placeholder="Mini-league name" type="text" name="minileague-name" />
             </InputGroup>
           </Form>
 
           <h4 className="left-col-minileague-text">Join mini-league</h4>
           <Form
             style={{ marginBottom: 10 }}
-            onSubmit={(e) => joinMiniLeague(e,
-              joinMiniLeagueEnabled,
-              setJoinMiniLeagueEnabled,
-              setResponseStatus,
-              setResponseMessage)}
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const minileagueName = formData.get('minileague-name');
+              joinMinileague({ variables: { leagueName: minileagueName } });
+            }}
           >
             <InputGroup>
-              <Form.Control disabled={!joinMiniLeagueEnabled} placeholder="Mini-league name" type="text" name="minileague-name" />
+              <Form.Control disabled={joinMutationLoading} placeholder="Mini-league name" type="text" name="minileague-name" />
             </InputGroup>
           </Form>
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {queryData && selectedMiniLeagueID ? (
-          queryData.minileagueMany.length > 0 ? (
+        {!queryLoading ? (
+          queryData.minileagueMany.length > 0 && selectedMiniLeagueID ? (
             <SingleMiniLeague
               setLoaded={setLoaded}
               loaded={loaded}
