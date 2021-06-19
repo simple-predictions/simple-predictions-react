@@ -256,8 +256,8 @@ const MiniLeagues = () => {
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {queryData && selectedMiniLeagueID ? (
-          queryData.minileagueMany.length > 0 ? (
+        {!queryLoading ? (
+          queryData.minileagueMany.length > 0 && selectedMiniLeagueID ? (
             <SingleMiniLeague
               setLoaded={setLoaded}
               loaded={loaded}
