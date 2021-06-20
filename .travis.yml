@@ -1,5 +1,0 @@
-language: node_js
-node_js:
-  - "stable"
-script:
-  - npx eslint src/**/*.{js,jsx}
