@@ -26,4 +26,9 @@ describe('test front page', function() {
         await screen.findByPlaceholderText("New password")
         await screen.findByText("Reset")
     })
+    it("should update colours on scroll", async function() {
+        const { container } = render(<Provider store={store}><Router><FrontPage widget="Login" /></Router></Provider>)
+
+        fireEvent.scroll(container, {y: 1000})
+    })
 })
