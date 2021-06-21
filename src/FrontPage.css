@@ -141,4 +141,8 @@ div.three-steps-row {
     text-decoration: none;
 }
 
+.selector-col > .row .selector-option-container {
+    margin-left: 0;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
