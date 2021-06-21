@@ -7,8 +7,7 @@ const handleSubmit = (e, submitPredictions) => {
 
   const MUTATION_ARR = [];
   const predsData = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of data.entries()) {
+  [...data].forEach(([key, value]) => {
     const predType = key.split('[')[1].split(']')[0];
     let predNum = value;
     const gameID = key.split('[')[0];
@@ -41,7 +40,7 @@ const handleSubmit = (e, submitPredictions) => {
       }
       predsData[predIndex].insurance = predNum;
     }
-  }
+  });
   for (let i = 0; i < predsData.length; i += 1) {
     const pred = predsData[i];
     const MUTATION = `
