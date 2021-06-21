@@ -48,7 +48,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "webpack --config webpack.config.js && react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -67,8 +67,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.12.17",
-    "@babel/register": "^7.14.5",
     "@sentry/webpack-plugin": "^1.11.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.1",
