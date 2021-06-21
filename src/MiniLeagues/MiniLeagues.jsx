@@ -116,7 +116,7 @@ const SingleMiniLeague = ({
       </Nav>
       {(() => {
         if (queryData.minileagueOne && rankings) {
-          return componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />;
+          return componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={!!queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />;
         }
         return (
           <div className="no-mini-league-statement-container query-data-single">
@@ -169,7 +169,7 @@ const MiniLeagues = () => {
       // eslint-disable-next-line no-underscore-dangle
       setSelectedMiniLeagueID(queryData.minileagueMany[0]?._id);
     }
-  }, [queryData]);
+  }, [queryData, selectedMiniLeagueID]);
 
   const [componentName, setComponentName] = useState('MiniLeagueTable');
   const [responseMessage, setResponseMessage] = useState('');
