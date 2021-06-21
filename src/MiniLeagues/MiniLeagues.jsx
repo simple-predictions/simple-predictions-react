@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import {
   Alert, Nav, Form, InputGroup,
@@ -115,15 +114,18 @@ const SingleMiniLeague = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {(queryData.minileagueOne && rankings) ? (
-        componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings?.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />
-      ) : (
-        <div className="no-mini-league-statement-container query-data-single">
-          <div className="no-mini-league-statement">
-            Loading...
+      {(() => {
+        if (queryData.minileagueOne && rankings) {
+          return componentName === 'MiniLeagueTable' ? <MiniLeagueTable selectedMiniLeagueName={rankings.name} table={table} setGameweek={setGameweek} gameweek={gameweek} loaded={queryData} /> : <MiniLeagueRankings loaded={queryData} rankings={rankings} />;
+        }
+        return (
+          <div className="no-mini-league-statement-container query-data-single">
+            <div className="no-mini-league-statement">
+              Loading...
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };
@@ -256,32 +258,38 @@ const MiniLeagues = () => {
         </div>
       </div>
       <div className="col-lg-8 right-col">
-        {!queryLoading ? (
-          queryData.minileagueMany.length > 0 && selectedMiniLeagueID ? (
-            <SingleMiniLeague
-              setLoaded={setLoaded}
-              loaded={loaded}
-              componentName={componentName}
-              setComponentName={setComponentName}
-              selectedMiniLeagueID={selectedMiniLeagueID}
-            />
-          ) : (
-            <div className="no-mini-league-statement-container length-zero">
-              {!queryLoading && (
-              <div className="no-mini-league-statement">
-                Please create or join a mini-league on the left
-                to view the table and others&#39; predictions.
+        {(() => {
+          if (!queryLoading) {
+            if (queryData.minileagueMany.length > 0 && selectedMiniLeagueID) {
+              return (
+                <SingleMiniLeague
+                  setLoaded={setLoaded}
+                  loaded={loaded}
+                  componentName={componentName}
+                  setComponentName={setComponentName}
+                  selectedMiniLeagueID={selectedMiniLeagueID}
+                />
+              );
+            }
+            return (
+              <div className="no-mini-league-statement-container length-zero">
+                {!queryLoading && (
+                <div className="no-mini-league-statement">
+                  Please create or join a mini-league on the left
+                  to view the table and others&#39; predictions.
+                </div>
+                )}
               </div>
-              )}
+            );
+          }
+          return (
+            <div className="no-mini-league-statement-container query-data">
+              <div className="no-mini-league-statement">
+                Loading...
+              </div>
             </div>
-          )
-        ) : (
-          <div className="no-mini-league-statement-container query-data">
-            <div className="no-mini-league-statement">
-              Loading...
-            </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
